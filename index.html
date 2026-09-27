@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cicli Ambrosini — Bozza nuova home</title>
+<meta name="description" content="Bozza concept per il redesign del sito Cicli Ambrosini, la bottega del ciclista a Varese dal 1967.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <span>Ritiro gratuito in negozio a Varese</span>
+  <span>Officina specializzata strada · MTB · e-bike</span>
+  <span>Bici pagabili in 3 rate senza interessi</span>
+</div></div>
+
+<header id="hdr">
+  <div class="wrap head">
+    <a href="index.html" class="logo" aria-label="Cicli Ambrosini, home"><small>CICLI</small><b>AMBROSINI</b></a>
+    <nav class="main">
+      <a href="catalogo.html#/g/Bici">Bici</a>
+      <a href="catalogo.html#/g/E-bike">E-bike</a>
+      <a href="catalogo.html#/g/Abbigliamento">Abbigliamento</a>
+      <a href="catalogo.html#/g/Componenti">Componenti</a>
+      <a href="catalogo.html#/g/Accessori">Accessori</a>
+      <a href="catalogo.html#/c/Usato">Usato</a>
+      <a href="#officina">Officina</a>
+      <a href="#bottega">La bottega</a>
+      <a href="catalogo.html">Catalogo</a>
+    </nav>
+    <div class="icons">
+      <a class="icon-btn hide-m" href="catalogo.html#/cerca" aria-label="Cerca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></a>
+      <a class="icon-btn hide-m" href="catalogo.html#/preferiti" aria-label="Preferiti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="badge" id="favCount">0</span></a>
+      <a class="icon-btn" href="catalogo.html#/carrello" aria-label="Carrello"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cartCount">0</span></a>
+      <button class="icon-btn burger" aria-label="Menu" id="openMenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <button class="close" id="closeMenu" aria-label="Chiudi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  <nav>
+    <a href="catalogo.html#/g/Bici">Bici</a><a href="catalogo.html#/g/E-bike">E-bike</a><a href="catalogo.html#/g/Abbigliamento">Abbigliamento</a><a href="catalogo.html#/g/Componenti">Componenti</a><a href="catalogo.html#/g/Accessori">Accessori</a><a href="catalogo.html#/c/Usato">Usato</a><a href="#officina">Officina</a><a href="catalogo.html#/carrello">Carrello</a>
+  </nav>
+  <div class="foot">Piazza Madonnina in Prato, 1 · Varese<br>+39 0332 240109</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-card" id="hero">
+    <div class="slide on"><img data-wix="37653dced83c45819e86aa02d33da2ee~mv2.png" data-w="1800" data-h="1000" alt="Bici da corsa Colnago davanti al Teatro alla Scala"></div>
+    <div class="slide"><img data-wix="d3a2daa0c4c14153a43811d10a2fed2c~mv2.png" data-w="1800" data-h="1000" alt="Colnago su sfondo blu"></div>
+    <div class="slide"><img data-wix="3718c87acc8843b3b4cb2930b8262f84~mv2.png" data-w="1800" data-h="1000" alt="E-MTB in montagna"></div>
+    <div class="hero-tag">Rivenditore autorizzato Colnago · Giant · Bianchi · Merida</div>
+    <div class="hero-copy">
+      <div class="eyebrow">Dal 1967 a Varese</div>
+      <h1 class="display">La bottega<br>del ciclista.</h1>
+      <p>Bici da corsa, gravel, MTB ed e-bike scelte e montate da chi pedala da oltre cinquant'anni. Online, oppure in negozio con la nostra officina.</p>
+      <div class="hero-ctas">
+        <a href="#bici" class="btn btn-blue">Trova la tua bici <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        <a href="catalogo.html#/officina" class="btn btn-white">Prenota l'officina</a>
+      </div>
+    </div>
+    <div class="dots" id="dots"></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="usp">
+    <div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V10l7-5 7 5v11M10 21v-6h4v6"/></svg></i><p><b>Ritira in negozio</b><span>Bici montata e regolata su di te</span></p></div>
+    <div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></i><p><b>Officina specializzata</b><span>Strada, MTB ed e-bike</span></p></div>
+    <div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/></svg></i><p><b>Paga in 3 rate</b><span>Senza interessi sulle bici</span></p></div>
+    <div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></i><p><b>Garanzia ufficiale</b><span>Rivenditore autorizzato</span></p></div>
+  </div>
+</div>
+
+<!-- CATEGORIE -->
+<section id="bici">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow">Le nostre bici</div><h2 class="display">Diverse strade,<br>un'unica passione.</h2></div>
+      <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-end">
+        <p><strong>Qualunque sia il tuo terreno, c'è una bici pensata per te.</strong> Ti aiutiamo a scegliere taglia e allestimento, poi la montiamo in officina.</p>
+        <div class="arrows" data-rail="cats"><button aria-label="Indietro" data-dir="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button aria-label="Avanti" data-dir="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+      </div>
+    </div>
+    <div class="rail cats" id="cats"></div>
+  </div>
+</section>
+
+<!-- PRODOTTI -->
+<section id="offerte" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow">In negozio adesso</div><h2 class="display">Novità e offerte</h2></div>
+      <div class="arrows" data-rail="prods"><button aria-label="Indietro" data-dir="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button aria-label="Avanti" data-dir="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+    </div>
+    <div class="filters" id="filters">
+      <button class="on" data-f="all">Tutto</button>
+      <button data-f="bici">Bici ed e-bike</button>
+      <button data-f="abb">Abbigliamento</button>
+      <button data-f="acc">Componenti e accessori</button>
+    </div>
+    <div class="rail prods" id="prods"></div>
+  </div>
+</section>
+
+<!-- OFFICINA -->
+<div class="band" id="officina">
+  <img data-wix="ea1f868dbdab4d9f82a1f6e398e7c542~mv2.jpg" data-w="1800" data-h="1000" alt="Officina Cicli Ambrosini">
+  <div class="in">
+    <div class="reveal">
+      <div class="eyebrow">L'officina</div>
+      <h2 class="display">Un'officina vera,<br>non un magazzino.</h2>
+      <p>Revisioni, riparazioni e montaggi su misura per strada, MTB ed e-bike. Prenoti online, lasci la bici e ti avvisiamo quando è pronta.</p>
+      <div class="hero-ctas"><a href="catalogo.html#/officina" class="btn btn-white">Prenota un intervento</a><a href="tel:+390332240109" class="btn btn-ghost">Chiamaci</a></div>
+    </div>
+    <div class="services reveal">
+      <a href="catalogo.html#/officina?s=revisione"><p><b>Revisione completa</b><small>Controllo, pulizia e regolazione</small></p><em>Prenota</em></a>
+      <a href="catalogo.html#/officina?s=ebike"><p><b>Riparazioni e-bike</b><small>Motore, batteria e diagnostica</small></p><em>Prenota</em></a>
+      <a href="catalogo.html#/officina?s=montaggio"><p><b>Montaggio su misura</b><small>Componenti, ruote e posizione in sella</small></p><em>Prenota</em></a>
+      <a href="catalogo.html#/officina?s=ruote"><p><b>Assetto tubeless e ruote</b><small>Centratura, gomme e tubeless</small></p><em>Prenota</em></a>
+    </div>
+  </div>
+</div>
+
+<!-- ABBIGLIAMENTO -->
+<section id="abbigliamento">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow">Abbigliamento</div><h2 class="display">Vestiti da campione.</h2></div>
+      <p>Maglie, salopette, guanti e accessori dei migliori marchi: <strong>Santini, Giant, Liv, AGU</strong> e altri.</p>
+    </div>
+    <div class="split reveal">
+      <a href="catalogo.html#/?brand=Santini" class="big">
+        <img data-wix="3cc8da772bbb48fe8a44cdc02a9f5d1b~mv2.webp" data-w="900" data-h="900" data-mode="fit" alt="Maglia Santini UCI World Champion">
+        <div class="t">
+          <div class="eyebrow">Collezione Santini UCI</div>
+          <h3 class="display">L'iride, da indossare.</h3>
+          <p>La linea ufficiale dei Campionati del Mondo UCI, disponibile in negozio e online.</p>
+          <span class="btn btn-blue">Scopri la collezione</span>
+        </div>
+      </a>
+      <div class="grid" id="miniGrid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARCHI -->
+<div class="brands" aria-label="Marchi trattati"><div class="marquee" id="marquee"></div></div>
+
+<!-- BOTTEGA -->
+<section id="bottega">
+  <div class="wrap story">
+    <div class="reveal">
+      <div class="eyebrow">La bottega</div>
+      <h2 class="display">Dal 1967, sotto la stessa insegna blu.</h2>
+      <p>Oltre cinquant'anni di ciclismo, un negozio in centro a Varese e la stessa idea di sempre: consigliare solo quello che useremmo anche noi.</p>
+      <p>Qui trovi chi ti aiuta a scegliere la taglia giusta, ti monta la bici e te la segue negli anni. Anche quando la compri online.</p>
+      <div class="stats">
+        <div><b>1967</b><span>anno di apertura</span></div>
+        <div><b>350+</b><span>prodotti online</span></div>
+        <div><b>15+</b><span>marchi ufficiali</span></div>
+      </div>
+      <a href="#visita" class="btn btn-blue">Vieni a trovarci</a>
+    </div>
+    <div class="collage reveal">
+      <img src="vetrina.webp" alt="La vetrina di Cicli Ambrosini in Viale Milano, Varese">
+      <img data-wix="e32304525849402b995552dd385c3e9f~mv2.jpg" data-w="700" data-h="520" alt="Interno del negozio">
+      <img data-wix="e9b5b0ed0348415682b839036f51b873~mv2.jpg" data-w="700" data-h="440" alt="Bici in esposizione">
+    </div>
+  </div>
+</section>
+
+<!-- VIENI A TROVARCI -->
+<section class="visit" id="visita">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow">Vieni a trovarci</div><h2 class="display">In centro a Varese.</h2></div>
+    </div>
+    <div class="visit-grid">
+      <div class="box">
+        <h3>Orari</h3>
+        <div class="status" id="status">Aperto ora</div>
+        <div class="hours" id="hours"></div>
+      </div>
+      <div class="box contact">
+        <h3>Contatti</h3>
+        <a href="https://www.google.com/maps/search/?api=1&query=Piazza+Madonnina+in+Prato+1+Varese" target="_blank" rel="noopener"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></i>Piazza Madonnina in Prato, 1<br>21100 Varese</a>
+        <a href="tel:+390332240109"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></i>+39 0332 240109</a>
+        <a href="mailto:cicliambrosini@cicliambrosini.com"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></i>cicliambrosini@cicliambrosini.com</a>
+      </div>
+      <div class="map"><iframe loading="lazy" title="Mappa" src="https://www.google.com/maps?q=Piazza+Madonnina+in+Prato+1,+Varese&output=embed"></iframe></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="news">
+      <h2 class="display">Novità, uscite di gruppo e offerte. Una mail al mese.</h2>
+      <form onsubmit="event.preventDefault();const i=this.querySelector('input');if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(i.value)){toast('Inserisci un’email valida');i.focus();return}toast('Grazie! Iscrizione simulata: nessun dato è stato inviato');this.reset()"><input type="email" required placeholder="La tua email" aria-label="Email"><button class="btn btn-blue">Iscriviti</button></form>
+    </div>
+    <div class="foot-grid">
+      <div>
+        <div class="logo"><small>CICLI</small><b>AMBROSINI</b></div>
+        <p>La bottega del ciclista a Varese dal 1967. Vendita, officina e assistenza.</p>
+        <div class="social">
+          <a href="https://www.instagram.com/cicliambrosini/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg></a>
+          <a href="https://www.facebook.com/cicliambrosiniofficial/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H8v4h2v7h4v-7h3l1-4h-4V8z"/></svg></a>
+          <a href="https://www.youtube.com/@cicliambrosini4947" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.6 12 31 31 0 0 0 2 15.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .4-3.8 31 31 0 0 0-.4-3.8zM10 15V9l5.2 3z"/></svg></a>
+        </div>
+      </div>
+      <div><h4>Bici</h4><a href="catalogo.html#/c/Strada">Bici da corsa</a><a href="catalogo.html#/c/Gravel">Gravel</a><a href="catalogo.html#/c/Mountain%20bike">Mountain bike</a><a href="catalogo.html#/g/E-bike">E-bike</a><a href="catalogo.html#/c/Usato">Usato</a></div>
+      <div><h4>Shop</h4><a href="catalogo.html#/g/Abbigliamento">Abbigliamento</a><a href="catalogo.html#/c/Caschi">Caschi</a><a href="catalogo.html#/g/Componenti">Componenti</a><a href="catalogo.html#/g/Accessori">Accessori</a><a href="catalogo.html">Catalogo completo</a></div>
+      <div><h4>Aiuto</h4><a href="catalogo.html#/info/spedizioni">Spedizioni e resi</a><a href="catalogo.html#/info/pagamenti">Pagamento a rate</a><a href="catalogo.html#/officina">Prenota l'officina</a><a href="catalogo.html#/info/contatti">Contatti e orari</a></div>
+    </div>
+    <div class="legal"><span>© Cicli Ambrosini · P. IVA da inserire</span><span><a href="catalogo.html#/info/privacy">Privacy</a> · <a href="catalogo.html#/info/cookie">Cookie</a> · <a href="catalogo.html#/info/termini">Termini di vendita</a> · <a href="proposta.html">Proposta</a></span></div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"><i>✓</i><span></span></div>
+<div class="concept">Bozza concept · proposta di redesign</div>
+
+<script>
+const WIX='https://static.wixstatic.com/media/6420e3_';
+const wix=(id,w,h,mode='fill')=>`${WIX}${id}/v1/${mode}/w_${w},h_${h},al_c,q_85/img.jpg`;
+document.querySelectorAll('img[data-wix]').forEach(i=>{i.src=wix(i.dataset.wix,i.dataset.w,i.dataset.h,i.dataset.mode||'fill');i.loading='lazy'});
+
+/* Hero slider */
+const slides=[...document.querySelectorAll('#hero .slide')],dots=document.getElementById('dots');let cur=0,timer;
+slides.forEach((_,i)=>{const b=document.createElement('button');b.setAttribute('aria-label','Slide '+(i+1));b.onclick=()=>go(i,true);dots.appendChild(b)});
+function go(i,user){slides[cur].classList.remove('on');dots.children[cur].classList.remove('on');cur=i;slides[cur].classList.add('on');dots.children[cur].classList.add('on');if(user){clearInterval(timer);auto()}}
+function auto(){timer=setInterval(()=>go((cur+1)%slides.length),6000)}
+dots.children[0].classList.add('on');auto();
+
+/* Categorie */
+const cats=[
+  ['Strada','Colnago, Giant, Bianchi, Merida','916e71461370427f9e7a1208591a01d8~mv2.png','Più venduta'],
+  ['Gravel','Per strade bianche e avventure','0b7d4796ee46482a8b830da7624362fe~mv2.png',''],
+  ['E-bike','E-MTB, e-road ed e-city','03a2f64231564dc1b0d9009b364c54e0~mv2.jpg','Nuovi arrivi'],
+  ['Mountain bike','Front e full suspension','c1313e0dba044cb898ec38fa5e27a086~mv2.png',''],
+  ['Usato garantito','Controllato dalla nostra officina','d54ac1fd615e44c291bd84d63d268732~mv2.jpg','Revisionato'],
+  ['Città e trekking','E-bike per la città e i viaggi','e3195d8898d047bc9a194d3296ad09b4~mv2.jpg',''],
+];
+const arrow='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+const CATLINK={'Strada':'#/c/Strada','Gravel':'#/c/Gravel','E-bike':'#/g/E-bike','Mountain bike':'#/c/Mountain%20bike','Usato garantito':'#/c/Usato','Città e trekking':'#/c/E-City%20e%20trekking'};
+document.getElementById('cats').innerHTML=cats.map(([t,s,img,chip])=>`<a href="catalogo.html${CATLINK[t]||'#/g/Bici'}" class="cat"><img src="${wix(img,600,800)}" alt="${t}" loading="lazy">${chip?`<span class="chip">${chip}</span>`:''}<div class="txt"><div><h3>${t}</h3><small>${s}</small></div><span class="go">${arrow}</span></div></a>`).join('');
+
+/* Prodotti (dati reali dal sito attuale): slug = scheda nel catalogo */
+const P=[
+  {s:'merida-reacto-7000',c:'bici',b:'Merida',n:'Reacto 7000',p:4989,o:5250,img:'f93f7c42b1374fb2a1f4783e46da796c~mv2.jpg',r:['Prenotabile'],page:'prodotto.html'},
+  {s:'merida-scultura-endurance-6000',c:'bici',b:'Merida',n:'Scultura Endurance 6000',p:3859,o:4060,img:'0146654d5f02489ca619519e6b5869e5~mv2.jpg',r:['In arrivo']},
+  {s:'santini-uci-world-champion-mondo-men-s-jersey-bianco',c:'abb',b:'Santini',n:'UCI World Champion Mondo Jersey',p:110,img:'3cc8da772bbb48fe8a44cdc02a9f5d1b~mv2.webp',r:['Novità'],sel:{Taglia:'M'}},
+  {s:'manubrio-colnago-cc01-integrato-nuovo',c:'acc',b:'Colnago',n:'Manubrio integrato CC01',p:570,o:814,img:'229c9f11a19146a4ac9398374017e7be~mv2.webp',sel:{Taglia:'110x39'}},
+  {s:'merida-reacto-6000',c:'bici',b:'Merida',n:'Reacto 6000',p:4319,o:4540,img:'6e1751072faa4ae18d6c97d01b167994~mv2.jpg',r:['In arrivo']},
+  {s:'santini-madss-aero-shoecovers-bianco',c:'abb',b:'Santini',n:'MADSS Aero Shoecovers',p:50,img:'8314795b3195414f8b734ce961af8edd~mv2.webp',opt:{Taglia:null}},
+  {s:'abus-bordo-granit-x-plus-serratura-pieghevole-6500-85-nero',c:'acc',b:'Abus',n:'Bordo Granit X-Plus 6500/85',p:75,o:152,img:'a15109c8d346470e8b3a5b3cbb544e35~mv2.webp'},
+  {s:'merida-big-nine-40',c:'bici',b:'Merida',n:'Big.Nine 40',p:849,o:880,img:'43f4976581fb4eefbb97195e1e98103e~mv2.jpg'},
+  {s:'santini-uci-world-champion-gloves',c:'abb',b:'Santini',n:'UCI World Champion Gloves',p:35,img:'172bd4cd853e4a31844c897e5a432f9c~mv2.webp',sel:{Taglia:'L'}},
+  {s:'borsa-urban-saddle-bag-1-5l-black',c:'acc',b:'AGU',n:'Borsa sottosella Urban 1,5 L',p:18,o:20,img:'bce449abf79d46ba916b0a492f671964~mv2.webp'},
+];
+const eur=v=>String(v).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+' €';
+const heartSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
+/* Carrello e preferiti condivisi con il catalogo (salvati nel browser) */
+const MEM={};const LS={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):(MEM[k]??d)}catch(e){return MEM[k]??d}},set(k,v){MEM[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const cc=document.getElementById('cartCount'),fc=document.getElementById('favCount');
+function badges(){const c=LS.get('ca_cart',[]),f=LS.get('ca_fav',[]);const n=c.reduce((a,l)=>a+l.qty,0);cc.textContent=n;cc.classList.toggle('on',n>0);fc.textContent=f.length;fc.classList.toggle('on',f.length>0)}
+const href=x=>x.page||`catalogo.html#/p/${x.s}`;
+const needsPage=x=>x.c==='bici'||x.opt;
+function renderProds(f='all'){const fav=LS.get('ca_fav',[]);
+  document.getElementById('prods').innerHTML=P.filter(x=>f==='all'||x.c===f).map(x=>{
+    const off=x.o?Math.round((1-x.p/x.o)*100):0;
+    const ribs=[...(off?[`-${off}%`]:[]),...(x.r||[])];
+    return `<article class="card"><a href="${href(x)}" class="ph"><img src="${wix(x.img,600,600,'fit')}" alt="${x.b} ${x.n}" loading="lazy"><div class="rib">${ribs.map(r=>`<span class="${r.startsWith('-')?'':'alt'}">${r}</span>`).join('')}</div></a><button class="heart ${fav.includes(x.s)?'on':''}" data-fav="${x.s}" aria-label="Aggiungi ai preferiti">${heartSvg}</button>
+    <div class="body"><div class="brand">${x.b}</div><h3><a href="${href(x)}">${x.n}</a></h3><div class="price"><b>${eur(x.p)}</b>${x.o?`<s>${eur(x.o)}</s>`:''}</div><div class="rate">${x.p>=300?`oppure 3 rate da ${eur(Math.ceil(x.p/3))}`:''}</div>
+    <div class="row"><span>${x.c==='bici'?'Ritiro in negozio':x.sel?Object.entries(x.sel).map(([k,v])=>k+' '+v).join(', '):'Spedizione 24/48h'}</span>${needsPage(x)?`<a class="add" href="${href(x)}">${x.c==='bici'?'Scegli':'Scegli taglia'}</a>`:`<button class="add" data-add="${x.s}">Aggiungi</button>`}</div></div></article>`}).join('');
+}
+renderProds();badges();
+document.getElementById('filters').onclick=e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x===b));renderProds(b.dataset.f);document.getElementById('prods').scrollLeft=0};
+document.addEventListener('click',e=>{
+  const a=e.target.closest('[data-add]');if(a){const x=P.find(y=>y.s===a.dataset.add);const cart=LS.get('ca_cart',[]);const opts=x.sel||{};const key=x.s+'|'+JSON.stringify(opts);const l=cart.find(y=>y.key===key);
+    if(l)l.qty++;else cart.push({key,slug:x.s,name:x.n,brand:x.b,img:'6420e3_'+x.img,price:x.p,opts,qty:1,bike:false,pre:false});
+    LS.set('ca_cart',cart);badges();a.textContent='Aggiunto ✓';a.classList.add('done');setTimeout(()=>{a.textContent='Aggiungi';a.classList.remove('done')},1600);toast(`${x.b} ${x.n} aggiunto al carrello`,'catalogo.html#/carrello','Vai al carrello')}
+  const h=e.target.closest('[data-fav]');if(h){const f=LS.get('ca_fav',[]);const i=f.indexOf(h.dataset.fav);if(i>=0)f.splice(i,1);else f.push(h.dataset.fav);LS.set('ca_fav',f);h.classList.toggle('on',i<0);badges();toast(i<0?'Aggiunto ai preferiti':'Tolto dai preferiti',i<0?'catalogo.html#/preferiti':null,'Vedi preferiti')}
+  const ar=e.target.closest('.arrows button');if(ar){const r=document.getElementById(ar.parentElement.dataset.rail);r.scrollBy({left:ar.dataset.dir*r.clientWidth*.8,behavior:'smooth'})}
+});
+addEventListener('pageshow',badges);
+let tt;function toast(m,link,label){const t=document.getElementById('toast');t.querySelector('span').innerHTML=m+(link?` <a href="${link}" style="color:var(--stone);font-weight:700;text-decoration:underline;margin-left:6px">${label}</a>`:'');t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),3200)}
+
+/* Mini griglia abbigliamento */
+const minis=[['santini-uci-world-champion-men-s-jersey-print','Santini','UCI World Champion Jersey Print',90,'1f1ba3af968f45988e691a1371f8aebe~mv2.webp'],['santini-uci-world-champion-cycling-cap-bianco','Santini','UCI Cycling Cap',19,'efd9501299344444b8264d89f356e15c~mv2.webp'],['santini-uci-world-champion-cycling-socks','Santini','UCI Cycling Socks',15,'e57e11975faa474e923d670fbcbb0bd1~mv2.webp'],['santini-uci-world-champion-neck-warmer','Santini','UCI Neck Warmer',12,'029310606a5a408cb3a69f20dd4990fe~mv2.webp']];
+document.getElementById('miniGrid').innerHTML=minis.map(([sl,b,n,p,img])=>`<a href="catalogo.html#/p/${sl}" class="mini"><img src="${wix(img,400,400,'fit')}" alt="${b} ${n}" loading="lazy"><b>${n}</b><span>${eur(p)}</span></a>`).join('');
+
+/* Marchi: solo quelli presenti nel catalogo, ognuno porta ai suoi prodotti */
+const brands=['Colnago','Giant','Liv','Bianchi','Merida','Santini','Shimano','Sidi','Mavic','Lazer','MET','Vittoria','Elite','Selle Italia',"O'Neal",'Crono'];
+document.getElementById('marquee').innerHTML=[...brands,...brands].map((b,i)=>`<a href="catalogo.html#/?brand=${encodeURIComponent(b)}" ${i>=brands.length?'aria-hidden="true" tabindex="-1"':''}><span>${b}</span></a>`).join('');
+
+/* Orari con stato aperto/chiuso */
+const H=[['Domenica',[]],['Lunedì',[['14:30','18:30']]],['Martedì',[['8:30','12:15'],['14:30','18:30']]],['Mercoledì',[['8:30','12:15'],['14:30','18:30']]],['Giovedì',[['8:30','12:15'],['14:30','18:30']]],['Venerdì',[['8:30','12:15'],['14:30','18:30']]],['Sabato',[['8:30','12:15'],['14:30','18:00']]]];
+const now=new Date(),d=now.getDay(),mins=now.getHours()*60+now.getMinutes(),toM=s=>{const[h,m]=s.split(':');return +h*60+ +m};
+const order=[1,2,3,4,5,6,0];
+document.getElementById('hours').innerHTML=order.map(i=>`<div class="${i===d?'today':''}"><span>${H[i][0]}</span><span>${H[i][1].length?H[i][1].map(r=>r.join('–')).join(' · '):'Chiuso'}</span></div>`).join('');
+const open=H[d][1].some(([a,b])=>mins>=toM(a)&&mins<toM(b));const st=document.getElementById('status');
+if(!open){st.textContent='Chiuso ora';st.classList.add('closed')}
+
+/* Header, menu, animazioni */
+const hdr=document.getElementById('hdr');addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>10),{passive:true});
+const dr=document.getElementById('drawer');document.getElementById('openMenu').onclick=()=>dr.classList.add('open');document.getElementById('closeMenu').onclick=()=>dr.classList.remove('open');dr.querySelectorAll('nav a').forEach(a=>a.onclick=()=>dr.classList.remove('open'));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('shown');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

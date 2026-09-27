@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Merida Reacto 7000 — Cicli Ambrosini (bozza)</title>
+<meta name="description" content="Bozza concept della scheda prodotto: Merida Reacto 7000, bici da corsa aero con SRAM Rival AXS e ruote Vision SC60.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .crumbs{display:flex;gap:8px;flex-wrap:wrap;font-size:13.5px;color:var(--muted);padding:22px 0 18px}
+  .crumbs a:hover{color:var(--blue)}
+  .crumbs span::before{content:"/";margin-right:8px;opacity:.5}
+
+  .pdp{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(24px,4vw,64px);align-items:start}
+  @media(max-width:980px){.pdp{grid-template-columns:1fr}}
+
+  /* Galleria */
+  .gallery{position:sticky;top:96px}
+  @media(max-width:980px){.gallery{position:static}}
+  .stage{position:relative;aspect-ratio:4/3;border-radius:var(--radius-lg);background:#F4F4F1;overflow:hidden;cursor:zoom-in}
+  .stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:4%;mix-blend-mode:multiply;transition:transform .5s ease,opacity .3s}
+  .stage.zoom img{transform:scale(2.1);cursor:zoom-out}
+  .stage .rib{position:absolute;top:18px;left:18px;display:flex;gap:6px;z-index:2}
+  .stage .hint{position:absolute;right:16px;bottom:16px;z-index:2;background:#fff;border-radius:999px;padding:7px 13px;font-size:12.5px;font-weight:500;color:var(--muted);display:flex;gap:6px;align-items:center}
+  .stage .src{position:absolute;left:18px;bottom:16px;z-index:2;font-size:11.5px;color:var(--muted)}
+  .thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:12px}
+  .thumbs button{aspect-ratio:1;border-radius:14px;background:#F4F4F1;overflow:hidden;border:2px solid transparent;position:relative;transition:border-color .2s}
+  .thumbs button.on{border-color:var(--blue)}
+  .thumbs img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+  .thumbs .crop img{object-fit:cover;transform:scale(var(--z,2.4));transform-origin:var(--o,50% 50%)}
+  .thumbs small{position:absolute;left:6px;right:6px;bottom:5px;font-size:10.5px;font-weight:600;background:rgba(255,255,255,.9);border-radius:6px;padding:2px 4px;text-align:center}
+
+  /* Info d'acquisto */
+  .buy .brand{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+  .buy h1{font-size:clamp(38px,4.4vw,58px);margin:6px 0 10px}
+  .buy .sub{color:var(--muted);font-size:15.5px;max-width:520px}
+  .tags{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 22px}
+  .tags span{font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:999px;background:var(--stone-light)}
+  .pricebox{padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .pricebox .row1{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .pricebox b{font-size:40px;font-weight:700;letter-spacing:-.02em}
+  .pricebox s{color:var(--muted);font-size:18px}
+  .pricebox .save{font-size:13px;font-weight:700;color:#fff;background:var(--blue);padding:5px 11px;border-radius:999px}
+  .pricebox small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+  .installments{display:flex;align-items:center;gap:12px;margin-top:14px;padding:12px 16px;border-radius:14px;background:var(--blue-soft);font-size:14px}
+  .installments strong{color:var(--blue-deep)}
+  .installments em{font-style:normal;margin-left:auto;font-size:12px;font-weight:700;background:#fff;padding:4px 10px;border-radius:999px}
+
+  .field{margin-top:24px}
+  .field-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .field-head b{font-size:15px}
+  .field-head b span{font-weight:500;color:var(--muted)}
+  .link{font-size:13.5px;font-weight:600;color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+  .sizes{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+  .sizes button{position:relative;padding:12px 0 10px;border-radius:12px;border:1.5px solid var(--line);font-weight:600;font-size:14px;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .15s}
+  .sizes button small{font-size:10.5px;font-weight:500;color:var(--muted)}
+  .sizes button.avail small{color:#1E7B4A}
+  .sizes button.avail::after{content:"";position:absolute;top:7px;right:7px;width:6px;height:6px;border-radius:50%;background:#2BA36A}
+  .sizes button:hover{border-color:var(--ink)}
+  .sizes button.on{border-color:var(--blue);background:var(--blue);color:#fff}
+  .sizes button.on small{color:rgba(255,255,255,.85)}
+  .sizes button.rec{box-shadow:0 0 0 3px var(--stone)}
+  @media(max-width:520px){.sizes{grid-template-columns:repeat(4,1fr)}.perks{grid-template-columns:1fr}.hl{min-height:0}}
+
+  .finder{display:none;margin-top:12px;padding:16px;border-radius:14px;background:var(--stone-light);font-size:14px}
+  .finder.open{display:block}
+  .finder label{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .finder input{width:90px;padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);font:inherit}
+  .finder output{display:block;margin-top:10px;font-weight:600;color:var(--blue-deep)}
+  .finder small{display:block;margin-top:6px;color:var(--muted);font-size:12px}
+
+  .delivery{display:grid;gap:10px}
+  .opt{display:flex;gap:14px;align-items:flex-start;padding:16px;border-radius:14px;border:1.5px solid var(--line);cursor:pointer;transition:border-color .15s}
+  .opt:has(input:checked){border-color:var(--blue);background:#FAFBFF}
+  .opt input{margin-top:3px;accent-color:var(--blue);width:18px;height:18px}
+  .opt b{display:block;font-size:14.5px}
+  .opt span{font-size:13px;color:var(--muted)}
+  .opt em{margin-left:auto;font-style:normal;font-size:13px;font-weight:700;white-space:nowrap}
+
+  .cta{display:flex;gap:10px;margin-top:24px}
+  .cta .btn{flex:1;justify-content:center;padding:17px 24px;font-size:16px}
+  .cta .icon-btn{width:56px;height:56px;flex:none}
+  .cta .icon-btn.on svg{fill:var(--blue);stroke:var(--blue)}
+  .avail-note{display:flex;gap:8px;align-items:center;font-size:13.5px;color:var(--muted);margin-top:12px}
+  .avail-note::before{content:"";width:8px;height:8px;border-radius:50%;background:#E0A21B}
+  .avail-note.ok::before{background:#2BA36A}
+
+  .perks{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px}
+  .perks div{display:flex;gap:12px;align-items:center;padding:14px;border-radius:14px;background:var(--stone-light);font-size:13.5px;line-height:1.35}
+  .perks i{flex:none;width:36px;height:36px;border-radius:50%;background:#fff;color:var(--blue);display:grid;place-items:center}
+  .perks i svg{width:18px;height:18px}
+  .ask{display:flex;align-items:center;gap:14px;margin-top:18px;padding:16px 18px;border-radius:14px;border:1px dashed var(--stone-dark)}
+  .ask p{font-size:14px;flex:1}
+  .ask p b{display:block}
+  .ask .btn{padding:10px 16px;font-size:14px}
+
+  /* Punti chiave */
+  .highlights{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:clamp(56px,7vw,96px)}
+  .hl{padding:26px;border-radius:var(--radius);background:var(--ink);color:#fff;display:flex;flex-direction:column;gap:10px;min-height:210px}
+  .hl b{font-family:Archivo;font-stretch:112%;font-weight:800;font-size:34px;line-height:1;color:var(--stone)}
+  .hl h3{font-size:16px;font-weight:600}
+  .hl p{font-size:13.5px;opacity:.7;margin-top:auto}
+  .hl:nth-child(2){background:var(--blue)}
+  .hl:nth-child(2) b{color:#fff}
+  @media(max-width:980px){.highlights{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.highlights{grid-template-columns:1fr}}
+
+  /* Tab */
+  .tabs-wrap{margin-top:clamp(56px,7vw,96px)}
+  .tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs button{flex:none;padding:14px 18px;font-weight:600;font-size:15px;color:var(--muted);border-bottom:2.5px solid transparent;margin-bottom:-1px}
+  .tabs button.on{color:var(--ink);border-color:var(--blue)}
+  .panel{display:none;padding:36px 0}
+  .panel.on{display:block}
+  .desc{display:grid;grid-template-columns:1.2fr 1fr;gap:48px}
+  .desc p{color:var(--muted);margin-bottom:14px;font-size:15.5px}
+  .desc h3{font-size:22px;margin-bottom:14px}
+  .desc ul{list-style:none;display:grid;gap:10px}
+  .desc li{display:flex;gap:12px;font-size:14.5px;padding:12px 14px;border-radius:12px;background:var(--stone-light)}
+  .desc li::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--blue);margin-top:7px}
+  @media(max-width:860px){.desc{grid-template-columns:1fr}}
+  .specs{display:grid;grid-template-columns:1fr 1fr;gap:0 48px}
+  .specs div{display:grid;grid-template-columns:160px 1fr;gap:16px;padding:13px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+  .specs dt{color:var(--muted);font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding-top:2px}
+  .specs h4{grid-column:1/-1;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin:22px 0 4px;border:0;padding:0;display:block}
+  .specs h4:first-child{margin-top:0}
+  @media(max-width:860px){.specs{grid-template-columns:1fr}.specs div{grid-template-columns:130px 1fr}}
+  .geo{display:grid;grid-template-columns:320px 1fr;gap:36px;align-items:start}
+  .geo img{width:100%;background:#fff;border-radius:var(--radius);border:1px solid var(--line);padding:16px}
+  .geo-table{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius)}
+  .geo-table table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
+  .geo-table th,.geo-table td{padding:10px 12px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
+  .geo-table th:first-child,.geo-table td:first-child{text-align:left;position:sticky;left:0;background:#fff;font-weight:500}
+  .geo-table thead th{background:var(--stone-light);font-weight:700}
+  .geo-table thead th:first-child{background:var(--stone-light)}
+  .geo-table .hi{background:var(--blue-soft);color:var(--blue-deep);font-weight:700}
+  .geo-table tr:last-child td{border:0}
+  .geo small{display:block;margin-top:10px;color:var(--muted);font-size:12.5px}
+  @media(max-width:860px){.geo{grid-template-columns:1fr}.geo img{max-width:360px}}
+  .ship{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .ship div{padding:24px;border-radius:var(--radius);background:var(--stone-light)}
+  .ship b{display:block;margin-bottom:6px}
+  .ship p{font-size:14px;color:var(--muted)}
+  @media(max-width:860px){.ship{grid-template-columns:1fr}}
+
+  /* Come funziona */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
+  .step{padding:28px;border-radius:var(--radius);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18)}
+  .step b{font-family:Archivo;font-stretch:112%;font-weight:800;font-size:44px;color:var(--stone);line-height:1}
+  .step h3{font-size:18px;margin:14px 0 6px}
+  .step p{font-size:14px;opacity:.8}
+  .band .in.single{grid-template-columns:1fr}
+  @media(max-width:860px){.steps{grid-template-columns:1fr}}
+
+  /* Barra acquisto mobile */
+  .mbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#fff;border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom));align-items:center;gap:14px;transform:translateY(110%);transition:transform .3s}
+  .mbar.on{transform:none}
+  .mbar p{flex:1;line-height:1.2}
+  .mbar p b{display:block;font-size:18px}
+  .mbar p span{font-size:12px;color:var(--muted)}
+  @media(max-width:980px){.mbar{display:flex}.concept{bottom:84px}}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <span>Ritiro gratuito in negozio a Varese</span>
+  <span>Officina specializzata strada · MTB · e-bike</span>
+  <span>Bici pagabili in 3 rate senza interessi</span>
+</div></div>
+
+<header id="hdr">
+  <div class="wrap head">
+    <a href="index.html" class="logo" aria-label="Cicli Ambrosini, home"><small>CICLI</small><b>AMBROSINI</b></a>
+    <nav class="main">
+      <a href="catalogo.html#/g/Bici">Bici</a><a href="catalogo.html#/g/E-bike">E-bike</a><a href="catalogo.html#/g/Abbigliamento">Abbigliamento</a><a href="catalogo.html#/g/Componenti">Componenti</a><a href="catalogo.html#/g/Accessori">Accessori</a><a href="catalogo.html#/c/Usato">Usato</a><a href="catalogo.html#/officina">Officina</a><a href="index.html#bottega">La bottega</a>
+    </nav>
+    <div class="icons">
+      <a class="icon-btn hide-m" href="catalogo.html#/cerca" aria-label="Cerca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></a>
+      <a class="icon-btn hide-m" href="catalogo.html#/preferiti" aria-label="Preferiti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="badge" id="favCount">0</span></a>
+      <a class="icon-btn" href="catalogo.html#/carrello" aria-label="Carrello"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cartCount">0</span></a>
+      <button class="icon-btn burger" aria-label="Menu" id="openMenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <button class="close" id="closeMenu" aria-label="Chiudi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  <nav><a href="catalogo.html#/g/Bici">Bici</a><a href="catalogo.html#/g/E-bike">E-bike</a><a href="catalogo.html#/g/Abbigliamento">Abbigliamento</a><a href="catalogo.html#/g/Componenti">Componenti</a><a href="catalogo.html#/g/Accessori">Accessori</a><a href="catalogo.html#/c/Usato">Usato</a><a href="catalogo.html#/officina">Officina</a><a href="index.html#bottega">La bottega</a><a href="catalogo.html#/carrello">Carrello</a></nav>
+  <div class="foot">Piazza Madonnina in Prato, 1 · Varese<br>+39 0332 240109</div>
+</div>
+
+<main class="wrap">
+  <nav class="crumbs" aria-label="Percorso"><a href="index.html">Home</a><span><a href="catalogo.html#/g/Bici">Bici</a></span><span><a href="catalogo.html#/c/Strada">Strada</a></span><span><a href="catalogo.html#/?brand=Merida">Merida</a></span><span>Reacto 7000</span></nav>
+
+  <div class="pdp">
+    <!-- GALLERIA -->
+    <div class="gallery">
+      <div class="stage" id="stage">
+        <div class="rib"><span>-5%</span><span class="alt">In arrivo · prenotabile</span></div>
+        <img id="mainImg" alt="Merida Reacto 7000, colore Halo Green / Pearl White">
+        <span class="src" id="imgSrc">Foto: Merida</span>
+        <span class="hint"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M11 8v6M8 11h6"/></svg>Clicca per ingrandire</span>
+      </div>
+      <div class="thumbs" id="thumbs"></div>
+    </div>
+
+    <!-- ACQUISTO -->
+    <div class="buy">
+      <div class="brand">Merida · Modello 2027</div>
+      <h1 class="display">Reacto 7000</h1>
+      <p class="sub">La bici aero da gara con telaio Reacto di quinta generazione, gruppo SRAM Rival AXS wireless con misuratore di potenza e ruote in carbonio Vision SC60.</p>
+      <div class="tags"><span>Strada · Aero</span><span>Carbonio CF3</span><span>Freni a disco</span><span>Wireless 12v</span></div>
+
+      <div class="pricebox">
+        <div class="row1"><b>4.989 €</b><s>5.250 €</s><span class="save">Risparmi 261 €</span></div>
+        <small>IVA inclusa · Prezzo di listino consigliato 5.250 €</small>
+        <div class="installments"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C3FBF" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg><span>Oppure <strong>3 rate da 1.663 €</strong> senza interessi</span><em>Scalapay · Klarna</em></div>
+      </div>
+
+      <div class="field">
+        <div class="field-head"><b>Taglia <span id="sizeLabel">· scegli la tua</span></b><button class="link" id="finderBtn">Qual è la mia taglia?</button></div>
+        <div class="sizes" id="sizes"></div>
+        <div class="finder" id="finder">
+          <label>La tua altezza <input type="number" id="height" min="140" max="210" placeholder="178"> cm</label>
+          <output id="finderOut">Inserisci l'altezza per un consiglio.</output>
+          <small>Indicazione di massima. In negozio facciamo la misura con te prima del montaggio.</small>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-head"><b>Come vuoi riceverla</b></div>
+        <div class="delivery">
+          <label class="opt"><input type="radio" name="del" value="ritiro" checked><p><b>Ritiro in negozio, montata e regolata</b><span>Piazza Madonnina in Prato 1, Varese · regoliamo sella e manubrio su di te</span></p><em>Gratis</em></label>
+          <label class="opt"><input type="radio" name="del" value="spedizione"><p><b>Spedizione a casa</b><span>Bici premontata in imballo rinforzato · 3–5 giorni lavorativi</span></p><em>49 €</em></label>
+        </div>
+      </div>
+
+      <div class="cta">
+        <button class="btn btn-blue" id="buyBtn">Prenota la tua Reacto</button>
+        <button class="icon-btn" id="favBtn" aria-label="Aggiungi ai preferiti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+      </div>
+      <div class="avail-note" id="availNote">Seleziona una taglia per vedere la disponibilità</div>
+
+      <div class="perks">
+        <div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></i>Montaggio e regolazione in officina inclusi</div>
+        <div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></i>Garanzia ufficiale Merida tramite rivenditore</div>
+        <div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></i>Primo controllo gratuito dopo 30 giorni</div>
+        <div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></i>Valutiamo la tua bici usata in permuta</div>
+      </div>
+
+      <div class="ask">
+        <p><b>Vuoi provarla o hai dubbi sulla taglia?</b>Passa in negozio o chiamaci: ti rispondiamo noi, non un call center.</p>
+        <a href="tel:+390332240109" class="btn btn-stone">Chiama</a><a href="catalogo.html#/richiesta/merida-reacto-7000" class="btn btn-ghost" style="padding:10px 16px;font-size:14px">Scrivici</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PUNTI CHIAVE -->
+  <div class="highlights">
+    <div class="hl"><b>~1.185 g</b><h3>Telaio CF3 Reacto V</h3><p>Peso del telaio in taglia M, dato Merida. Aerodinamica e peso migliorati rispetto alla generazione precedente.</p></div>
+    <div class="hl"><b>12v AXS</b><h3>SRAM Rival wireless</h3><p>Cambiata elettronica senza fili e misuratore di potenza integrato: la prima Reacto che lo monta di serie.</p></div>
+    <div class="hl"><b>60 mm</b><h3>Ruote Vision SC60</h3><p>Cerchi in carbonio a profilo alto con Continental Grand Prix 5000S TR da 28 mm.</p></div>
+    <div class="hl"><b>32 mm</b><h3>Passaggio gomme</h3><p>Spazio per coperture fino a 32 mm e reggisella S-Flex per il comfort sulle lunghe distanze.</p></div>
+  </div>
+
+  <!-- TAB -->
+  <div class="tabs-wrap" id="dettagli">
+    <div class="tabs" id="tabs">
+      <button class="on" data-t="p-desc">Descrizione</button>
+      <button data-t="p-specs">Scheda tecnica</button>
+      <button data-t="p-geo">Taglie e geometria</button>
+      <button data-t="p-ship">Spedizione e resi</button>
+    </div>
+
+    <div class="panel on" id="p-desc">
+      <div class="desc">
+        <div>
+          <h3>Fatta per correre.</h3>
+          <p>La Reacto 7000 unisce il telaio Reacto di quinta generazione a componenti di alta gamma. Il risultato è una bici aero pensata per le gare e per chi vuole essere il più veloce del gruppo.</p>
+          <p>Rispetto al modello precedente, Merida ha migliorato l'aerodinamica e ridotto il peso, aggiungendo spazio per gomme fino a 32 mm. La sensazione di guida resta quella che ha reso la Reacto famosa: controllo e comfort anche alle alte velocità.</p>
+          <p>Il reggisella S-Flex assorbe le vibrazioni della strada e limita l'affaticamento, mentre la tecnologia Disc Cooler mantiene i freni efficienti nelle discese lunghe.</p>
+        </div>
+        <ul>
+          <li>Telaio in carbonio CF3 aero leggero (circa 1.185 g in taglia M)</li>
+          <li>Gruppo SRAM Rival AXS 12 velocità wireless, con misuratore di potenza</li>
+          <li>Cockpit integrato in carbonio Merida Team SL 1P</li>
+          <li>Ruote in carbonio Vision SC 60 i23 con Continental GP 5000S TR 28 mm</li>
+          <li>Reggisella aero in carbonio S-Flex e tecnologia Disc Cooler</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="panel" id="p-specs"><dl class="specs" id="specs"></dl></div>
+
+    <div class="panel" id="p-geo">
+      <div class="geo">
+        <div>
+          <img src="https://merida-cdn.m-c-g.net/merida-v2/crud-card/db-global/2019/frame-geometry/merida-drawing-geometries-2018.svg?p1" alt="Schema delle quote di geometria del telaio">
+          <small>Schema e quote: sito ufficiale Merida. La colonna evidenziata è la taglia selezionata.</small>
+        </div>
+        <div class="geo-table"><table id="geoTable"></table></div>
+      </div>
+    </div>
+
+    <div class="panel" id="p-ship">
+      <div class="ship">
+        <div><b>Ritiro in negozio</b><p>Gratuito. Ti avvisiamo quando la bici è montata e pronta; al ritiro regoliamo la posizione in sella insieme a te.</p></div>
+        <div><b>Spedizione in Italia</b><p>Bici premontata, imballo rinforzato e corriere assicurato. Consegna in 3–5 giorni lavorativi.</p></div>
+        <div><b>Reso entro 14 giorni</b><p>Diritto di recesso per gli acquisti online, con bici integra e nell'imballo originale.</p></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- COME FUNZIONA -->
+<section style="padding-bottom:0">
+  <div class="band">
+    <img src="https://static.wixstatic.com/media/6420e3_e32304525849402b995552dd385c3e9f~mv2.jpg/v1/fill/w_1800,h_900,al_c,q_80/img.jpg" alt="">
+    <div class="in single">
+      <div>
+        <div class="eyebrow">Come funziona</div>
+        <h2 class="display">La compri online,<br>te la prepariamo noi.</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><b>01</b><h3>Prenoti online</h3><p>Scegli taglia e ritiro. Paghi subito, a rate o con un acconto.</p></div>
+        <div class="step"><b>02</b><h3>La montiamo in officina</h3><p>Montaggio, controllo completo e regolazioni, fatti da noi a Varese.</p></div>
+        <div class="step"><b>03</b><h3>La ritiri pronta</h3><p>Regoliamo sella e manubrio su di te. Dopo 30 giorni, il primo controllo è gratis.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CORRELATI -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow">Potrebbero interessarti</div><h2 class="display">Altre bici da corsa</h2></div>
+      <div class="arrows" data-rail="rel"><button aria-label="Indietro" data-dir="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button aria-label="Avanti" data-dir="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+    </div>
+    <div class="rail prods" id="rel"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid" style="padding-top:0">
+      <div><div class="logo"><small>CICLI</small><b>AMBROSINI</b></div><p>La bottega del ciclista a Varese dal 1967. Vendita, officina e assistenza.</p></div>
+      <div><h4>Bici</h4><a href="catalogo.html#/c/Strada">Bici da corsa</a><a href="catalogo.html#/c/Gravel">Gravel</a><a href="catalogo.html#/c/Mountain%20bike">Mountain bike</a><a href="catalogo.html#/g/E-bike">E-bike</a><a href="catalogo.html#/c/Usato">Usato</a></div>
+      <div><h4>Shop</h4><a href="catalogo.html#/g/Abbigliamento">Abbigliamento</a><a href="catalogo.html#/c/Caschi">Caschi</a><a href="catalogo.html#/g/Componenti">Componenti</a><a href="catalogo.html#/g/Accessori">Accessori</a><a href="catalogo.html">Catalogo completo</a></div>
+      <div><h4>Aiuto</h4><a href="catalogo.html#/info/spedizioni">Spedizioni e resi</a><a href="catalogo.html#/info/pagamenti">Pagamento a rate</a><a href="catalogo.html#/officina">Prenota l'officina</a><a href="catalogo.html#/info/contatti">Contatti e orari</a></div>
+    </div>
+    <div class="legal"><span>© Cicli Ambrosini · Dati tecnici e foto prodotto: Merida</span><span><a href="catalogo.html#/info/privacy">Privacy</a> · <a href="catalogo.html#/info/cookie">Cookie</a> · <a href="catalogo.html#/info/termini">Termini di vendita</a></span></div>
+  </div>
+</footer>
+
+<div class="mbar" id="mbar"><p><b>4.989 €</b><span>o 3 rate da 1.663 €</span></p><button class="btn btn-blue" onclick="document.getElementById('buyBtn').click()">Prenota</button></div>
+<div class="toast" id="toast"><i>✓</i><span></span></div>
+<div class="concept">Bozza concept · proposta di redesign</div>
+
+<script>
+const MER='https://merida-cdn.m-c-g.net/merida-v2/';
+const wix=(id,w,h,mode='fill')=>`https://static.wixstatic.com/media/6420e3_${id}/v1/${mode}/w_${w},h_${h},al_c,q_85/img.jpg`;
+const OFFICIAL=MER+'crud-zoom-img/master/bikes/2027/REACTO_7000_grnwht_MY27.tif?p1';
+
+/* Galleria: foto ufficiale Merida + foto del negozio + dettagli ingranditi */
+const G=[
+  {src:OFFICIAL,label:'Vista laterale',credit:'Foto: Merida'},
+  {src:OFFICIAL,label:'Cockpit',crop:true,z:3,o:'80% 14%',credit:'Foto: Merida · dettaglio'},
+  {src:OFFICIAL,label:'Trasmissione',crop:true,z:3.2,o:'46% 76%',credit:'Foto: Merida · dettaglio'},
+  {src:OFFICIAL,label:'Ruota Vision',crop:true,z:2.2,o:'12% 72%',credit:'Foto: Merida · dettaglio'},
+  {src:wix('f93f7c42b1374fb2a1f4783e46da796c~mv2.jpg',1200,900,'fit'),label:'In negozio',credit:'Foto: Cicli Ambrosini'},
+];
+const stage=document.getElementById('stage'),main=document.getElementById('mainImg'),thumbs=document.getElementById('thumbs'),srcEl=document.getElementById('imgSrc');
+thumbs.innerHTML=G.map((g,i)=>`<button class="${g.crop?'crop':''} ${i?'':'on'}" data-i="${i}" style="--z:${g.z||1};--o:${g.o||'50% 50%'}" aria-label="${g.label}"><img src="${g.src}" alt=""><small>${g.label}</small></button>`).join('');
+function show(i){const g=G[i];stage.classList.remove('zoom');main.style.opacity=0;setTimeout(()=>{main.src=g.src;main.style.transformOrigin=g.o||'50% 50%';if(g.crop){stage.classList.add('zoom')}main.style.opacity=1},150);srcEl.textContent=g.credit;[...thumbs.children].forEach((b,k)=>b.classList.toggle('on',k===i))}
+thumbs.onclick=e=>{const b=e.target.closest('button');if(b)show(+b.dataset.i)};
+main.src=OFFICIAL;
+stage.onclick=e=>{if(stage.classList.contains('zoom')){stage.classList.remove('zoom')}else{const r=stage.getBoundingClientRect();main.style.transformOrigin=`${(e.clientX-r.left)/r.width*100}% ${(e.clientY-r.top)/r.height*100}%`;stage.classList.add('zoom')}};
+
+/* Taglie: tutte quelle di Merida, disponibilità dal sito del negozio (solo S in elenco) */
+const SIZES=[['3XS',150,157],['XXS',156,163],['XS',162,169],['S',168,175],['M',174,181],['L',180,187],['XL',186,196]];
+const AVAIL={S:'In arrivo'};
+const sizesEl=document.getElementById('sizes');let sel=null;
+sizesEl.innerHTML=SIZES.map(([s])=>`<button data-s="${s}" class="${AVAIL[s]?'avail':''}">${s}<small>${AVAIL[s]||'Su ordine'}</small></button>`).join('');
+const note=document.getElementById('availNote');
+sizesEl.onclick=e=>{const b=e.target.closest('button');if(!b)return;pick(b.dataset.s)};
+function pick(s){sel=s;[...sizesEl.children].forEach(b=>b.classList.toggle('on',b.dataset.s===s));document.getElementById('sizeLabel').textContent='· '+s;
+  if(AVAIL[s]){note.textContent=`Taglia ${s} in arrivo in negozio: prenotala ora, te la teniamo da parte.`;note.classList.add('ok')}
+  else{note.textContent=`Taglia ${s} su ordinazione dal distributore Merida: ti confermiamo i tempi entro 24 ore.`;note.classList.remove('ok')}
+  highlightGeo(s)}
+document.getElementById('finderBtn').onclick=()=>document.getElementById('finder').classList.toggle('open');
+document.getElementById('height').oninput=e=>{const h=+e.target.value,out=document.getElementById('finderOut');[...sizesEl.children].forEach(b=>b.classList.remove('rec'));
+  if(!h||h<140||h>210){out.textContent="Inserisci l'altezza per un consiglio.";return}
+  const m=SIZES.filter(([,a,b])=>h>=a&&h<=b).map(x=>x[0]);const r=m[0]||(h<150?'3XS':'XL');
+  out.textContent=m.length>1?`Sei tra la ${m[0]} e la ${m[1]}: passa in negozio per la misura, o scegli la ${m[0]} per una posizione più raccolta.`:`Ti consigliamo la taglia ${r}.`;
+  m.forEach(s=>sizesEl.querySelector(`[data-s="${s}"]`).classList.add('rec'));pick(r)};
+
+/* Scheda tecnica ufficiale Merida */
+const SPECS={
+  'Telaio':[['Telaio','Reacto CF3 V'],['Forcella','Merida Reacto CF3 V Disc'],['Colore','Halo Green / Pearl White'],['Taglie','3XS, XXS, XS, S, M, L, XL'],['Serie sterzo','Merida Team SL'],['Perni','Merida Expert SL']],
+  'Trasmissione':[['Comandi','SRAM ED Rival AXS E1'],['Deragliatore ant.','SRAM Rival AXS E1'],['Deragliatore post.','SRAM Rival AXS E1'],['Guarnitura','SRAM Rival AXS'],['Cassetta','SRAM XG 1250 D1'],['Catena','SRAM Rival E1'],['Movimento centrale','SRAM Pressfit DUB']],
+  'Freni':[['Freni','SRAM ED Rival AXS E1'],['Dischi','SRAM Paceline']],
+  'Ruote':[['Ruote','Vision SC 60 i23 Disc'],['Copertone ant.','Continental Grand Prix 5000S TR'],['Copertone post.','Continental Grand Prix 5000S TR']],
+  'Cockpit e sella':[['Manubrio','Merida Team SL 1P integrato'],['Attacco','Merida Team one-piece integrato'],['Nastro','Merida Road Expert'],['Reggisella','Merida Reacto V S-Flex'],['Collarino','Merida Reacto V'],['Sella','Prologo Akero RS PAS T2.0']],
+};
+document.getElementById('specs').innerHTML=Object.entries(SPECS).map(([g,rows])=>`<h4>${g}</h4>`+rows.map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')).join('');
+
+/* Geometria ufficiale Merida (mm / gradi) */
+const GEO=[['Tubo sella (ST)',440,470,500,520,540,560,590],['Tubo orizzontale (TT)',506,521,535,545,560,575,590],['Foderi bassi (CS)',410,410,410,410,410,410,410],['Angolo sterzo (HTA)','70.5°','70.5°','72°','72.5°','73.5°','73.5°','74°'],['Angolo sella (STA)','75.5°','74.5°','74°','74°','73.5°','73°','73°'],['Abbassamento mov. (BD)',70,70,70,66,66,66,66],['Tubo sterzo (HT)',100,105,112,128,140,155,175],['Lunghezza forcella (FL)',385,385,385,385,385,385,385],['Offset forcella (FO)',45,45,45,45,45,45,45],['Reach (R)',373,377,384,390,395,400,409],['Stack (S)',512,517,529,542,557,571,593],['Interasse (WB)',981,987,984,992,992,1002,1011],['Altezza cavallo (SH)',727,746,771,792,810,826,853],['Rapporto stack/reach','1,37','1,37','1,38','1,39','1,41','1,43','1,45']];
+function renderGeo(hi){document.getElementById('geoTable').innerHTML=`<thead><tr><th>Quota (mm)</th>${SIZES.map(([s])=>`<th class="${s===hi?'hi':''}">${s}</th>`).join('')}</tr></thead><tbody>${GEO.map(r=>`<tr><td>${r[0]}</td>${r.slice(1).map((v,i)=>`<td class="${SIZES[i][0]===hi?'hi':''}">${v}</td>`).join('')}</tr>`).join('')}</tbody>`}
+function highlightGeo(s){renderGeo(s)}
+renderGeo('S');
+
+/* Tab */
+document.getElementById('tabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id===b.dataset.t))};
+
+/* Correlati (prezzi reali dal sito del negozio) */
+const REL=[
+  ['merida-reacto-6000','Merida','Reacto 6000',4319,4540,'6e1751072faa4ae18d6c97d01b167994~mv2.jpg','In arrivo'],
+  ['merida-scultura-endurance-6000','Merida','Scultura Endurance 6000',3859,4060,'0146654d5f02489ca619519e6b5869e5~mv2.jpg','In arrivo'],
+  ['colnago-v5rs-nuovo','Colnago','V5Rs',8599,10800,'050152e27bcf435db68e12f8c84ff0bd~mv2.jpg','Disponibile'],
+  ['colnago-c68','Colnago','C68',9019,9800,'d77ba9c2b80f47dcacc16e7a50b821bb~mv2.webp','Chiedi disponibilità'],
+  ['giant-tcr-advanced-pro-1-di2-2026','Giant','TCR Advanced Pro 1 Di2 2026',4529,4799,'12c6f9bddd9641c9a05ab4867b1849b3~mv2.jpg',''],
+  ['giant-tcr-advanced-sl-1-axs-2026','Giant','TCR Advanced SL 1 AXS 2026',7899,8399,'a60c8bdb6d4d4610b8a453dafe60621d~mv2.jpg',''],
+];
+const eur=v=>String(v).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+' €';
+const heartSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
+function renderRel(){const fav=LS.get('ca_fav',[]);document.getElementById('rel').innerHTML=REL.map(([sl,b,n,p,o,img,st])=>{const off=Math.round((1-p/o)*100),h='catalogo.html#/p/'+sl;return `<article class="card"><a href="${h}" class="ph"><img src="${wix(img,600,600,'fit')}" alt="${b} ${n}" loading="lazy"><div class="rib"><span>-${off}%</span>${st?`<span class="alt">${st}</span>`:''}</div></a><button class="heart ${fav.includes(sl)?'on':''}" data-fav="${sl}" aria-label="Aggiungi ai preferiti">${heartSvg}</button><div class="body"><div class="brand">${b}</div><h3><a href="${h}">${n}</a></h3><div class="price"><b>${eur(p)}</b><s>${eur(o)}</s></div><div class="rate">oppure 3 rate da ${eur(Math.ceil(p/3))}</div><div class="row"><span>Ritiro in negozio</span><a class="add" href="${h}">Scegli</a></div></div></article>`}).join('')}
+
+/* Interazioni: carrello e preferiti condivisi con home e catalogo (salvati nel browser) */
+const MEM={};const LS={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):(MEM[k]??d)}catch(e){return MEM[k]??d}},set(k,v){MEM[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const cc=document.getElementById('cartCount'),fc=document.getElementById('favCount');
+function badges(){const c=LS.get('ca_cart',[]),f=LS.get('ca_fav',[]);const n=c.reduce((a,l)=>a+l.qty,0);cc.textContent=n;cc.classList.toggle('on',n>0);fc.textContent=f.length;fc.classList.toggle('on',f.length>0);document.getElementById('favBtn').classList.toggle('on',f.includes('merida-reacto-7000'))}
+let tt;function toast(m,link,label){const t=document.getElementById('toast');t.querySelector('span').innerHTML=m+(link?` <a href="${link}" style="color:var(--stone);font-weight:700;text-decoration:underline;margin-left:6px">${label}</a>`:'');t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),3200)}
+function toggleFav(sl){const f=LS.get('ca_fav',[]);const i=f.indexOf(sl);if(i>=0)f.splice(i,1);else f.push(sl);LS.set('ca_fav',f);badges();toast(i<0?'Aggiunto ai preferiti':'Tolto dai preferiti',i<0?'catalogo.html#/preferiti':null,'Vedi preferiti');return i<0}
+document.getElementById('buyBtn').onclick=()=>{if(!sel){document.getElementById('sizes').scrollIntoView({behavior:'smooth',block:'center'});toast('Scegli prima la taglia');return}
+  const d=document.querySelector('input[name=del]:checked');LS.set('ca_del',d?d.value:'ritiro');
+  const opts={Taglia:AVAIL[sel]?sel:sel+' (su ordinazione)'};const key='merida-reacto-7000|'+JSON.stringify(opts);const cart=LS.get('ca_cart',[]);const l=cart.find(x=>x.key===key);
+  if(l)l.qty++;else cart.push({key,slug:'merida-reacto-7000',name:'Reacto 7000',brand:'Merida',img:'6420e3_f93f7c42b1374fb2a1f4783e46da796c~mv2.jpg',price:4989,opts,qty:1,bike:true,pre:true});
+  LS.set('ca_cart',cart);badges();toast(`Reacto 7000 taglia ${sel} aggiunta al carrello`,'catalogo.html#/carrello','Vai al carrello')};
+document.getElementById('favBtn').onclick=()=>toggleFav('merida-reacto-7000');
+document.addEventListener('click',e=>{
+  const h=e.target.closest('[data-fav]');if(h){h.classList.toggle('on',toggleFav(h.dataset.fav))}
+  const ar=e.target.closest('.arrows button');if(ar){const r=document.getElementById(ar.parentElement.dataset.rail);r.scrollBy({left:ar.dataset.dir*r.clientWidth*.8,behavior:'smooth'})}
+});
+renderRel();badges();addEventListener('pageshow',badges);
+const hdr=document.getElementById('hdr'),buy=document.getElementById('buyBtn'),mbar=document.getElementById('mbar');
+addEventListener('scroll',()=>{hdr.classList.toggle('scrolled',scrollY>10);mbar.classList.toggle('on',buy.getBoundingClientRect().bottom<0)},{passive:true});
+const dr=document.getElementById('drawer');document.getElementById('openMenu').onclick=()=>dr.classList.add('open');document.getElementById('closeMenu').onclick=()=>dr.classList.remove('open');
+</script>
+</body>
+</html>

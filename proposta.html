@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proposta redesign cicliambrosini.it</title>
+<meta name="description" content="Analisi del sito attuale e proposta per il nuovo sito e-commerce di Cicli Ambrosini.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  body{background:var(--stone-light)}
+  .doc{max-width:980px;margin:0 auto;padding:0 var(--gutter)}
+  .fill{background:#FFF1A8;border-radius:4px;padding:0 5px;font-weight:600;color:var(--ink)}
+
+  /* Copertina */
+  .cover{background:var(--blue);color:#fff;border-radius:0 0 var(--radius-lg) var(--radius-lg);overflow:hidden;position:relative}
+  .cover::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;border:70px solid rgba(216,204,178,.18)}
+  .cover .doc{position:relative;z-index:1;padding-top:40px;padding-bottom:64px}
+  .cover .logo{color:#fff}
+  .cover .eyebrow{color:var(--stone);margin-top:72px}
+  .cover h1{font-size:clamp(40px,6.4vw,78px);margin:14px 0 20px}
+  .cover p.lead{font-size:clamp(17px,1.6vw,20px);max-width:620px;opacity:.9}
+  .meta{display:flex;gap:28px;flex-wrap:wrap;margin-top:36px;font-size:14px}
+  .meta div > span:first-child{display:block;opacity:.65;font-size:12px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px}
+  .cover .fill{color:var(--ink)}
+  .cover-ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:36px}
+
+  /* Indice */
+  .toc{display:flex;gap:8px;flex-wrap:wrap;margin:28px 0 0}
+  .toc a{font-size:13.5px;font-weight:500;padding:8px 14px;border-radius:999px;background:#fff;border:1px solid var(--line)}
+  .toc a:hover{border-color:var(--blue);color:var(--blue)}
+
+  .sec{padding:clamp(48px,6vw,80px) 0 0}
+  .num{font-family:Archivo;font-stretch:112%;font-weight:800;color:var(--blue);font-size:15px;letter-spacing:.06em}
+  .sec h2{font-size:clamp(30px,3.8vw,46px);margin:8px 0 14px}
+  .sec > p,.intro{color:var(--muted);font-size:16.5px;max-width:720px;margin-bottom:26px}
+  .panel{background:#fff;border-radius:var(--radius);padding:clamp(20px,3vw,32px)}
+
+  /* Sintesi */
+  .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .summary div{background:#fff;border-radius:var(--radius);padding:24px;border-top:4px solid var(--blue)}
+  .summary b{display:block;font-size:17px;margin-bottom:6px}
+  .summary p{font-size:14.5px;color:var(--muted)}
+  @media(max-width:760px){.summary{grid-template-columns:1fr}}
+
+  /* Dati */
+  .facts{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .fact{background:#fff;border-radius:var(--radius);padding:22px 24px;display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:start}
+  .fact .big{grid-row:span 3;font-family:Archivo;font-stretch:112%;font-weight:800;font-size:40px;line-height:1;color:var(--blue);min-width:92px}
+  .fact .big small{display:block;font-family:Inter;font-size:12px;font-weight:600;color:var(--muted);margin-top:6px;letter-spacing:0}
+  .fact h3{font-size:16px}
+  .fact p{font-size:14px;color:var(--muted)}
+  .fact .why{font-size:13.5px;color:var(--ink);background:var(--stone-light);border-radius:10px;padding:8px 12px;margin-top:6px}
+  .fact .why b{color:var(--blue-deep)}
+  @media(max-width:760px){.facts{grid-template-columns:1fr}}
+  .strengths{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+  .strengths span{background:#fff;border-radius:999px;padding:9px 16px;font-size:14px;font-weight:500;border:1px solid var(--line)}
+  .strengths span::before{content:"✓";color:#1E7B4A;font-weight:700;margin-right:8px}
+  .src{font-size:12.5px;color:var(--muted);margin-top:14px}
+
+  /* Obiettivi */
+  .goals{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .goal{background:var(--ink);color:#fff;border-radius:var(--radius);padding:24px;min-height:180px;display:flex;flex-direction:column}
+  .goal:nth-child(2){background:var(--blue)}
+  .goal b{font-family:Archivo;font-stretch:112%;font-weight:800;font-size:30px;color:var(--stone);line-height:1}
+  .goal:nth-child(2) b{color:#fff}
+  .goal h3{font-size:16px;margin-top:auto;padding-top:18px}
+  .goal p{font-size:13.5px;opacity:.75;margin-top:4px}
+  @media(max-width:860px){.goals{grid-template-columns:1fr 1fr}}
+  @media(max-width:480px){.goals{grid-template-columns:1fr}}
+
+  /* Prima / dopo */
+  .compare{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:var(--radius);overflow:hidden;font-size:14.5px}
+  .compare th{text-align:left;padding:14px 18px;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;background:var(--ink);color:#fff}
+  .compare th:last-child{background:var(--blue)}
+  .compare td{padding:14px 18px;border-bottom:1px solid var(--line);vertical-align:top}
+  .compare td:first-child{font-weight:600;width:22%}
+  .compare td:nth-child(2){color:var(--muted);width:34%}
+  .compare tr:last-child td{border:0}
+  @media(max-width:700px){.compare,.compare tbody,.compare tr,.compare td{display:block;width:100%!important}.compare thead{display:none}.compare tr{border-bottom:1px solid var(--line);padding:10px 0}.compare td{border:0;padding:4px 18px}.compare td:nth-child(2)::before{content:"Oggi: ";font-weight:600}.compare td:nth-child(3)::before{content:"Nuovo: ";font-weight:600;color:var(--blue)}}
+
+  .shots{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+  .shot{background:#fff;border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;gap:10px}
+  .shot b{font-size:17px}
+  .shot p{font-size:14px;color:var(--muted);flex:1}
+  .shot .btn{align-self:flex-start}
+  @media(max-width:700px){.shots{grid-template-columns:1fr}}
+
+  /* Piattaforme */
+  .platforms{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .plat{background:#fff;border-radius:var(--radius);padding:26px;position:relative;border:2px solid transparent}
+  .plat.rec{border-color:var(--blue)}
+  .plat .flag{position:absolute;top:-12px;left:22px;background:var(--blue);color:#fff;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px}
+  .plat h3{font-size:22px;margin-bottom:4px}
+  .plat .for{font-size:14px;color:var(--muted);margin-bottom:16px}
+  .plat ul{list-style:none;display:grid;gap:8px;font-size:14px}
+  .plat li{display:flex;gap:10px}
+  .plat li.p::before{content:"+";color:#1E7B4A;font-weight:800}
+  .plat li.m::before{content:"–";color:#A23B1F;font-weight:800}
+  @media(max-width:760px){.platforms{grid-template-columns:1fr}}
+  .note{margin-top:14px;padding:16px 20px;border-radius:14px;background:var(--blue-soft);font-size:14.5px;color:var(--blue-deep)}
+
+  /* Pacchetti */
+  .packs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:stretch}
+  .pack{background:#fff;border-radius:var(--radius);padding:26px;display:flex;flex-direction:column;position:relative;border:2px solid transparent}
+  .pack.rec{border-color:var(--blue);box-shadow:0 20px 40px -24px rgba(14,34,117,.45)}
+  .pack .flag{position:absolute;top:-12px;left:22px;background:var(--blue);color:#fff;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px}
+  .pack h3{font-family:Archivo;font-stretch:108%;font-weight:800;font-size:22px;white-space:nowrap}
+  .pack .for{font-size:13.5px;color:var(--muted);margin:4px 0 18px;min-height:3em}
+  .pack .price{display:block;margin-top:0;font-size:28px;font-weight:700;margin-bottom:4px}
+  .pack .price small{font-size:13px;font-weight:500;color:var(--muted)}
+  .pack .time{font-size:13px;color:var(--muted);margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+  .pack ul{list-style:none;display:grid;gap:9px;font-size:14px}
+  .pack li{display:flex;gap:10px}
+  .pack li::before{content:"✓";color:var(--blue);font-weight:800}
+  .pack li.plus{font-weight:600}
+  @media(max-width:860px){.packs{grid-template-columns:1fr}}
+  .extras{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+  .extras div{background:#fff;border-radius:14px;padding:16px 18px;font-size:14px}
+  .extras b{display:block;margin-bottom:2px}
+  .extras span{color:var(--muted)}
+  @media(max-width:760px){.extras{grid-template-columns:1fr}}
+
+  /* Tempi */
+  .timeline{display:grid;gap:10px}
+  .ph{display:grid;grid-template-columns:130px 1fr;gap:18px;align-items:center;background:#fff;border-radius:14px;padding:16px 20px}
+  .ph .wk{font-size:13px;font-weight:700;color:var(--blue)}
+  .ph .bar{height:8px;border-radius:999px;background:var(--stone-light);position:relative;margin-top:10px}
+  .ph .bar i{position:absolute;top:0;bottom:0;border-radius:999px;background:var(--blue)}
+  .ph b{font-size:15px}
+  .ph p{font-size:13.5px;color:var(--muted)}
+  @media(max-width:600px){.ph{grid-template-columns:1fr;gap:4px}}
+
+  /* Liste */
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .list{background:#fff;border-radius:var(--radius);padding:24px 26px}
+  .list h3{font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:14px}
+  .list ol,.list ul{padding-left:20px;display:grid;gap:9px;font-size:14.5px}
+  .list li::marker{color:var(--blue);font-weight:700}
+  @media(max-width:760px){.twocol{grid-template-columns:1fr}}
+
+  .next{margin:clamp(48px,6vw,80px) 0 56px;background:var(--ink);color:#fff;border-radius:var(--radius-lg);padding:clamp(28px,5vw,56px);display:grid;grid-template-columns:1.3fr 1fr;gap:32px;align-items:center}
+  .next h2{font-size:clamp(30px,3.6vw,44px);margin:8px 0 12px}
+  .next p{opacity:.8}
+  .next .eyebrow{color:var(--stone)}
+  .card-contact{background:rgba(255,255,255,.08);border-radius:var(--radius);padding:22px;font-size:14.5px;display:grid;gap:8px}
+  .card-contact span{opacity:.6;font-size:12px;text-transform:uppercase;letter-spacing:.1em}
+  @media(max-width:760px){.next{grid-template-columns:1fr}}
+
+  .printbar{position:sticky;top:0;z-index:40;background:rgba(244,239,229,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .printbar .doc{display:flex;justify-content:space-between;align-items:center;height:60px;gap:12px}
+  .printbar .logo b{font-size:20px}
+  .printbar .logo small{font-size:11px}
+  .printbar .btn{padding:10px 18px;font-size:14px}
+  @media(max-width:560px){.printbar .hide-s{display:none}}
+
+  @media print{
+    @page{margin:14mm}
+    body{background:#fff;font-size:12px}
+    .printbar,.concept,.cover-ctas,.toc,.shot .btn{display:none!important}
+    .cover{border-radius:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .sec{break-inside:avoid-page;padding-top:28px}
+    .fact,.pack,.plat,.goal,.ph,.list{break-inside:avoid}
+    .goal,.next,.compare th,.pack .flag,.plat .flag,.fill,.ph .bar i{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .panel,.fact,.pack,.plat,.list,.ph,.summary div,.shot,.extras div{border:1px solid var(--line)}
+  }
+</style>
+</head>
+<body>
+
+<div class="printbar"><div class="doc">
+  <span class="logo"><small>CICLI</small><b>AMBROSINI</b></span>
+  <div style="display:flex;gap:8px">
+    <a href="index.html" class="btn btn-ghost hide-s">Bozza home</a>
+    <button class="btn btn-blue" onclick="print()">Salva in PDF</button>
+  </div>
+</div></div>
+
+<header class="cover" style="position:relative;top:auto;background:var(--blue);backdrop-filter:none">
+  <div class="doc">
+    <div class="logo"><small>CICLI</small><b>AMBROSINI</b></div>
+    <div class="eyebrow">Proposta di redesign · cicliambrosini.it</div>
+    <h1 class="display">Un sito all'altezza della bottega.</h1>
+    <p class="lead">Analisi del sito attuale e proposta per un nuovo negozio online: più facile da usare da telefono, più visibile su Google e più semplice da gestire per voi.</p>
+    <div class="meta">
+      <div><span>Preparata per</span>Cicli Ambrosini, Varese</div>
+      <div><span>Preparata da</span><span class="fill">[Nome Cognome]</span></div>
+      <div><span>Data</span>Settembre 2026</div>
+    </div>
+    <div class="cover-ctas">
+      <a href="index.html" class="btn btn-white">Guarda la bozza della home</a>
+      <a href="prodotto.html" class="btn btn-ghost">Guarda la scheda prodotto</a>
+      <a href="catalogo.html" class="btn btn-ghost">Sfoglia il catalogo completo</a>
+    </div>
+  </div>
+</header>
+
+<main class="doc">
+  <nav class="toc" aria-label="Indice">
+    <a href="#oggi">1 · Il sito oggi</a><a href="#obiettivi">2 · Obiettivi</a><a href="#proposta">3 · La proposta</a><a href="#piattaforma">4 · Piattaforma</a><a href="#pacchetti">5 · Pacchetti</a><a href="#tempi">6 · Tempi</a><a href="#servono">7 · Cosa serve</a>
+  </nav>
+
+  <section class="sec">
+    <div class="num">IN SINTESI</div>
+    <h2 class="display">Tre cose da sapere</h2>
+    <div class="summary">
+      <div><b>Il negozio c'è, il sito non lo racconta</b><p>Storia dal 1967, officina e marchi come Colnago, Giant, Bianchi e Merida: online quasi non si vedono.</p></div>
+      <div><b>Google e telefono vi penalizzano</b><p>Indirizzi di pagina confusi, parole chiave ripetute e immagini senza descrizione riducono la visibilità.</p></div>
+      <div><b>Un nuovo sito in 6–8 settimane</b><p>Portiamo online i 369 prodotti attuali senza perdere le posizioni su Google già conquistate.</p></div>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section class="sec" id="oggi">
+    <div class="num">01</div>
+    <h2 class="display">Il sito oggi</h2>
+    <p>Ho analizzato cicliambrosini.it dall'esterno, come lo vede un cliente e come lo vede Google. Ecco cosa emerge.</p>
+    <div class="facts">
+      <div class="fact"><div class="big">329<small>su 335 immagini</small></div><h3>Immagini senza descrizione</h3><p>Google non sa cosa mostrano le foto delle bici.</p><div class="why"><b>Effetto:</b> i prodotti non compaiono in Google Immagini.</div></div>
+      <div class="fact"><div class="big">26<small>voci di menu</small></div><h3>Menu tutto allo stesso livello</h3><p>Bici, abbigliamento e ricambi sono mescolati in un unico elenco.</p><div class="why"><b>Effetto:</b> da telefono è difficile trovare le cose.</div></div>
+      <div class="fact"><div class="big">16<small>indirizzi</small></div><h3>Indirizzi di pagina pieni di marchi</h3><p>Es. <em>/giant-liv-bianchi-bottecchia</em>. Altri 10 sono <em>/shop-1 … /shop-9</em>.</p><div class="why"><b>Effetto:</b> Google li può considerare spam.</div></div>
+      <div class="fact"><div class="big">~150<small>parole chiave</small></div><h3>Elenco di parole chiave in fondo alla home</h3><p>Un lungo blocco di nomi di modelli e marchi ripetuti.</p><div class="why"><b>Effetto:</b> è una tecnica che Google oggi penalizza.</div></div>
+      <div class="fact"><div class="big">130<small>caratteri</small></div><h3>Titolo della pagina troppo lungo</h3><p>Google ne mostra circa 60: nei risultati appare tagliato.</p><div class="why"><b>Effetto:</b> meno clic dalla ricerca.</div></div>
+      <div class="fact"><div class="big">6<small>voci di menu</small></div><h3>Voci di menu che portano alla pagina sbagliata</h3><p>"Occhiali" mostra le bici da strada, "Rulli" le gravel, "Pedali" le scarpe, "Selle" tutto il catalogo. "E-Road", "Batterie" e "Nutrimento" sono vuote.</p><div class="why"><b>Effetto:</b> il cliente non trova il prodotto e se ne va.</div></div>
+      <div class="fact"><div class="big">0<small>codici EAN</small></div><h3>Prodotti senza codici</h3><p>Nessuno dei 368 prodotti ha EAN o codice articolo.</p><div class="why"><b>Effetto:</b> niente Google Shopping, confronto prezzi e collegamento al magazzino.</div></div>
+      <div class="fact"><div class="big">3,2<small>MB · 205 file</small></div><h3>Home pesante</h3><p>Da telefono, sotto la prima foto c'è un grande spazio nero vuoto.</p><div class="why"><b>Effetto:</b> caricamento lento e prima impressione debole.</div></div>
+    </div>
+    <p class="src" style="margin-bottom:0">Si notano anche errori di battitura ("POSSIBILIE", "0Martedì") e l'email su dominio .com mentre il sito è su .it. Dati rilevati il 26/09/2026.</p>
+    <h3 style="margin-top:28px;font-size:17px">Cosa funziona già, e va valorizzato</h3>
+    <div class="strengths"><span>Storia dal 1967</span><span>369 prodotti già online</span><span>Marchi di alta gamma</span><span>Officina specializzata</span><span>Negozio in centro a Varese</span><span>Instagram, Facebook e YouTube attivi</span></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="sec" id="obiettivi">
+    <div class="num">02</div>
+    <h2 class="display">Obiettivi del nuovo sito</h2>
+    <div class="goals">
+      <div class="goal"><b>Vendere</b><h3>Più bici e accessori online</h3><p>Schede chiare, taglie, rate e ritiro in negozio.</p></div>
+      <div class="goal"><b>Farsi trovare</b><h3>Più visibilità su Google</h3><p>Soprattutto per chi cerca "negozio bici Varese".</p></div>
+      <div class="goal"><b>Portare in negozio</b><h3>Più visite e prenotazioni</h3><p>Officina prenotabile online, orari e mappa sempre in vista.</p></div>
+      <div class="goal"><b>Semplificare</b><h3>Meno lavoro per voi</h3><p>Prodotti, prezzi e offerte aggiornabili in pochi minuti.</p></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="sec" id="proposta">
+    <div class="num">03</div>
+    <h2 class="display">Cosa cambia</h2>
+    <p>Lo stile riprende la vostra vetrina di Viale Milano: il blu dell'insegna, la pietra della facciata e una scritta del marchio forte e riconoscibile.</p>
+    <table class="compare">
+      <thead><tr><th>Area</th><th>Oggi</th><th>Nuovo sito</th></tr></thead>
+      <tbody>
+        <tr><td>Home</td><td>Lista di prodotti mescolati</td><td>Percorso per tipo di bici, offerte, officina e storia della bottega</td></tr>
+        <tr><td>Menu</td><td>26 voci sullo stesso livello</td><td>7 sezioni chiare: Bici, E-bike, Abbigliamento, Componenti, Accessori, Usato, Officina</td></tr>
+        <tr><td>Scheda prodotto</td><td>Una foto, testo lungo, solo il nome della taglia</td><td>Galleria con dettagli, taglie con disponibilità, "qual è la mia taglia", scheda tecnica e geometria</td></tr>
+        <tr><td>Pagamento</td><td>Solo pagamento intero</td><td>Rate senza interessi per le bici (Scalapay / Klarna)</td></tr>
+        <tr><td>Consegna</td><td>Non chiaro</td><td>Ritiro gratuito con montaggio e regolazione, oppure spedizione</td></tr>
+        <tr><td>Officina</td><td>Solo un modulo contatti</td><td>Servizi elencati e prenotazione online</td></tr>
+        <tr><td>Google</td><td>Indirizzi confusi, parole chiave ripetute</td><td>Indirizzi puliti, descrizioni delle immagini, scheda Google del negozio collegata</td></tr>
+        <tr><td>Telefono</td><td>Spazi vuoti, menu lungo</td><td>Progettato prima per il telefono, con barra "Prenota" sempre visibile</td></tr>
+      </tbody>
+    </table>
+    <div class="shots">
+      <div class="shot"><b>Bozza della home</b><p>Apertura con foto, categorie di bici, offerte con i vostri prodotti reali, officina, abbigliamento, la bottega, orari e mappa.</p><a href="index.html" class="btn btn-blue">Apri la bozza</a></div>
+      <div class="shot"><b>Catalogo completo: 363 prodotti</b><p>Tutti i prodotti del sito attuale in un unico file, con ricerca, filtri per categoria e marca, e la scheda di ciascuno incrociata con il sito ufficiale del produttore: 256 prodotti verificati, 68 con verifica parziale (differenze segnalate) e 170 con codice EAN recuperato. Carrello, checkout, prenotazione officina e richieste funzionano in modalità dimostrativa.</p><a href="catalogo.html" class="btn btn-blue">Apri il catalogo</a></div>
+      <div class="shot"><b>Scheda prodotto: Merida Reacto 7000</b><p>Prezzo e disponibilità dal vostro sito, foto e dati tecnici ufficiali Merida.</p><a href="prodotto.html" class="btn btn-stone">Apri la scheda</a></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="sec" id="piattaforma">
+    <div class="num">04</div>
+    <h2 class="display">Su quale piattaforma</h2>
+    <p>Oggi il sito è su Wix. Si può restare lì o passare a Shopify: la scelta dipende da come lavorate in negozio.</p>
+    <div class="platforms">
+      <div class="plat">
+        <h3>Restare su Wix</h3>
+        <div class="for">Rifacciamo grafica, struttura e ottimizzazione per Google sulla piattaforma attuale.</div>
+        <ul><li class="p">Nessun cambio di strumento: sapete già usarlo</li><li class="p">Costo e tempi più bassi</li><li class="p">Nessun trasferimento di prodotti</li><li class="m">Meno flessibile per filtri, taglie e varianti</li><li class="m">Nessun collegamento con la cassa del negozio</li></ul>
+      </div>
+      <div class="plat rec">
+        <span class="flag">Consigliata</span>
+        <h3>Passare a Shopify</h3>
+        <div class="for">La piattaforma e-commerce più diffusa, pensata per negozi con molti prodotti.</div>
+        <ul><li class="p">Cassa del negozio collegata: un solo magazzino per negozio e sito</li><li class="p">Rate, Satispay, PayPal e Apple Pay già integrati</li><li class="p">Filtri per taglia, marca e prezzo; gestione facile da telefono</li><li class="p">Trasferimento dei 369 prodotti e degli indirizzi senza perdere Google</li><li class="m">Un nuovo strumento da imparare (formazione inclusa)</li></ul>
+      </div>
+    </div>
+    <div class="note">Decidiamo insieme al primo incontro. Mi servirà sapere se usate un gestionale o una cassa, chi aggiornerà il sito e quanti ordini online ricevete oggi.</div>
+  </section>
+
+  <!-- 5 -->
+  <section class="sec" id="pacchetti">
+    <div class="num">05</div>
+    <h2 class="display">Pacchetti</h2>
+    <p>Prezzi una tantum, IVA esclusa. Il canone della piattaforma (Wix o Shopify) è a parte e si paga direttamente a loro.</p>
+    <div class="packs">
+      <div class="pack">
+        <h3>Restyling</h3>
+        <div class="for">Nuova grafica sul sito Wix attuale.</div>
+        <div class="price"><span class="fill">€ ____</span></div>
+        <div class="time">Circa 3–4 settimane</div>
+        <ul><li>Nuova home e nuovo menu</li><li>Grafica di categorie e schede prodotto</li><li>Pulizia di indirizzi e parole chiave</li><li>Descrizioni delle immagini principali</li><li>Pagine Officina e La bottega</li></ul>
+      </div>
+      <div class="pack rec">
+        <span class="flag">Consigliato</span>
+        <h3>Nuovo e-commerce</h3>
+        <div class="for">Nuovo sito su Shopify, come nella bozza.</div>
+        <div class="price"><span class="fill">€ ____</span></div>
+        <div class="time">Circa 6–8 settimane</div>
+        <ul><li class="plus">Tutto il pacchetto Restyling, più:</li><li>Trasferimento dei 369 prodotti</li><li>Reindirizzamento dei vecchi indirizzi</li><li>Taglie, varianti e filtri</li><li>Rate, ritiro in negozio e spedizioni</li><li>Prenotazione dell'officina</li><li>Formazione per il personale</li></ul>
+      </div>
+      <div class="pack">
+        <h3>Completo</h3>
+        <div class="for">Nuovo e-commerce, più visibilità e assistenza continua.</div>
+        <div class="price"><span class="fill">€ ____</span></div>
+        <div class="time">Circa 8–10 settimane</div>
+        <ul><li class="plus">Tutto il pacchetto Nuovo e-commerce, più:</li><li>Collegamento con la cassa del negozio</li><li>Ottimizzazione per le ricerche su Varese e provincia</li><li>Newsletter e recupero dei carrelli abbandonati</li><li>3 mesi di assistenza inclusi</li></ul>
+      </div>
+    </div>
+    <div class="extras">
+      <div><b>Servizio fotografico</b><span>Negozio, officina e prodotti · <span class="fill">€ ____</span></span></div>
+      <div><b>Manutenzione mensile</b><span>Aggiornamenti e piccole modifiche · <span class="fill">€ ____ /mese</span></span></div>
+      <div><b>Gestione offerte e novità</b><span>Caricamento prodotti per voi · <span class="fill">€ ____ /mese</span></span></div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="sec" id="tempi">
+    <div class="num">06</div>
+    <h2 class="display">Tempi (pacchetto consigliato)</h2>
+    <div class="timeline">
+      <div class="ph"><div class="wk">Settimana 1</div><div><b>Incontro e raccolta materiali</b><p>Obiettivi, accessi, foto, testi e scelta della piattaforma.</p><div class="bar"><i style="left:0;width:12.5%"></i></div></div></div>
+      <div class="ph"><div class="wk">Settimane 2–3</div><div><b>Grafica definitiva</b><p>Home, categorie, scheda prodotto e officina, da telefono e computer. Due giri di modifiche.</p><div class="bar"><i style="left:12.5%;width:25%"></i></div></div></div>
+      <div class="ph"><div class="wk">Settimane 3–6</div><div><b>Realizzazione e trasferimento</b><p>Costruzione del sito, trasferimento dei prodotti, pagamenti e spedizioni.</p><div class="bar"><i style="left:25%;width:50%"></i></div></div></div>
+      <div class="ph"><div class="wk">Settimana 7</div><div><b>Prove e formazione</b><p>Ordini di prova, controlli su Google e formazione del personale.</p><div class="bar"><i style="left:75%;width:12.5%"></i></div></div></div>
+      <div class="ph"><div class="wk">Settimana 8</div><div><b>Messa online</b><p>Passaggio del dominio, reindirizzamenti attivi e controllo nei giorni successivi.</p><div class="bar"><i style="left:87.5%;width:12.5%"></i></div></div></div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="sec" id="servono">
+    <div class="num">07</div>
+    <h2 class="display">Cosa serve e cosa decidere</h2>
+    <div class="twocol">
+      <div class="list">
+        <h3>Cosa mi serve da voi</h3>
+        <ol>
+          <li>Accesso al sito Wix, per esportare prodotti e indirizzi</li>
+          <li>Accesso a Google Search Console e alla scheda Google del negozio</li>
+          <li>Foto del negozio e dell'officina, se le avete</li>
+          <li>Due righe sulla storia della bottega</li>
+          <li>Elenco dei servizi dell'officina, con i prezzi</li>
+          <li>Dati fiscali, condizioni di vendita e di reso</li>
+        </ol>
+      </div>
+      <div class="list">
+        <h3>Da decidere insieme</h3>
+        <ul>
+          <li>Wix o Shopify</li>
+          <li>Pagamento a rate: sì o no, e con quale servizio</li>
+          <li>Spedizione delle bici o solo ritiro in negozio</li>
+          <li>Servizi inclusi con l'acquisto: montaggio, primo controllo, permuta</li>
+          <li>Garanzia sull'usato e prenotazione dell'officina online</li>
+          <li>Email su dominio .it o .com, da allineare al sito</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="next">
+    <div>
+      <div class="eyebrow">Prossimo passo</div>
+      <h2 class="display">Ci vediamo in negozio?</h2>
+      <p>Mezz'ora per guardare insieme la bozza, capire come lavorate e scegliere il pacchetto giusto.</p>
+    </div>
+    <div class="card-contact">
+      <span>Contatti</span>
+      <div class="fill" style="justify-self:start">[Nome Cognome]</div>
+      <div class="fill" style="justify-self:start">[telefono]</div>
+      <div class="fill" style="justify-self:start">[email]</div>
+    </div>
+  </div>
+</main>
+
+<div class="concept">Bozza concept · proposta di redesign</div>
+</body>
+</html>
