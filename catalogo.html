@@ -66,8 +66,8 @@
   .logo small,.logo b{font-family:Righteous,Archivo,sans-serif;font-weight:400;-webkit-text-stroke:.05em currentColor;letter-spacing:.025em}
   .logo small{font-size:15px;text-transform:lowercase}
   .logo b{font-size:27px}
-  /* N ad arco come sull'insegna: la "n" minuscola di Righteous alzata all'altezza delle maiuscole (stesso spessore delle aste) */
-  .logo b .n{display:inline-block;transform:scaleY(1.313);transform-origin:50% 100%}
+  /* N ad arco come sull'insegna (∩): la "U" di Righteous capovolta, stessa altezza e spessore delle altre maiuscole */
+  .logo b .n{display:inline-block;transform:rotate(180deg)}
   nav.main{display:flex;gap:4px}
   nav.main a{padding:10px 14px;border-radius:999px;font-weight:500;font-size:15px}
   nav.main a:hover{background:var(--stone-light)}
@@ -713,7 +713,7 @@ body:has(.cmpbar.on) .concept{bottom:96px}
 
 <header id="hdr">
   <div class="wrap head">
-    <a href="index.html" class="logo" aria-label="Cicli Ambrosini, home"><small>CICLI</small><b>AMBROSI<span class="n">n</span>I</b></a>
+    <a href="index.html" class="logo" aria-label="Cicli Ambrosini, home"><small>CICLI</small><b>AMBROSI<span class="n">U</span>I</b></a>
     <nav class="main" id="mainNav"></nav>
     <div class="icons">
       <a class="icon-btn hide-m" href="#/cerca" aria-label="Cerca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></a>
@@ -735,7 +735,7 @@ body:has(.cmpbar.on) .concept{bottom:96px}
 <footer>
   <div class="wrap">
     <div class="foot-grid" style="padding-top:0">
-      <div><div class="logo" role="img" aria-label="Cicli Ambrosini"><small>CICLI</small><b>AMBROSI<span class="n">n</span>I</b></div><p>La bottega del ciclista a Varese dal 1967. Vendita, officina e assistenza.</p>
+      <div><div class="logo" role="img" aria-label="Cicli Ambrosini"><small>CICLI</small><b>AMBROSI<span class="n">U</span>I</b></div><p>La bottega del ciclista a Varese dal 1967. Vendita, officina e assistenza.</p>
         <div class="social">
           <a href="https://www.instagram.com/cicliambrosini/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg></a>
           <a href="https://www.facebook.com/cicliambrosiniofficial/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H8v4h2v7h4v-7h3l1-4h-4V8z"/></svg></a>

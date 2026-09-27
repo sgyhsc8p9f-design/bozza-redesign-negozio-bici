@@ -51,8 +51,8 @@
   .logo small,.logo b{font-family:Righteous,Archivo,sans-serif;font-weight:400;-webkit-text-stroke:.05em currentColor;letter-spacing:.025em}
   .logo small{font-size:15px;text-transform:lowercase}
   .logo b{font-size:27px}
-  /* N ad arco come sull'insegna: la "n" minuscola di Righteous alzata all'altezza delle maiuscole (stesso spessore delle aste) */
-  .logo b .n{display:inline-block;transform:scaleY(1.313);transform-origin:50% 100%}
+  /* N ad arco come sull'insegna (∩): la "U" di Righteous capovolta, stessa altezza e spessore delle altre maiuscole */
+  .logo b .n{display:inline-block;transform:rotate(180deg)}
   nav.main{display:flex;gap:4px}
   nav.main a{padding:10px 14px;border-radius:999px;font-weight:500;font-size:15px}
   nav.main a:hover{background:var(--stone-light)}
