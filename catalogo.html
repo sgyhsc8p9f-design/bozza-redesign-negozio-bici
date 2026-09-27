@@ -274,6 +274,72 @@
 
 .card{position:relative}
 
+/* Link rosso "Offerte" nel menu */
+nav.main a.nav-off{color:#C2410C}
+nav.main a.nav-off:hover{background:#FFF1EA}
+.drawer nav a.nav-off{color:#FFB38A}
+
+/* Hero a scorrimento (home): la bici prende forma e parte.
+   Stato base = foto + titolo; la classe .anim (aggiunta dal JS) attiva la scena. */
+.sh{padding:12px var(--gutter)}
+.sh-stage{--road:17%;position:relative;max-width:calc(var(--maxw) + 2*var(--gutter));margin:0 auto;height:calc(100svh - 100px);min-height:540px;max-height:920px;border-radius:var(--radius-lg);overflow:hidden;color:#fff;background:radial-gradient(120% 90% at 68% 42%,#2447C8 0%,var(--blue-deep) 72%);isolation:isolate}
+.sh-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+.sh-veil{position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(90deg,rgba(8,14,40,.82) 0%,rgba(8,14,40,.45) 45%,rgba(8,14,40,.05) 75%),linear-gradient(0deg,rgba(8,14,40,.55),transparent 40%)}
+.sh .hero-copy,.sh .hero-tag{z-index:6}
+.sh-grid,.sh-hills,.sh-road,.sh-bike,.sh-intro,.sh-steps{display:none}
+.sh.anim .sh-grid,.sh.anim .sh-hills,.sh.anim .sh-road,.sh.anim .sh-bike,.sh.anim .sh-intro,.sh.anim .sh-steps{display:block}
+.sh-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(75% 70% at 62% 55%,#000 25%,transparent 100%);mask-image:radial-gradient(75% 70% at 62% 55%,#000 25%,transparent 100%)}
+.sh-hills{position:absolute;left:0;bottom:var(--road);width:200%;height:30%;z-index:0}
+.sh-hills .far{fill:rgba(255,255,255,.06)}
+.sh-hills .near{fill:rgba(14,34,117,.55)}
+.sh-road{position:absolute;left:0;right:0;bottom:calc(var(--road) - 2px);height:2px;z-index:1;background:repeating-linear-gradient(90deg,rgba(216,204,178,.6) 0 28px,transparent 28px 52px)}
+.sh-bike{position:absolute;z-index:5;left:42%;bottom:var(--road);width:min(50vw,740px)}
+.sh-bike svg{display:block;width:100%;height:auto;overflow:visible}
+.sh-bike .bk *{fill:none;stroke:#fff;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.sh-bike .bk .tire{stroke-width:9}
+.sh-bike .bk .rim{stroke-width:3;stroke:var(--stone)}
+.sh-bike .bk .thick{stroke-width:10}
+.sh-bike .bk .head{stroke-width:12}
+.sh-bike .bk .saddle{stroke-width:8}
+.sh-bike .bk .thin,.sh-bike .bk .sp{stroke-width:1.6;stroke:rgba(255,255,255,.75)}
+.sh-bike .ghost *{stroke:rgba(216,204,178,.6)!important;stroke-width:2!important;stroke-dasharray:2 7}
+.sh-bike .ghost .sp{display:none}
+.sh-bike .dim .gd{fill:none;stroke:rgba(216,204,178,.45);stroke-width:1.2;stroke-dasharray:3 5}
+.sh-bike .dim .dl{fill:none;stroke:var(--stone);stroke-width:1.6;stroke-linecap:round}
+.sh-bike .dim text{fill:var(--stone);font:600 14px Inter,system-ui,sans-serif;letter-spacing:.04em}
+.sh-intro{position:absolute;z-index:6;left:clamp(24px,5vw,72px);top:clamp(28px,7vh,72px);max-width:600px}
+.sh-intro .eyebrow{color:var(--stone)}
+.sh-intro .display{font-size:clamp(38px,5.4vw,80px);margin-top:12px}
+.sh-hint{display:flex;align-items:center;gap:14px;margin-top:26px;font-size:14px;line-height:1.35;opacity:.85}
+.sh-hint i{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(255,255,255,.45);display:grid;place-items:center;flex:none}
+.sh-hint svg{width:18px;height:18px;animation:sh-nudge 1.8s ease-in-out infinite}
+@keyframes sh-nudge{50%{transform:translateY(4px)}}
+.sh-steps{position:absolute;z-index:6;left:clamp(24px,5vw,72px);right:clamp(24px,5vw,72px);bottom:22px}
+.sh-cap{display:flex;gap:12px;align-items:baseline;max-width:520px;margin-bottom:16px;font-size:15.5px;line-height:1.4;min-height:2.8em}
+.sh-cap b{font-family:Archivo;font-stretch:112%;font-weight:800;color:var(--stone);font-size:14px}
+.sh-cap span{animation:sh-in .45s ease both}
+@keyframes sh-in{from{opacity:0;transform:translateY(8px)}}
+.sh-steps ol{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:640px}
+.sh-steps li{font-size:12.5px;font-weight:600;letter-spacing:.02em;opacity:.55;transition:opacity .3s}
+.sh-steps li.on{opacity:1}
+.sh-steps li i{--p:0;display:block;height:2px;margin-bottom:8px;background:rgba(255,255,255,.22);position:relative;overflow:hidden}
+.sh-steps li i::after{content:"";position:absolute;inset:0;background:#fff;transform-origin:left;transform:scaleX(var(--p))}
+@media(max-width:760px){
+  .sh-stage{--road:30%}
+  .sh-bike{left:4%;width:92vw}
+  .sh-steps{bottom:16px}
+  .sh-cap{font-size:14px;margin-bottom:12px}
+  .sh-steps ol{gap:8px}
+  .sh-steps li{font-size:11px}
+}
+
+/* Mini bici sotto l'header: avanza con lo scroll della pagina */
+.ride{position:absolute;left:0;right:0;bottom:-1px;height:2px;pointer-events:none;opacity:0;transition:opacity .3s}
+header.scrolled .ride{opacity:1}
+.ride b{position:absolute;left:0;top:0;height:2px;width:100%;background:var(--blue);transform-origin:left;transform:scaleX(var(--p,0))}
+.ride svg{position:absolute;left:0;bottom:1px;width:30px;height:18px;fill:none;stroke:var(--blue);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.contact a small{display:block;font-size:12.5px;color:var(--muted)}
+
 
 /* ===== Catalogo ===== */
 .cat-hero{padding:34px 0 8px}
@@ -638,7 +704,7 @@ nav.main a.nav-off:hover{background:#FFF1EA}
 <div class="topbar"><div class="wrap">
   <span>Ritiro gratuito in negozio a Varese</span>
   <span>Spedizione gratuita sopra 60 €</span>
-  <span>Bici pagabili in 3 rate senza interessi</span>
+  <span>Paga in 3 rate senza interessi, da 100 €</span>
 </div></div>
 
 <header id="hdr">
@@ -798,7 +864,7 @@ function tilesHtml(base){
 let CMP=LS.get('ca_cmp',[]).filter(s=>BY[s]);
 const needsChoice=p=>isRes(p)||isBike(p)||p.opt.some(o=>o.v&&o.v.length>1);
 function card(p){const r=ribbons(p);return `<article class="card"><a href="#/p/${p.s}" class="ph">${p.img[0]?`<img src="${wix(p.img[0],500,500)}" alt="${esc(fullName(p))}" loading="lazy">`:''}<div class="rib">${r.slice(0,2).map(x=>`<span class="${x.startsWith('-')?'':'alt'}">${esc(x)}</span>`).join('')}</div></a><button class="heart ${isFav(p.s)?'on':''}" data-fav="${p.s}" aria-label="${isFav(p.s)?'Togli dai preferiti':'Aggiungi ai preferiti'}">${heartSvg}</button>
-<div class="body"><div class="brand">${esc(p.b||p.cat)}</div><h3><a href="#/p/${p.s}">${esc(niceName(p))}</a></h3>${p.sl?`<div class="specline">${esc(p.sl)}</div>`:''}${isRes(p)?`<div class="price"><b style="font-size:16px">Prezzo riservato</b></div><div class="rate">Listino ${eur(p.p)}</div>`:`<div class="price"><b>${eur(p.p)}</b>${p.o?`<s>${eur(p.o)}</s>`:''}</div><div class="rate">${p.p>=300?`oppure 3 rate da ${eur(Math.ceil(p.p/3))}`:''}</div>`}
+<div class="body"><div class="brand">${esc(p.b||p.cat)}</div><h3><a href="#/p/${p.s}">${esc(niceName(p))}</a></h3>${p.sl?`<div class="specline">${esc(p.sl)}</div>`:''}${isRes(p)?`<div class="price"><b style="font-size:16px">Prezzo riservato</b></div><div class="rate">Listino ${eur(p.p)}</div>`:`<div class="price"><b>${eur(p.p)}</b>${p.o?`<s>${eur(p.o)}</s>`:''}</div><div class="rate">${p.p>=100?`oppure 3 rate da ${eur(Math.ceil(p.p/3))}`:''}</div>`}
 ${isBike(p)?`<label class="cmpchk"><input type="checkbox" data-cmp="${p.s}" ${CMP.includes(p.s)?'checked':''}> Confronta</label>`:''}
 <div class="row"><span>${esc(p.f.disp==='Disponibile'?(isBike(p)?'Ritiro in negozio':'Spedizione 24/48h'):p.f.disp)}</span>${needsChoice(p)?`<a class="add opt" href="#/p/${p.s}">${isRes(p)?'Richiedi':'Scegli'}</a>`:`<button class="add" data-add="${p.s}">Aggiungi</button>`}</div></div></article>`}
 function cmpBar(){let b=document.getElementById('cmpbar');if(!b){b=document.createElement('div');b.id='cmpbar';b.className='cmpbar';document.body.appendChild(b)}
@@ -943,7 +1009,7 @@ function renderProduct(p){
         <p>${v.st==='verified'?(v.diff.length?`Stesso prodotto confermato sulla pagina ufficiale. ${v.diff.length===1?'C’è 1 dettaglio':'Ci sono '+v.diff.length+' dettagli'} da controllare nella scheda “Verifica”.`:'Nome, descrizione e dati tecnici corrispondono alla pagina ufficiale del produttore.'):v.st==='partial'?'Trovato sul sito ufficiale, ma con alcune differenze o dati incompleti: vedi la scheda “Verifica”.':v.st==='notfound'?'Il prodotto non compare sul sito ufficiale del produttore (fuori catalogo, modello vecchio o esclusiva del negozio).':'Dati dal sito attuale del negozio, non ancora incrociati con il produttore.'}</p>
         <div class="row">${v.url?`<a href="${esc(v.url)}" target="_blank" rel="noopener">Pagina ufficiale ↗</a>`:''}<a href="#/p/${p.s}" data-tab="t-ver">Dettagli della verifica</a>${v.ean.length?`<span>EAN ${v.ean.slice(0,3).map(e=>`<code>${esc(e)}</code>`).join(' ')}${v.ean.length>3?` +${v.ean.length-3}`:''}</span>`:''}</div>
       </div>
-      ${bike?`<div class="perks"><div>🔧 Montaggio e regolazione in officina</div><div>🛡️ <a href="#/info/garanzia">Garanzia ufficiale tramite rivenditore</a></div></div>`:''}
+      ${bike?`<div class="perks"><div>🔧 Montaggio e regolazione in officina</div><div>🛡️ <a href="#/info/garanzia">Garanzia gestita da noi, in negozio</a></div></div>`:''}
     </div>
   </div>
   ${v.hl.length?`<div class="hls">${v.hl.slice(0,4).map(h=>`<div>${esc(h)}</div>`).join('')}</div>`:''}
@@ -980,7 +1046,7 @@ function renderProduct(p){
   const openTab=t=>{app.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x.dataset.t===t));app.querySelectorAll('.panel').forEach(x=>x.classList.toggle('on',x.id===t))};
   document.getElementById('tabs').onclick=e=>{const b=e.target.closest('button');if(b)openTab(b.dataset.t)};
   app.querySelectorAll('[data-tab]').forEach(a=>a.onclick=e=>{e.preventDefault();openTab(a.dataset.tab);document.getElementById('tabsWrap').scrollIntoView({behavior:'smooth'})});
-  document.getElementById('mbar').innerHTML=res?`<p><b>Prezzo riservato</b><span>Listino ${eur(p.p)}</span></p><button class="btn btn-blue" onclick="document.getElementById('buyBtn').click()">Richiedi</button>`:`<p><b>${eur(p.p)}</b><span>${p.p>=300?'o 3 rate da '+eur(Math.ceil(p.p/3)):'IVA inclusa'}</span></p><button class="btn btn-blue" onclick="document.getElementById('buyBtn').click()">${pre?'Prenota':'Aggiungi'}</button>`;
+  document.getElementById('mbar').innerHTML=res?`<p><b>Prezzo riservato</b><span>Listino ${eur(p.p)}</span></p><button class="btn btn-blue" onclick="document.getElementById('buyBtn').click()">Richiedi</button>`:`<p><b>${eur(p.p)}</b><span>${p.p>=100?'o 3 rate da '+eur(Math.ceil(p.p/3)):'IVA inclusa'}</span></p><button class="btn btn-blue" onclick="document.getElementById('buyBtn').click()">${pre?'Prenota':'Aggiungi'}</button>`;
 }
 
 /* ---------- Carrello ---------- */
@@ -996,7 +1062,7 @@ function summaryHtml(method,withBtn,inner=''){const t=totals(method);const miss=
   ${method==='spedizione'&&t.other>0?`<div class="hint">${miss>0?`Aggiungi ${eur(miss)} di accessori o abbigliamento per la spedizione gratuita.`:'Spedizione gratuita per accessori e abbigliamento.'}</div><div class="freebar"><i style="width:${Math.min(100,t.other/SHIP.free*100)}%"></i></div>`:''}
   ${method==='spedizione'&&t.bikes?`<div class="hint">Spedizione bici: ${eur(SHIP.bike)} ciascuna, premontata e assicurata.</div>`:''}
   <div class="row tot"><span>Totale</span><span>${eur(t.tot)}</span></div>
-  <div class="hint">IVA inclusa${t.tot>=300?` · oppure 3 rate da ${eur(Math.ceil(t.tot/3))} senza interessi`:''}</div>
+  <div class="hint">IVA inclusa${t.tot>=100?` · oppure 3 rate da ${eur(Math.ceil(t.tot/3))} senza interessi`:''}</div>
   ${withBtn?`<a class="btn btn-blue" href="#/checkout">Procedi all'acquisto</a><a class="btn btn-ghost" href="#/" style="width:100%;justify-content:center;margin-top:8px">Continua gli acquisti</a>`:''}
   ${inner||'<div class="pay-icons"><span>Carta</span><span>PayPal</span><span>Satispay</span><span>Scalapay</span><span>In negozio</span></div>'}</div>`}
 function renderCart(){document.title='Demo non ufficiale · Carrello — Cicli Ambrosini (bozza)';
@@ -1153,8 +1219,8 @@ const INFO={
   <table><tr><th>Cosa</th><th>Costo</th><th>Tempi</th></tr><tr><td>Accessori e abbigliamento</td><td>Gratis sopra ${eur(SHIP.free)}, altrimenti ${eur(SHIP.std)}</td><td>24/48 ore lavorative</td></tr><tr><td>Bici</td><td>${eur(SHIP.bike)}</td><td>3–5 giorni lavorativi, premontata</td></tr><tr><td>Ritiro in negozio</td><td>Gratis</td><td>Ti avvisiamo quando è pronto</td></tr></table>
   <h2>Resi</h2><ul><li>Hai 14 giorni dalla consegna per restituire un prodotto acquistato online.</li><li>Il prodotto deve essere integro, non usato e nella confezione originale.</li><li>Puoi riportarlo in negozio oppure concordare il ritiro con il corriere.</li><li>Rimborsiamo con lo stesso metodo di pagamento entro 14 giorni dal rientro.</li></ul>${DRAFT}`],
  pagamenti:['Pagamenti e rate',`<p>Online puoi pagare con carta di credito o debito, PayPal, Satispay o Scalapay. Con il ritiro in negozio puoi anche pagare al ritiro.</p>
-  <h2>Pagamento in 3 rate</h2><ul><li>Disponibile con Scalapay per ordini da 100 €.</li><li>Paghi la prima rata all'ordine e le altre due ogni 30 giorni.</li><li>Nessun interesse e nessun costo aggiuntivo.</li><li>Per le bici puoi chiedere in negozio anche finanziamenti più lunghi.</li></ul>${DRAFT}`],
- garanzia:['Garanzia',`<p>Siamo rivenditori ufficiali: ogni bici e ogni componente nuovo ha la garanzia del produttore, gestita direttamente da noi.</p><ul><li>Garanzia legale di 24 mesi sui prodotti nuovi.</li><li>Garanzie estese sui telai secondo le condizioni di ogni marca.</li><li>Per l'usato: controllo completo in officina prima della vendita.</li></ul><p>Per un intervento in garanzia <a href="#/officina" style="color:var(--blue);text-decoration:underline">prenota l'officina</a> o passa in negozio con la prova d'acquisto.</p>${DRAFT}`],
+  <h2>Pagamento in 3 rate</h2><ul><li>Disponibile con Scalapay per ordini da 100 €.</li><li>Paghi la prima rata all'ordine e le altre due ogni 30 giorni.</li><li>Nessun interesse e nessun costo aggiuntivo.</li><li>Importo massimo e approvazione dipendono da Scalapay.</li></ul>${DRAFT}`],
+ garanzia:['Garanzia',`<p>Ogni bici e ogni componente nuovo ha la garanzia del produttore, e ce ne occupiamo noi, in negozio.</p><ul><li>Garanzia legale di 24 mesi sui prodotti nuovi.</li><li>Garanzie estese sui telai secondo le condizioni di ogni marca.</li></ul><p>Per un intervento in garanzia <a href="#/officina" style="color:var(--blue);text-decoration:underline">prenota l'officina</a> o passa in negozio con la prova d'acquisto.</p>${DRAFT}`],
  contatti:['Contatti e orari',`<table><tr><th>Giorno</th><th>Orario</th></tr><tr><td>Lunedì</td><td>14:30–18:30</td></tr><tr><td>Martedì – Venerdì</td><td>8:30–12:15 · 14:30–18:30</td></tr><tr><td>Sabato</td><td>8:30–12:15 · 14:30–18:00</td></tr><tr><td>Domenica</td><td>Chiuso</td></tr></table>
   <p><b>Indirizzo:</b> <a href="https://www.google.com/maps/search/?api=1&query=Piazza+Madonnina+in+Prato+1+Varese" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:underline">Piazza Madonnina in Prato, 1 · 21100 Varese</a></p>
   <p><b>Telefono:</b> <a href="tel:+390332240109" style="color:var(--blue);text-decoration:underline">+39 0332 240109</a></p><p><b>Email:</b> <a href="mailto:cicliambrosini@cicliambrosini.com" style="color:var(--blue);text-decoration:underline">cicliambrosini@cicliambrosini.com</a></p>
