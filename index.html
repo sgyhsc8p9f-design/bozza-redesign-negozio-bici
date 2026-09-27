@@ -137,23 +137,6 @@
   </div>
 </section>
 
-<!-- PRODOTTI -->
-<section id="offerte" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div><div class="eyebrow">In negozio adesso</div><h2 class="display">Novità e offerte</h2></div>
-      <div class="arrows" data-rail="prods"><button aria-label="Indietro" data-dir="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button aria-label="Avanti" data-dir="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
-    </div>
-    <div class="filters" id="filters">
-      <button class="on" data-f="all">Tutto</button>
-      <button data-f="bici">Bici ed e-bike</button>
-      <button data-f="abb">Abbigliamento</button>
-      <button data-f="acc">Componenti e accessori</button>
-    </div>
-    <div class="rail prods" id="prods" data-lenis-prevent-horizontal></div>
-  </div>
-</section>
-
 <!-- OFFICINA -->
 <div class="band" id="officina">
   <img src="officina.jpg" width="2000" height="1116" loading="lazy" alt="Officina per bici con cavalletti da lavoro, attrezzi e ruote (immagine illustrativa)">
@@ -166,28 +149,6 @@
     </div>
   </div>
 </div>
-
-<!-- ABBIGLIAMENTO -->
-<section id="abbigliamento">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div><div class="eyebrow">Abbigliamento</div><h2 class="display">Vestiti da campione.</h2></div>
-      <p>Maglie, salopette, guanti e accessori dei migliori marchi: <strong>Santini, Giant, Liv, AGU</strong> e altri.</p>
-    </div>
-    <div class="split reveal">
-      <a href="catalogo.html#/?brand=Santini" class="big">
-        <img data-wix="3cc8da772bbb48fe8a44cdc02a9f5d1b~mv2.webp" data-w="900" data-h="900" data-mode="fit" alt="Maglia Santini UCI World Champion">
-        <div class="t">
-          <div class="eyebrow">Collezione Santini UCI</div>
-          <h3 class="display">L'iride, da indossare.</h3>
-          <p>La linea ufficiale dei Campionati del Mondo UCI, disponibile in negozio e online.</p>
-          <span class="btn btn-blue">Scopri la collezione</span>
-        </div>
-      </a>
-      <div class="grid" id="miniGrid"></div>
-    </div>
-  </div>
-</section>
 
 <!-- MARCHI -->
 <div class="brands" aria-label="Marchi trattati"><div class="marquee" id="marquee"></div></div>
@@ -288,50 +249,16 @@ const arrow='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-w
 const CATLINK={'Strada':'#/c/Strada','Gravel':'#/c/Gravel','E-bike':'#/g/E-bike','Mountain bike':'#/c/Mountain%20bike','Telai':'#/c/Telai','Città e trekking':'#/c/Citt%C3%A0%20e%20trekking'};
 document.getElementById('cats').innerHTML=cats.map(([t,s,img,chip])=>`<a href="catalogo.html${CATLINK[t]||'#/g/Bici'}" class="cat"><img src="${wix(img,600,800)}" alt="${t}" loading="lazy">${chip?`<span class="chip">${chip}</span>`:''}<div class="txt"><div><h3>${t}</h3><small>${s}</small></div><span class="go">${arrow}</span></div></a>`).join('');
 
-/* Prodotti (dati reali dal sito attuale): slug = scheda nel catalogo */
-const P=[
-  {s:'merida-reacto-7000',c:'bici',b:'Merida',n:'Reacto 7000',p:4989,o:5250,img:'f93f7c42b1374fb2a1f4783e46da796c~mv2.jpg',r:['Prenotabile'],page:'prodotto.html'},
-  {s:'merida-scultura-endurance-6000',c:'bici',b:'Merida',n:'Scultura Endurance 6000',p:3859,o:4060,img:'0146654d5f02489ca619519e6b5869e5~mv2.jpg',r:['In arrivo']},
-  {s:'santini-uci-world-champion-mondo-men-s-jersey-bianco',c:'abb',b:'Santini',n:'UCI World Champion Mondo Jersey',p:110,img:'3cc8da772bbb48fe8a44cdc02a9f5d1b~mv2.webp',r:['Novità'],sel:{Taglia:'M'}},
-  {s:'manubrio-colnago-cc01-integrato-nuovo',c:'acc',b:'Colnago',n:'Manubrio integrato CC01',p:570,o:814,img:'229c9f11a19146a4ac9398374017e7be~mv2.webp',sel:{Taglia:'110x39'}},
-  {s:'merida-reacto-6000',c:'bici',b:'Merida',n:'Reacto 6000',p:4319,o:4540,img:'6e1751072faa4ae18d6c97d01b167994~mv2.jpg',r:['In arrivo']},
-  {s:'santini-madss-aero-shoecovers-bianco',c:'abb',b:'Santini',n:'MADSS Aero Shoecovers',p:50,img:'8314795b3195414f8b734ce961af8edd~mv2.webp',opt:{Taglia:null}},
-  {s:'abus-bordo-granit-x-plus-serratura-pieghevole-6500-85-nero',c:'acc',b:'Abus',n:'Bordo Granit X-Plus 6500/85',p:75,o:152,img:'a15109c8d346470e8b3a5b3cbb544e35~mv2.webp'},
-  {s:'merida-big-nine-40',c:'bici',b:'Merida',n:'Big.Nine 40',p:849,o:880,img:'43f4976581fb4eefbb97195e1e98103e~mv2.jpg'},
-  {s:'santini-uci-world-champion-gloves',c:'abb',b:'Santini',n:'UCI World Champion Gloves',p:35,img:'172bd4cd853e4a31844c897e5a432f9c~mv2.webp',sel:{Taglia:'L'}},
-  {s:'borsa-urban-saddle-bag-1-5l-black',c:'acc',b:'AGU',n:'Borsa sottosella Urban 1,5 L',p:18,o:20,img:'bce449abf79d46ba916b0a492f671964~mv2.webp'},
-];
-const eur=v=>String(v).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+' €';
-const heartSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
 /* Carrello e preferiti condivisi con il catalogo (salvati nel browser) */
 const MEM={};const LS={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):(MEM[k]??d)}catch(e){return MEM[k]??d}},set(k,v){MEM[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const cc=document.getElementById('cartCount'),fc=document.getElementById('favCount');
 function badges(){const c=LS.get('ca_cart',[]),f=LS.get('ca_fav',[]);const n=c.reduce((a,l)=>a+l.qty,0);cc.textContent=n;cc.classList.toggle('on',n>0);fc.textContent=f.length;fc.classList.toggle('on',f.length>0)}
-const href=x=>x.page||`catalogo.html#/p/${x.s}`;
-const needsPage=x=>x.c==='bici'||x.opt;
-function renderProds(f='all'){const fav=LS.get('ca_fav',[]);
-  document.getElementById('prods').innerHTML=P.filter(x=>f==='all'||x.c===f).map(x=>{
-    const off=x.o?Math.round((1-x.p/x.o)*100):0;
-    const ribs=[...(off?[`-${off}%`]:[]),...(x.r||[])];
-    return `<article class="card"><a href="${href(x)}" class="ph"><img src="${wix(x.img,600,600,'fit')}" alt="${x.b} ${x.n}" loading="lazy"><div class="rib">${ribs.map(r=>`<span class="${r.startsWith('-')?'':'alt'}">${r}</span>`).join('')}</div></a><button class="heart ${fav.includes(x.s)?'on':''}" data-fav="${x.s}" aria-label="Aggiungi ai preferiti">${heartSvg}</button>
-    <div class="body"><div class="brand">${x.b}</div><h3><a href="${href(x)}">${x.n}</a></h3><div class="price"><b>${eur(x.p)}</b>${x.o?`<s>${eur(x.o)}</s>`:''}</div><div class="rate">${x.p>=100?`oppure 3 rate da ${eur(Math.ceil(x.p/3))}`:''}</div>
-    <div class="row"><span>${x.c==='bici'?'Ritiro in negozio':x.sel?Object.entries(x.sel).map(([k,v])=>k+' '+v).join(', '):'Spedizione 24/48h'}</span>${needsPage(x)?`<a class="add" href="${href(x)}">${x.c==='bici'?'Scegli':'Scegli taglia'}</a>`:`<button class="add" data-add="${x.s}">Aggiungi</button>`}</div></div></article>`}).join('');
-}
-renderProds();badges();
-document.getElementById('filters').onclick=e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x===b));renderProds(b.dataset.f);document.getElementById('prods').scrollLeft=0};
+badges();
 document.addEventListener('click',e=>{
-  const a=e.target.closest('[data-add]');if(a){const x=P.find(y=>y.s===a.dataset.add);const cart=LS.get('ca_cart',[]);const opts=x.sel||{};const key=x.s+'|'+JSON.stringify(opts);const l=cart.find(y=>y.key===key);
-    if(l)l.qty++;else cart.push({key,slug:x.s,name:x.n,brand:x.b,img:'6420e3_'+x.img,price:x.p,opts,qty:1,bike:false,pre:false});
-    LS.set('ca_cart',cart);badges();a.textContent='Aggiunto ✓';a.classList.add('done');setTimeout(()=>{a.textContent='Aggiungi';a.classList.remove('done')},1600);toast(`${x.b} ${x.n} aggiunto al carrello`,'catalogo.html#/carrello','Vai al carrello')}
-  const h=e.target.closest('[data-fav]');if(h){const f=LS.get('ca_fav',[]);const i=f.indexOf(h.dataset.fav);if(i>=0)f.splice(i,1);else f.push(h.dataset.fav);LS.set('ca_fav',f);h.classList.toggle('on',i<0);badges();toast(i<0?'Aggiunto ai preferiti':'Tolto dai preferiti',i<0?'catalogo.html#/preferiti':null,'Vedi preferiti')}
   const ar=e.target.closest('.arrows button');if(ar){const r=document.getElementById(ar.parentElement.dataset.rail);r.scrollBy({left:ar.dataset.dir*r.clientWidth*.8,behavior:'smooth'})}
 });
 addEventListener('pageshow',badges);
 let tt;function toast(m,link,label){const t=document.getElementById('toast');t.querySelector('span').innerHTML=m+(link?` <a href="${link}" style="color:var(--stone);font-weight:700;text-decoration:underline;margin-left:6px">${label}</a>`:'');t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),3200)}
-
-/* Mini griglia abbigliamento */
-const minis=[['santini-uci-world-champion-men-s-jersey-print','Santini','UCI World Champion Jersey Print',90,'1f1ba3af968f45988e691a1371f8aebe~mv2.webp'],['santini-uci-world-champion-cycling-cap-bianco','Santini','UCI Cycling Cap',19,'efd9501299344444b8264d89f356e15c~mv2.webp'],['santini-uci-world-champion-cycling-socks','Santini','UCI Cycling Socks',15,'e57e11975faa474e923d670fbcbb0bd1~mv2.webp'],['santini-uci-world-champion-neck-warmer','Santini','UCI Neck Warmer',12,'029310606a5a408cb3a69f20dd4990fe~mv2.webp']];
-document.getElementById('miniGrid').innerHTML=minis.map(([sl,b,n,p,img])=>`<a href="catalogo.html#/p/${sl}" class="mini"><img src="${wix(img,400,400,'fit')}" alt="${b} ${n}" loading="lazy"><b>${n}</b><span>${eur(p)}</span></a>`).join('');
 
 /* Marchi: solo quelli presenti nel catalogo, ognuno porta ai suoi prodotti */
 const brands=['Colnago','Giant','Liv','Bianchi','Merida','Santini','Shimano','Sidi','Mavic','Lazer','MET','Vittoria','Elite','Selle Italia',"O'Neal",'Crono'];
@@ -409,9 +336,8 @@ if(window.gsap&&window.ScrollTrigger){
     stepUpdate(0);
 
     /* Sezioni: card che salgono in sequenza, foto in parallasse, numeri che contano */
-    ScrollTrigger.batch('.usp>div,#cats .cat,#prods .card,#miniGrid .mini',{start:'top 92%',once:true,onEnter:b=>gsap.fromTo(b,{y:50,autoAlpha:0},{y:0,autoAlpha:1,duration:.8,stagger:.08,ease:'power3.out'})});
+    ScrollTrigger.batch('.usp>div,#cats .cat',{start:'top 92%',once:true,onEnter:b=>gsap.fromTo(b,{y:50,autoAlpha:0},{y:0,autoAlpha:1,duration:.8,stagger:.08,ease:'power3.out'})});
     gsap.fromTo('.band>img',{yPercent:-10,scale:1.2},{yPercent:10,scale:1.2,ease:'none',scrollTrigger:{trigger:'.band',start:'top bottom',end:'bottom top',scrub:true}});
-    gsap.fromTo('.split .big img',{scale:.82,rotate:-4},{scale:1,rotate:0,ease:'none',scrollTrigger:{trigger:'.split',start:'top bottom',end:'center center',scrub:true}});
     document.querySelectorAll('.collage img').forEach((im,i)=>{const d=i?-24:32;gsap.fromTo(im,{y:d},{y:-d,ease:'none',scrollTrigger:{trigger:'.collage',start:'top bottom',end:'bottom top',scrub:true}})});
     document.querySelectorAll('.stats b').forEach(b=>{const m=b.textContent.match(/^(\d+)(.*)$/);if(!m)return;const n=+m[1],o={v:n>1000?1900:0};gsap.to(o,{v:n,duration:1.6,ease:'power2.out',scrollTrigger:{trigger:b,start:'top 90%',once:true},onUpdate:()=>{b.textContent=Math.round(o.v)+m[2]}})});
     document.fonts.ready.then(()=>ScrollTrigger.refresh());
