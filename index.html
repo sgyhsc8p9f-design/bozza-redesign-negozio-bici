@@ -11,7 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=anim2">
+<style>html.lenis,html.lenis body{height:auto}html.lenis{scroll-behavior:auto!important}.lenis.lenis-smooth iframe{pointer-events:none}</style>
 <style>.demo-banner{position:relative;z-index:1;background:#0E1320;color:#fff;font:600 13px/1.4 Inter,system-ui,sans-serif;text-align:center;padding:9px 16px}.demo-banner a{color:#D8CCB2;text-decoration:underline;margin-left:6px}@media print{.demo-banner{display:none}}</style>
 </head>
 <body>
@@ -36,6 +37,7 @@
       <button class="icon-btn burger" aria-label="Menu" id="openMenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
+  <div class="ride" id="ride" aria-hidden="true"><b></b><svg viewBox="0 0 30 18"><g class="w"><circle cx="6" cy="12" r="5"/><path d="M6 7v10"/></g><g class="w"><circle cx="24" cy="12" r="5"/><path d="M24 7v10"/></g><path d="M6 12 11 5h9l4 7M11 5l4 7 5-7M15 12H6M9 3.5h4M20 5l1-3h2.5"/></svg></div>
 </header>
 
 <div class="drawer" id="drawer">
@@ -44,25 +46,73 @@
   <div class="foot">Piazza Madonnina in Prato, 1 · Varese<br>+39 0332 240109</div>
 </div>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-card" id="hero">
-    <div class="slide on"><img data-wix="37653dced83c45819e86aa02d33da2ee~mv2.png" data-w="1800" data-h="1000" alt="Bici da corsa Colnago davanti al Teatro alla Scala"></div>
-    <div class="slide"><img data-wix="d3a2daa0c4c14153a43811d10a2fed2c~mv2.png" data-w="1800" data-h="1000" alt="Colnago su sfondo blu"></div>
-    <div class="slide"><img data-wix="3718c87acc8843b3b4cb2930b8262f84~mv2.png" data-w="1800" data-h="1000" alt="E-MTB in montagna"></div>
-    <div class="hero-tag">Rivenditore autorizzato Colnago · Giant · Bianchi · Merida</div>
-    <div class="hero-copy">
+<!-- HERO A SCORRIMENTO: scorrendo la bici prende forma, poi parte e scopre la foto.
+     Senza JavaScript o con "riduci movimento" resta la foto con il titolo. -->
+<section class="sh" id="sh" aria-labelledby="sh-title">
+  <div class="sh-stage" id="shStage">
+    <div class="sh-grid" aria-hidden="true"></div>
+    <svg class="sh-hills" viewBox="0 0 1600 200" preserveAspectRatio="none" aria-hidden="true">
+      <path class="far" d="M0 200V120C90 96 170 60 260 70S420 128 520 110 700 30 820 44 1000 120 1120 104 1300 40 1420 52 1560 100 1600 96V200Z"/>
+      <path class="near" d="M0 200V160C120 140 200 118 320 128S520 170 640 158 840 110 960 118 1180 166 1300 156 1500 124 1600 132V200Z"/>
+    </svg>
+    <div class="sh-road" aria-hidden="true"></div>
+    <img class="sh-photo" data-wix="37653dced83c45819e86aa02d33da2ee~mv2.png" data-w="1800" data-h="1000" data-eager="1" alt="Bici da corsa Colnago davanti al Teatro alla Scala">
+    <div class="sh-veil" aria-hidden="true"></div>
+
+    <div class="sh-bike" id="shBike" aria-hidden="true">
+      <svg viewBox="0 0 600 350">
+        <g class="dim" id="shDim">
+          <path class="gd" d="M282 262V56M414 110V56M414 110H506M282 262H506"/>
+          <path class="dl" d="M288 56H408M282 50v12M414 50v12"/>
+          <path class="dl" d="M506 116V256M500 110h12M500 262h12"/>
+          <path class="dl" d="M266 258 232 96M260 262l14-3M226 94l14-3"/>
+          <text x="348" y="44" text-anchor="middle">Reach</text>
+          <text x="518" y="192">Stack</text>
+          <text x="228" y="128" text-anchor="end">Altezza sella</text>
+        </g>
+        <g class="bk" id="shSolid">
+          <g class="wheel" id="shWr"><circle class="p tire" cx="150" cy="250" r="96"/><circle class="p rim" cx="150" cy="250" r="72"/><circle class="p" cx="150" cy="250" r="10"/></g>
+          <g class="wheel" id="shWf"><circle class="p tire" cx="452" cy="250" r="96"/><circle class="p rim" cx="452" cy="250" r="72"/><circle class="p" cx="452" cy="250" r="5"/></g>
+          <path class="p thick" d="M424 148 282 262"/>
+          <path class="p" d="M282 262 150 250"/>
+          <path class="p" d="M258 140 150 250"/>
+          <path class="p thick" d="M282 262 250 116"/>
+          <path class="p" d="M250 116 414 110"/>
+          <path class="p head" d="M414 110 424 148"/>
+          <path class="p" d="M424 148Q444 214 452 250"/>
+          <path class="p" d="M250 116 244 88"/>
+          <path class="p saddle" d="M216 86Q246 76 280 84"/>
+          <path class="p" d="M414 108 446 100"/>
+          <path class="p" d="M446 100C468 98 474 112 472 128 470 142 460 148 448 146M464 104l6 16"/>
+          <path class="p thin" d="M282 238 150 240M282 286 150 260"/>
+          <g id="shCrank"><circle class="p" cx="282" cy="262" r="24"/><path class="p" d="M282 262v36M270 298h24"/></g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="sh-intro" id="shIntro">
       <div class="eyebrow">Dal 1967 a Varese</div>
-      <h1 class="display">La bottega<br>del ciclista.</h1>
-      <p>Bici da corsa, gravel, MTB ed e-bike scelte e montate da chi pedala da oltre cinquant'anni. Online, oppure in negozio con la nostra officina.</p>
+      <p class="display">La tua bici,<br>montata su di te.</p>
+      <span class="sh-hint" id="shHint"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4v16m-6-6 6 6 6-6"/></svg></i>Scorri e guardala<br>prendere forma.</span>
+    </div>
+
+    <div class="sh-steps" id="shSteps" aria-hidden="true">
+      <p class="sh-cap" id="shCap"><b>01</b><span></span></p>
+      <ol><li><i></i>Scegli</li><li><i></i>Misura</li><li><i></i>Montaggio</li><li><i></i>In strada</li></ol>
+    </div>
+
+    <div class="hero-tag" id="shTag">Rivenditore autorizzato Colnago · Giant · Bianchi · Merida</div>
+    <div class="hero-copy sh-final" id="shFinal">
+      <div class="eyebrow">Dal 1967 a Varese</div>
+      <h1 class="display" id="sh-title">La bottega<br>del ciclista.</h1>
+      <p>Bici da corsa, gravel, MTB ed e-bike scelte e montate da chi pedala da oltre cinquant'anni, e seguite negli anni dalla nostra officina.</p>
       <div class="hero-ctas">
         <a href="#bici" class="btn btn-blue">Trova la tua bici <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
         <a href="catalogo.html#/officina" class="btn btn-white">Prenota l'officina</a>
       </div>
     </div>
-    <div class="dots" id="dots"></div>
   </div>
-</div>
+</section>
 
 <div class="wrap">
   <div class="usp">
@@ -83,7 +133,7 @@
         <div class="arrows" data-rail="cats"><button aria-label="Indietro" data-dir="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button aria-label="Avanti" data-dir="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
       </div>
     </div>
-    <div class="rail cats" id="cats"></div>
+    <div class="rail cats" id="cats" data-lenis-prevent-horizontal></div>
   </div>
 </section>
 
@@ -100,7 +150,7 @@
       <button data-f="abb">Abbigliamento</button>
       <button data-f="acc">Componenti e accessori</button>
     </div>
-    <div class="rail prods" id="prods"></div>
+    <div class="rail prods" id="prods" data-lenis-prevent-horizontal></div>
   </div>
 </section>
 
@@ -221,17 +271,14 @@
 <div class="toast" id="toast"><i>✓</i><span></span></div>
 <div class="concept">Bozza concept · proposta di redesign</div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+
 <script>
 const WIX='https://static.wixstatic.com/media/6420e3_';
 const wix=(id,w,h,mode='fill')=>`${WIX}${id}/v1/${mode}/w_${w},h_${h},al_c,q_85/img.jpg`;
-document.querySelectorAll('img[data-wix]').forEach(i=>{i.src=wix(i.dataset.wix,i.dataset.w,i.dataset.h,i.dataset.mode||'fill');i.loading='lazy'});
-
-/* Hero slider */
-const slides=[...document.querySelectorAll('#hero .slide')],dots=document.getElementById('dots');let cur=0,timer;
-slides.forEach((_,i)=>{const b=document.createElement('button');b.setAttribute('aria-label','Slide '+(i+1));b.onclick=()=>go(i,true);dots.appendChild(b)});
-function go(i,user){slides[cur].classList.remove('on');dots.children[cur].classList.remove('on');cur=i;slides[cur].classList.add('on');dots.children[cur].classList.add('on');if(user){clearInterval(timer);auto()}}
-function auto(){timer=setInterval(()=>go((cur+1)%slides.length),6000)}
-dots.children[0].classList.add('on');auto();
+document.querySelectorAll('img[data-wix]').forEach(i=>{i.loading=i.dataset.eager?'eager':'lazy';i.src=wix(i.dataset.wix,i.dataset.w,i.dataset.h,i.dataset.mode||'fill')});
 
 /* Categorie */
 const cats=[
@@ -308,6 +355,75 @@ const hdr=document.getElementById('hdr');addEventListener('scroll',()=>hdr.class
 const dr=document.getElementById('drawer');document.getElementById('openMenu').onclick=()=>dr.classList.add('open');document.getElementById('closeMenu').onclick=()=>dr.classList.remove('open');dr.querySelectorAll('nav a').forEach(a=>a.onclick=()=>dr.classList.remove('open'));
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('shown');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* Mini bici sotto l'header: avanza con lo scroll della pagina */
+const ride=document.getElementById('ride'),rideBike=ride.querySelector('svg'),rideW=[...ride.querySelectorAll('.w')];
+function rideUpdate(){const max=document.documentElement.scrollHeight-innerHeight,p=max>0?Math.min(1,scrollY/max):0;ride.style.setProperty('--p',p);rideBike.style.transform=`translateX(${p*(ride.clientWidth-30)}px)`;rideW.forEach((w,i)=>w.setAttribute('transform',`rotate(${scrollY*.9} ${i?24:6} 12)`))}
+addEventListener('scroll',rideUpdate,{passive:true});addEventListener('resize',rideUpdate);rideUpdate();
+
+/* Animazioni a scorrimento (GSAP + ScrollTrigger + Lenis).
+   Se le librerie non si caricano o c'è "riduci movimento", la home resta statica. */
+if(window.gsap&&window.ScrollTrigger){
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)',()=>{
+    /* Scroll fluido, anche per i link interni (#bici, #officina…) */
+    let lenis,raf;
+    const onAnchor=e=>{const a=e.target.closest('a[href^="#"]');const t=a&&a.getAttribute('href').length>1&&document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();lenis.scrollTo(t.getBoundingClientRect().top+scrollY-hdr.offsetHeight-8)};
+    if(window.Lenis){lenis=new Lenis({lerp:.11});lenis.on('scroll',ScrollTrigger.update);raf=t=>lenis.raf(t*1000);gsap.ticker.add(raf);gsap.ticker.lagSmoothing(0);document.addEventListener('click',onAnchor)}
+
+    /* Hero: la bici prende forma (Scegli → Misura → Montaggio) e parte (In strada) */
+    const $=id=>document.getElementById(id);
+    const sh=$('sh'),stage=$('shStage'),bike=$('shBike'),solid=$('shSolid'),dim=$('shDim');
+    sh.classList.add('anim');
+    const NS='http://www.w3.org/2000/svg';
+    [['shWr',150],['shWf',452]].forEach(([id,cx])=>{const g=$(id);if(g.querySelector('.sp'))return;for(let k=0;k<16;k++){const a=k*Math.PI/8,l=document.createElementNS(NS,'line');l.setAttribute('class','sp');l.setAttribute('x1',cx+Math.cos(a)*9);l.setAttribute('y1',250+Math.sin(a)*9);l.setAttribute('x2',cx+Math.cos(a+.35)*70);l.setAttribute('y2',250+Math.sin(a+.35)*70);g.appendChild(l)}});
+    const ghost=solid.cloneNode(true);ghost.removeAttribute('id');ghost.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));ghost.setAttribute('class','bk ghost');solid.before(ghost);
+    const dash=els=>els.forEach(p=>{const L=p.getTotalLength();p.style.strokeDasharray=`${L} ${L+2}`;p.dataset.l=L+1});
+    const parts=[...solid.querySelectorAll('.p')],inW=p=>p.closest('.wheel'),inD=p=>p.closest('#shCrank')||p.classList.contains('thin');
+    const order=[...parts.filter(p=>!inW(p)&&!inD(p)),...parts.filter(inW),...parts.filter(inD)];
+    const dimPaths=[...dim.querySelectorAll('path')];
+    dash(order);dash(dimPaths);
+    const off=els=>({strokeDashoffset:i=>els[i].dataset.l});
+    const lis=[...$('shSteps').querySelectorAll('li')],cap=$('shCap');
+    const CAP=["Scegli online o in negozio, con chi pedala da oltre cinquant'anni.",'Misuriamo la taglia su di te: altezza sella, reach e stack.','La montiamo e la regoliamo nella nostra officina.','La ritiri in negozio a Varese, pronta da pedalare.'];
+    const PH=[0,2.2,4.2,6.6,8.6];let cur=-1;
+    const stepUpdate=t=>{lis.forEach((li,i)=>li.firstChild.style.setProperty('--p',gsap.utils.clamp(0,1,(t-PH[i])/(PH[i+1]-PH[i]))));let a=0;PH.slice(0,4).forEach((v,i)=>{if(t>=v)a=i});if(a!==cur){cur=a;lis.forEach((li,i)=>li.classList.toggle('on',i===a));cap.innerHTML=`<b>0${a+1}</b><span>${CAP[a]}</span>`}};
+    const ease='power1.in',RIDE=2.2;
+    const tl=gsap.timeline({defaults:{ease:'none'},onUpdate(){stepUpdate(this.time())},scrollTrigger:{trigger:sh,pin:true,start:()=>`top ${hdr.offsetHeight}px`,end:()=>'+='+Math.round(innerHeight*(innerWidth<760?2.2:2.8)),scrub:.6,invalidateOnRefresh:true}});
+    tl.fromTo(ghost,{opacity:.4},{opacity:1,duration:1.2},0)
+      .to('#shHint',{autoAlpha:0,duration:.6},.3)
+      .to('#shIntro',{autoAlpha:0,y:-40,duration:1.1},1.1)
+      .fromTo(dimPaths,off(dimPaths),{strokeDashoffset:0,duration:.8,stagger:.25,ease:'power1.inOut'},2.2)
+      .fromTo(dim.querySelectorAll('text'),{opacity:0},{opacity:1,duration:.5,stagger:.2},2.8)
+      .fromTo(order,off(order),{strokeDashoffset:0,duration:.9,stagger:{amount:1.5},ease:'power1.inOut'},4.2)
+      .to(ghost,{opacity:0,duration:.8},5.6)
+      .to(dim,{opacity:0,duration:.6},5.8)
+      .fromTo(solid.querySelectorAll('.sp'),{opacity:0},{opacity:1,duration:.5},5.9)
+      .to(bike,{x:()=>stage.clientWidth-bike.offsetLeft+60,duration:RIDE,ease},6.6)
+      .to('#shWr',{rotation:1440,svgOrigin:'150 250',duration:RIDE,ease},6.6)
+      .to('#shWf',{rotation:1440,svgOrigin:'452 250',duration:RIDE,ease},6.6)
+      .to('#shCrank',{rotation:720,svgOrigin:'282 262',duration:RIDE,ease},6.6)
+      .to('.sh-hills',{xPercent:-25,duration:2.4},6.4)
+      .to('.sh-road',{backgroundPositionX:'-520px',duration:2.4},6.4)
+      .fromTo('.sh-photo',{clipPath:'inset(0% 100% 0% 0%)'},{clipPath:'inset(0% 0% 0% 0%)',duration:RIDE,ease},6.8)
+      .fromTo('.sh-veil',{opacity:0},{opacity:1,duration:1},7.8)
+      .to('#shSteps',{autoAlpha:0,duration:.5},8.4)
+      .fromTo('#shFinal>*',{autoAlpha:0,y:40},{autoAlpha:1,y:0,duration:.8,stagger:.15},8.6)
+      .fromTo('#shTag',{autoAlpha:0},{autoAlpha:1,duration:.6},9)
+      .set({},{},10);
+    stepUpdate(0);
+
+    /* Sezioni: card che salgono in sequenza, foto in parallasse, numeri che contano */
+    ScrollTrigger.batch('.usp>div,#cats .cat,#prods .card,#miniGrid .mini',{start:'top 92%',once:true,onEnter:b=>gsap.fromTo(b,{y:50,autoAlpha:0},{y:0,autoAlpha:1,duration:.8,stagger:.08,ease:'power3.out'})});
+    gsap.fromTo('.band>img',{yPercent:-10,scale:1.2},{yPercent:10,scale:1.2,ease:'none',scrollTrigger:{trigger:'.band',start:'top bottom',end:'bottom top',scrub:true}});
+    gsap.fromTo('.split .big img',{scale:.82,rotate:-4},{scale:1,rotate:0,ease:'none',scrollTrigger:{trigger:'.split',start:'top bottom',end:'center center',scrub:true}});
+    document.querySelectorAll('.collage img').forEach((im,i)=>{const d=i?-24:32;gsap.fromTo(im,{y:d},{y:-d,ease:'none',scrollTrigger:{trigger:'.collage',start:'top bottom',end:'bottom top',scrub:true}})});
+    document.querySelectorAll('.stats b').forEach(b=>{const m=b.textContent.match(/^(\d+)(.*)$/);if(!m)return;const n=+m[1],o={v:n>1000?1900:0};gsap.to(o,{v:n,duration:1.6,ease:'power2.out',scrollTrigger:{trigger:b,start:'top 90%',once:true},onUpdate:()=>{b.textContent=Math.round(o.v)+m[2]}})});
+    document.fonts.ready.then(()=>ScrollTrigger.refresh());
+
+    return()=>{sh.classList.remove('anim');ghost.remove();if(lenis){gsap.ticker.remove(raf);lenis.destroy();document.removeEventListener('click',onAnchor)}};
+  });
+}
 </script>
 </body>
 </html>

@@ -264,3 +264,63 @@
 nav.main a.nav-off{color:#C2410C}
 nav.main a.nav-off:hover{background:#FFF1EA}
 .drawer nav a.nav-off{color:#FFB38A}
+
+/* Hero a scorrimento (home): la bici prende forma e parte.
+   Stato base = foto + titolo; la classe .anim (aggiunta dal JS) attiva la scena. */
+.sh{padding:12px var(--gutter)}
+.sh-stage{--road:17%;position:relative;max-width:calc(var(--maxw) + 2*var(--gutter));margin:0 auto;height:calc(100svh - 100px);min-height:540px;max-height:920px;border-radius:var(--radius-lg);overflow:hidden;color:#fff;background:radial-gradient(120% 90% at 68% 42%,#2447C8 0%,var(--blue-deep) 72%);isolation:isolate}
+.sh-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+.sh-veil{position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(90deg,rgba(8,14,40,.82) 0%,rgba(8,14,40,.45) 45%,rgba(8,14,40,.05) 75%),linear-gradient(0deg,rgba(8,14,40,.55),transparent 40%)}
+.sh .hero-copy,.sh .hero-tag{z-index:6}
+.sh-grid,.sh-hills,.sh-road,.sh-bike,.sh-intro,.sh-steps{display:none}
+.sh.anim .sh-grid,.sh.anim .sh-hills,.sh.anim .sh-road,.sh.anim .sh-bike,.sh.anim .sh-intro,.sh.anim .sh-steps{display:block}
+.sh-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(75% 70% at 62% 55%,#000 25%,transparent 100%);mask-image:radial-gradient(75% 70% at 62% 55%,#000 25%,transparent 100%)}
+.sh-hills{position:absolute;left:0;bottom:var(--road);width:200%;height:30%;z-index:0}
+.sh-hills .far{fill:rgba(255,255,255,.06)}
+.sh-hills .near{fill:rgba(14,34,117,.55)}
+.sh-road{position:absolute;left:0;right:0;bottom:calc(var(--road) - 2px);height:2px;z-index:1;background:repeating-linear-gradient(90deg,rgba(216,204,178,.6) 0 28px,transparent 28px 52px)}
+.sh-bike{position:absolute;z-index:5;left:42%;bottom:var(--road);width:min(50vw,740px)}
+.sh-bike svg{display:block;width:100%;height:auto;overflow:visible}
+.sh-bike .bk *{fill:none;stroke:#fff;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.sh-bike .bk .tire{stroke-width:9}
+.sh-bike .bk .rim{stroke-width:3;stroke:var(--stone)}
+.sh-bike .bk .thick{stroke-width:10}
+.sh-bike .bk .head{stroke-width:12}
+.sh-bike .bk .saddle{stroke-width:8}
+.sh-bike .bk .thin,.sh-bike .bk .sp{stroke-width:1.6;stroke:rgba(255,255,255,.75)}
+.sh-bike .ghost *{stroke:rgba(216,204,178,.6)!important;stroke-width:2!important;stroke-dasharray:2 7}
+.sh-bike .ghost .sp{display:none}
+.sh-bike .dim .gd{fill:none;stroke:rgba(216,204,178,.45);stroke-width:1.2;stroke-dasharray:3 5}
+.sh-bike .dim .dl{fill:none;stroke:var(--stone);stroke-width:1.6;stroke-linecap:round}
+.sh-bike .dim text{fill:var(--stone);font:600 14px Inter,system-ui,sans-serif;letter-spacing:.04em}
+.sh-intro{position:absolute;z-index:6;left:clamp(24px,5vw,72px);top:clamp(28px,7vh,72px);max-width:600px}
+.sh-intro .eyebrow{color:var(--stone)}
+.sh-intro .display{font-size:clamp(38px,5.4vw,80px);margin-top:12px}
+.sh-hint{display:flex;align-items:center;gap:14px;margin-top:26px;font-size:14px;line-height:1.35;opacity:.85}
+.sh-hint i{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(255,255,255,.45);display:grid;place-items:center;flex:none}
+.sh-hint svg{width:18px;height:18px;animation:sh-nudge 1.8s ease-in-out infinite}
+@keyframes sh-nudge{50%{transform:translateY(4px)}}
+.sh-steps{position:absolute;z-index:6;left:clamp(24px,5vw,72px);right:clamp(24px,5vw,72px);bottom:22px}
+.sh-cap{display:flex;gap:12px;align-items:baseline;max-width:520px;margin-bottom:16px;font-size:15.5px;line-height:1.4;min-height:2.8em}
+.sh-cap b{font-family:Archivo;font-stretch:112%;font-weight:800;color:var(--stone);font-size:14px}
+.sh-cap span{animation:sh-in .45s ease both}
+@keyframes sh-in{from{opacity:0;transform:translateY(8px)}}
+.sh-steps ol{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:640px}
+.sh-steps li{font-size:12.5px;font-weight:600;letter-spacing:.02em;opacity:.55;transition:opacity .3s}
+.sh-steps li.on{opacity:1}
+.sh-steps li i{--p:0;display:block;height:2px;margin-bottom:8px;background:rgba(255,255,255,.22);position:relative;overflow:hidden}
+.sh-steps li i::after{content:"";position:absolute;inset:0;background:#fff;transform-origin:left;transform:scaleX(var(--p))}
+@media(max-width:760px){
+  .sh-stage{--road:30%}
+  .sh-bike{left:4%;width:92vw}
+  .sh-steps{bottom:16px}
+  .sh-cap{font-size:14px;margin-bottom:12px}
+  .sh-steps ol{gap:8px}
+  .sh-steps li{font-size:11px}
+}
+
+/* Mini bici sotto l'header: avanza con lo scroll della pagina */
+.ride{position:absolute;left:0;right:0;bottom:-1px;height:2px;pointer-events:none;opacity:0;transition:opacity .3s}
+header.scrolled .ride{opacity:1}
+.ride b{position:absolute;left:0;top:0;height:2px;width:100%;background:var(--blue);transform-origin:left;transform:scaleX(var(--p,0))}
+.ride svg{position:absolute;left:0;bottom:1px;width:30px;height:18px;fill:none;stroke:var(--blue);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
