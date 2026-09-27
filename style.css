@@ -318,6 +318,8 @@ nav.main a.nav-off:hover{background:#FFF1EA}
   .sh .hero-copy p{display:none}
   .sh .hero-ctas{margin-top:22px;gap:10px}
   .sh .hero-ctas .btn{padding:12px 20px;font-size:14.5px}
+  .services{gap:8px}
+  .services div{padding:12px 16px;border-radius:12px}
   .ride{display:none}
 }
 
