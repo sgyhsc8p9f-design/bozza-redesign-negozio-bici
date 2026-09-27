@@ -266,10 +266,6 @@
 
 .card{position:relative}
 
-/* Link rosso "Offerte" nel menu */
-nav.main a.nav-off{color:#C2410C}
-nav.main a.nav-off:hover{background:#FFF1EA}
-.drawer nav a.nav-off{color:#FFB38A}
 
 /* Hero a scorrimento (home): la bici prende forma e parte.
    Stato base = foto + titolo; la classe .anim (aggiunta dal JS) attiva la scena. */
@@ -333,3 +329,33 @@ header.scrolled .ride{opacity:1}
 .ride b{position:absolute;left:0;top:0;height:2px;width:100%;background:var(--blue);transform-origin:left;transform:scaleX(var(--p,0))}
 .ride svg{position:absolute;left:0;bottom:1px;width:30px;height:18px;fill:none;stroke:var(--blue);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .contact a small{display:block;font-size:12.5px;color:var(--muted)}
+
+/* Menu a tendina, uguale su tutte le pagine (prima era solo nel catalogo) */
+nav.main{align-self:stretch;align-items:stretch;gap:2px}
+nav.main>a{align-self:center}
+.mm{position:static;display:flex;align-items:center}
+.mm-t{display:inline-flex!important;align-items:center;gap:4px}
+.mm-t .chev{width:14px;height:14px;transition:transform .2s}
+.mm:hover .mm-t .chev,.mm:focus-within .mm-t .chev{transform:rotate(180deg)}
+.mm-p{position:absolute;left:0;right:0;top:100%;background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);box-shadow:0 24px 40px -24px rgba(14,19,32,.25);z-index:60;visibility:hidden;opacity:0;transform:translateY(-6px);transition:opacity .16s,transform .16s,visibility 0s linear .16s}
+/* ponte invisibile sopra il pannello: il mouse non esce dal menu passando sul bordo dell'header */
+.mm-p::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:14px}
+.mm:hover .mm-p,.mm:focus-within .mm-p{visibility:visible;opacity:1;transform:none;transition-delay:.05s,.05s,0s}
+.mm.shut .mm-p{visibility:hidden!important;opacity:0!important;transition:none!important}
+.mm-g{display:flex;gap:40px;padding-top:26px;padding-bottom:30px}
+.mm-c{min-width:190px}
+.mm-c h5{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+nav.main .mm-p a{display:flex;justify-content:space-between;gap:16px;padding:7px 10px;margin-left:-10px;border-radius:10px;font-size:15px;font-weight:500}
+nav.main .mm-p a span{color:var(--muted);font-size:13px}
+nav.main .mm-p a:hover{background:var(--stone-light);color:var(--blue)}
+.mm-x{margin-left:auto;padding-left:30px;border-left:1px solid var(--line)}
+nav.main a.nav-off,.drawer nav a.nav-off{color:#C2410C}
+nav.main a.nav-off:hover{background:#FFF1EA}
+.drawer nav details{border-bottom:1px solid rgba(255,255,255,.15)}
+.drawer nav summary{font-family:Archivo;font-stretch:112%;font-weight:800;font-size:34px;padding:8px 0;list-style:none;cursor:pointer}
+.drawer nav summary::-webkit-details-marker{display:none}
+.drawer nav details a{font-family:Inter;font-weight:500;font-size:17px;padding:8px 0 8px 4px;border:0;display:block}
+.drawer nav details a.d-all{color:var(--stone);font-weight:700}
+.drawer nav a.d-small{font-size:18px;font-family:Inter;font-weight:600;border:0;padding:6px 0}
+.drawer nav a.nav-off{color:#FFB38A}
+
