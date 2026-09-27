@@ -324,26 +324,4 @@ nav.main a.nav-off:hover{background:#FFF1EA}
 header.scrolled .ride{opacity:1}
 .ride b{position:absolute;left:0;top:0;height:2px;width:100%;background:var(--blue);transform-origin:left;transform:scaleX(var(--p,0))}
 .ride svg{position:absolute;left:0;bottom:1px;width:30px;height:18px;fill:none;stroke:var(--blue);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-
-/* Dicono di noi: media e numero delle recensioni Google Maps */
-.rev{background:linear-gradient(180deg,#fff 0%,#EEF1FA 100%)}
-.rev-in{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(32px,6vw,96px);align-items:center}
-.rev-dot{display:flex;align-items:center;gap:10px}
-.rev-dot::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--blue)}
-.rev h2{font-size:clamp(36px,4.8vw,64px);margin:14px 0 22px}
-.rev h2 span{color:#8A90A2}
-.rev-in>div>p{color:var(--muted);max-width:460px;font-size:17px}
-.rev-card{background:#fff;border-radius:var(--radius-lg);padding:clamp(28px,4vw,52px);box-shadow:0 40px 80px -40px rgba(14,34,117,.28),0 2px 6px rgba(14,34,117,.05);display:flex;flex-direction:column;gap:clamp(28px,4vw,44px)}
-.rev-src{display:flex;align-items:center;gap:16px}
-.rev-src i{width:54px;height:54px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;color:var(--blue);flex:none}
-.rev-src i svg{width:22px;height:22px}
-.rev-src b{display:block;font-size:18px}
-.rev-src span{color:var(--muted);font-size:15px}
-.rev-nums{display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap}
-.rev-score{display:block;font-family:Archivo;font-stretch:112%;font-weight:900;font-size:clamp(84px,10vw,136px);line-height:.85;letter-spacing:-.03em;color:var(--ink);font-variant-numeric:tabular-nums}
-.rev-lbl{color:var(--muted);font-size:18px;line-height:1.35;padding-bottom:4px}
-.rev-btn{align-self:flex-start;padding:10px 10px 10px 24px}
-.rev-btn i{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center}
-.rev-note{color:var(--muted);font-size:12.5px;margin-top:-24px}
-@media(max-width:900px){.rev-in{grid-template-columns:1fr}}
-@media(max-width:520px){.rev-btn{white-space:normal}}
+.contact a small{display:block;font-size:12.5px;color:var(--muted)}

@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=rev3">
+<link rel="stylesheet" href="style.css?v=rev4">
 <style>html.lenis,html.lenis body{height:auto}html.lenis{scroll-behavior:auto!important}.lenis.lenis-smooth iframe{pointer-events:none}</style>
 <style>.demo-banner{position:relative;z-index:1;background:#0E1320;color:#fff;font:600 13px/1.4 Inter,system-ui,sans-serif;text-align:center;padding:9px 16px}.demo-banner a{color:#D8CCB2;text-decoration:underline;margin-left:6px}@media print{.demo-banner{display:none}}</style>
 </head>
@@ -221,29 +221,6 @@
   </div>
 </section>
 
-<!-- DICONO DI NOI: numero delle recensioni su Google Maps (dato del 27/09/2026, da aggiornare a mano) -->
-<section class="rev" id="recensioni">
-  <div class="wrap rev-in">
-    <div class="reveal">
-      <div class="eyebrow rev-dot">Dicono di noi</div>
-      <h2 class="display">Chiedete a chi<br><span>è già passato da noi.</span></h2>
-      <p>Su Google Maps 93 ciclisti hanno raccontato come si sono trovati in negozio e in officina. Leggi le loro recensioni prima di venirci a trovare.</p>
-    </div>
-    <div class="rev-card reveal" data-count="93">
-      <div class="rev-src">
-        <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></i>
-        <p><b>Google Maps</b><span>La scheda di Cicli Ambrosini</span></p>
-      </div>
-      <div class="rev-nums">
-        <b class="rev-score" id="revCount">93</b>
-        <p class="rev-lbl">recensioni di clienti<br>su Google Maps</p>
-      </div>
-      <a class="btn btn-blue rev-btn" href="https://maps.google.com/?cid=14169359840540097843" target="_blank" rel="noopener">Vedi la scheda su Google Maps <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></i></a>
-      <small class="rev-note">Recensioni pubblicate su Google Maps, non verificate da noi.</small>
-    </div>
-  </div>
-</section>
-
 <!-- VIENI A TROVARCI -->
 <section class="visit" id="visita">
   <div class="wrap">
@@ -261,6 +238,7 @@
         <a href="https://www.google.com/maps/search/?api=1&query=Piazza+Madonnina+in+Prato+1+Varese" target="_blank" rel="noopener"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></i>Piazza Madonnina in Prato, 1<br>21100 Varese</a>
         <a href="tel:+390332240109"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></i>+39 0332 240109</a>
         <a href="mailto:cicliambrosini@cicliambrosini.com"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></i>cicliambrosini@cicliambrosini.com</a>
+        <a href="https://maps.google.com/?cid=14169359840540097843" target="_blank" rel="noopener"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg></i><span>93 recensioni su Google Maps<small>Non verificate da noi · dato di settembre 2026</small></span></a>
       </div>
       <div class="map"><iframe loading="lazy" title="Mappa" src="https://www.google.com/maps?q=Piazza+Madonnina+in+Prato+1,+Varese&output=embed"></iframe></div>
     </div>
@@ -442,7 +420,6 @@ if(window.gsap&&window.ScrollTrigger){
     gsap.fromTo('.split .big img',{scale:.82,rotate:-4},{scale:1,rotate:0,ease:'none',scrollTrigger:{trigger:'.split',start:'top bottom',end:'center center',scrub:true}});
     document.querySelectorAll('.collage img').forEach((im,i)=>{const d=i?-24:32;gsap.fromTo(im,{y:d},{y:-d,ease:'none',scrollTrigger:{trigger:'.collage',start:'top bottom',end:'bottom top',scrub:true}})});
     document.querySelectorAll('.stats b').forEach(b=>{const m=b.textContent.match(/^(\d+)(.*)$/);if(!m)return;const n=+m[1],o={v:n>1000?1900:0};gsap.to(o,{v:n,duration:1.6,ease:'power2.out',scrollTrigger:{trigger:b,start:'top 90%',once:true},onUpdate:()=>{b.textContent=Math.round(o.v)+m[2]}})});
-    const rc=document.querySelector('.rev-card');if(rc){const N=+rc.dataset.count,o={n:0},cn=$('revCount');gsap.to(o,{n:N,duration:1.6,ease:'power2.out',scrollTrigger:{trigger:rc,start:'top 85%',once:true},onUpdate:()=>{cn.textContent=Math.round(o.n)}})}
     document.fonts.ready.then(()=>ScrollTrigger.refresh());
 
     return()=>{sh.classList.remove('anim');ghost.remove();if(lenis){gsap.ticker.remove(raf);lenis.destroy();document.removeEventListener('click',onAnchor)}};
