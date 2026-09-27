@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Demo non ufficiale · Catalogo — Cicli Ambrosini (bozza)</title>
 <meta name="description" content="Bozza concept del catalogo completo di Cicli Ambrosini, con schede prodotto verificate sui siti dei produttori.">
+<script src="menu.js?v=1" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Inter:wght@400;500;600;700&family=Righteous&display=swap" rel="stylesheet">
@@ -350,11 +351,12 @@ nav.main>a{align-self:center}
 .mm{position:static;display:flex;align-items:center}
 .mm-t{display:inline-flex!important;align-items:center;gap:4px}
 .mm-t .chev{width:14px;height:14px;transition:transform .2s}
-.mm:hover .mm-t .chev,.mm:focus-within .mm-t .chev{transform:rotate(180deg)}
+html:not(.mmjs) .mm:hover .mm-t .chev,.mm.open .mm-t .chev,.mm:focus-within .mm-t .chev{transform:rotate(180deg)}
 .mm-p{position:absolute;left:0;right:0;top:100%;background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);box-shadow:0 24px 40px -24px rgba(14,19,32,.25);z-index:60;visibility:hidden;opacity:0;transform:translateY(-6px);transition:opacity .16s,transform .16s,visibility 0s linear .16s}
 /* ponte invisibile sopra il pannello: il mouse non esce dal menu passando sul bordo dell'header */
 .mm-p::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:14px}
-.mm:hover .mm-p,.mm:focus-within .mm-p{visibility:visible;opacity:1;transform:none;transition-delay:.05s,.05s,0s}
+/* aperto: con menu.js la classe .open (con ritardi "intelligenti"); senza script il semplice :hover */
+html:not(.mmjs) .mm:hover .mm-p,.mm.open .mm-p,.mm:focus-within .mm-p{visibility:visible;opacity:1;transform:none;transition-delay:.05s,.05s,0s}
 .mm.shut .mm-p{visibility:hidden!important;opacity:0!important;transition:none!important}
 .mm-g{display:flex;gap:40px;padding-top:26px;padding-bottom:30px}
 .mm-c{min-width:190px}
@@ -616,16 +618,7 @@ nav.main a.nav-off:hover{background:#FFF1EA}
 .link{font-size:13.5px;font-weight:600;color:var(--blue);text-decoration:underline;text-underline-offset:3px}
 .svc-price{font-size:12.5px;color:var(--stone-dark);font-weight:600}
 
-/* ===== Organizzazione stile Canyon: riquadri, pannello filtri, confronto, questionario ===== */
-.tiles{display:flex;gap:12px;overflow-x:auto;padding:4px 0 18px;scrollbar-width:thin;margin-top:6px}
-.tile{flex:none;width:150px;display:grid;gap:6px;text-align:left;border-radius:16px;padding:8px;border:1.5px solid transparent;background:none;color:inherit;font:inherit;cursor:pointer}
-.tile:hover{border-color:var(--line)}
-.tile.on{border-color:var(--blue);background:var(--blue-soft)}
-.tile .ti{aspect-ratio:4/3;border-radius:12px;background:#F4F4F1;overflow:hidden;display:grid;place-items:center}
-.tile .ti img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;padding:6%}
-.tile.help .ti{background:var(--blue);color:#fff;font-size:34px;font-family:Archivo;font-weight:800}
-.tile .tt{font-weight:600;font-size:14px;line-height:1.25}
-.tile .tn{font-size:12.5px;color:var(--muted)}
+/* ===== Organizzazione stile Canyon: pannello filtri, confronto, questionario ===== */
 .list-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0 16px;border-bottom:1px solid var(--line);margin-bottom:22px;flex-wrap:wrap}
 .rcount{font-size:14.5px;color:var(--muted)}.rcount b{color:var(--ink)}
 .list-ctl{display:flex;gap:8px}
@@ -857,18 +850,6 @@ function priceBands(base){const bike=base.length&&base.filter(p=>p.grp==='Bici')
   return bike?[[0,1500,'Fino a 1.500 €'],[1500,3000,'1.500–3.000 €'],[3000,6000,'3.000–6.000 €'],[6000,null,'Oltre 6.000 €']]:[[0,30,'Fino a 30 €'],[30,80,'30–80 €'],[80,200,'80–200 €'],[200,null,'Oltre 200 €']]}
 
 /* ---------- Riquadri delle sottocategorie (come Canyon) ---------- */
-function tileImg(list){const p=[...list].sort((a,b)=>b.p-a.p).find(x=>x.img[0]);return p?wix(p.img[0],360,280):''}
-function tilesHtml(base){
-  let tiles=[];
-  if(S.cat){const f=FACETS.find(x=>x.k==='uso');const c=facetCounts(f,VISIBLE.filter(p=>p.cat===S.cat));
-    const us=Object.keys(c);if(us.length>1)tiles=us.map(u=>({t:u,n:c[u],img:tileImg(VISIBLE.filter(p=>p.cat===S.cat&&p.f.uso===u)),act:`data-tile-uso="${esc(u)}"`,on:(S.fx.uso||[]).includes(u)}))}
-  else if(S.grp&&S.grp!=='Offerte'){const cats=[...new Set(base.map(p=>p.cat))].sort((a,b)=>{const all=GROUPS.flatMap(g=>g[1]);return all.indexOf(a)-all.indexOf(b)});
-    tiles=cats.map(c=>({t:c,n:base.filter(p=>p.cat===c).length,img:tileImg(base.filter(p=>p.cat===c)),href:'#/c/'+encodeURIComponent(c)}));
-    if(S.grp==='Bici'||S.grp==='E-bike')tiles.push({t:'Aiutami a scegliere',n:null,img:'',href:'#/aiutami',help:1})}
-  else if(!S.cat&&!S.grp&&!S.q){tiles=GROUPS.map(([g])=>({t:g,n:VISIBLE.filter(p=>p.grp===g).length,img:tileImg(VISIBLE.filter(p=>p.grp===g)),href:'#/g/'+encodeURIComponent(g)}));tiles.push({t:'Aiutami a scegliere',img:'',href:'#/aiutami',help:1})}
-  if(!tiles.length)return'';
-  return `<div class="tiles" role="list">${tiles.map(t=>`<${t.href?`a href="${t.href}"`:`button type="button" ${t.act}`} class="tile ${t.on?'on':''} ${t.help?'help':''}" role="listitem"><span class="ti">${t.img?`<img src="${t.img}" alt="" loading="lazy">`:`<b>?</b>`}</span><span class="tt">${esc(t.t)}</span>${t.n!=null?`<span class="tn">${t.n}</span>`:''}</${t.href?'a':'button'}>`).join('')}</div>`}
-
 /* ---------- Scheda nell'elenco ---------- */
 let CMP=LS.get('ca_cmp',[]).filter(s=>BY[s]);
 const needsChoice=p=>isRes(p)||isBike(p)||p.opt.some(o=>o.v&&o.v.length>1);
@@ -900,7 +881,6 @@ function renderList(){
   app.innerHTML=`<div class="wrap">
   <div class="cat-hero"><div class="eyebrow">${esc(S.eyebrow||(S.cat?BY_CAT_GROUP(S.cat):'Negozio online'))}</div><h1 class="display">${esc(title)}</h1>
   ${S.grp==='Offerte'?'<p>I prodotti con almeno il 20% di sconto, dal più scontato.</p>':''}</div>
-  ${tilesHtml(base)}
   <div class="list-top"><span class="rcount"><b>${l.length}</b> articol${l.length===1?'o':'i'}</span>
     <div class="list-ctl"><select id="fSort" aria-label="Ordina"><option value="rel">In evidenza</option><option value="pa">Prezzo crescente</option><option value="pd">Prezzo decrescente</option><option value="sc">Sconto maggiore</option><option value="nm">Nome A–Z</option></select>
     <button class="btn-f" id="fBtn" aria-expanded="${S.panel}">${S.panel?'Chiudi filtri ✕':'Filtri'}${af?` (${af})`:''}</button></div></div>
@@ -933,7 +913,6 @@ function renderList(){
   app.querySelectorAll('[data-band]').forEach(b=>b.onclick=()=>{const [a,z]=b.dataset.band.split('-');const na=+a,nz=z===''?null:+z;if(S.pmin===na&&S.pmax===nz){S.pmin=S.pmax=null}else{S.pmin=na;S.pmax=nz}keepPanel(renderList)});
   $('pGo').onclick=()=>{const a=$('pMin').value,z=$('pMax').value;S.pmin=a===''?null:+a;S.pmax=z===''?null:+z;keepPanel(renderList)};
   app.querySelectorAll('input[name=disc]').forEach(r=>r.onchange=()=>{S.disc=+r.value;keepPanel(renderList)});
-  app.querySelectorAll('[data-tile-uso]').forEach(b=>b.onclick=()=>{const u=b.dataset.tileUso,sel=S.fx.uso=S.fx.uso||[];const i=sel.indexOf(u);if(i>=0)sel.splice(i,1);else{sel.length=0;sel.push(u)}renderList()});
   app.querySelectorAll('[data-clear]').forEach(b=>b.onclick=()=>{const k=b.dataset.clear,v=b.dataset.cv;if(k==='price'){S.pmin=S.pmax=null}else if(k==='disc')S.disc=0;else if(k==='q')S.q='';else S.fx[k]=(S.fx[k]||[]).filter(x=>x!==v);renderList()});
   const m=$('more');if(m)m.onclick=()=>{S.limit+=48;renderList()};
   cmpBar();
