@@ -259,3 +259,8 @@
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 
 .card{position:relative}
+
+/* Link rosso "Offerte" nel menu */
+nav.main a.nav-off{color:#C2410C}
+nav.main a.nav-off:hover{background:#FFF1EA}
+.drawer nav a.nav-off{color:#FFB38A}
