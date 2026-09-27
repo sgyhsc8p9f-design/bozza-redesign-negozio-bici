@@ -47,8 +47,10 @@
   header.scrolled{border-color:var(--line)}
   .head{display:flex;align-items:center;justify-content:space-between;height:76px;gap:24px}
   .logo{display:flex;flex-direction:column;line-height:.9;color:var(--blue)}
-  .logo small{font-family:Archivo;font-stretch:125%;font-weight:800;font-size:13px;letter-spacing:.08em}
-  .logo b{font-family:Archivo;font-stretch:125%;font-weight:900;font-size:26px;letter-spacing:.01em}
+  /* Logo come l'insegna del negozio (stile ITC Bauhaus): Righteous, ispessito con un contorno dello stesso colore */
+  .logo small,.logo b{font-family:Righteous,Archivo,sans-serif;font-weight:400;-webkit-text-stroke:.05em currentColor;letter-spacing:.025em}
+  .logo small{font-size:15px;text-transform:lowercase}
+  .logo b{font-size:27px}
   nav.main{display:flex;gap:4px}
   nav.main a{padding:10px 14px;border-radius:999px;font-weight:500;font-size:15px}
   nav.main a:hover{background:var(--stone-light)}
