@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=rev4">
+<link rel="stylesheet" href="style.css?v=m2">
 <style>html.lenis,html.lenis body{height:auto}html.lenis{scroll-behavior:auto!important}.lenis.lenis-smooth iframe{pointer-events:none}</style>
 <style>.demo-banner{position:relative;z-index:1;background:#0E1320;color:#fff;font:600 13px/1.4 Inter,system-ui,sans-serif;text-align:center;padding:9px 16px}.demo-banner a{color:#D8CCB2;text-decoration:underline;margin-left:6px}@media print{.demo-banner{display:none}}</style>
 </head>
@@ -360,13 +360,13 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 /* Mini bici sotto l'header: avanza con lo scroll della pagina */
 const ride=document.getElementById('ride'),rideBike=ride.querySelector('svg'),rideW=[...ride.querySelectorAll('.w')];
 function rideUpdate(){const max=document.documentElement.scrollHeight-innerHeight,p=max>0?Math.min(1,scrollY/max):0;ride.style.setProperty('--p',p);rideBike.style.transform=`translateX(${p*(ride.clientWidth-30)}px)`;rideW.forEach((w,i)=>w.setAttribute('transform',`rotate(${scrollY*.9} ${i?24:6} 12)`))}
-addEventListener('scroll',rideUpdate,{passive:true});addEventListener('resize',rideUpdate);rideUpdate();
+const rideOn=matchMedia('(min-width: 900px)');addEventListener('scroll',()=>{if(rideOn.matches)rideUpdate()},{passive:true});addEventListener('resize',rideUpdate);rideUpdate();
 
-/* Animazioni a scorrimento (GSAP + ScrollTrigger + Lenis).
-   Se le librerie non si caricano o c'è "riduci movimento", la home resta statica. */
+/* Animazioni a scorrimento (GSAP + ScrollTrigger + Lenis): solo da computer (da 900 px).
+   Su telefono e tablet in verticale, senza librerie o con "riduci movimento" la home resta statica e leggera. */
 if(window.gsap&&window.ScrollTrigger){
   gsap.registerPlugin(ScrollTrigger);
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)',()=>{
+  gsap.matchMedia().add('(min-width: 900px) and (prefers-reduced-motion: no-preference)',()=>{
     /* Scroll fluido, anche per i link interni (#bici, #officina…) */
     let lenis,raf;
     const onAnchor=e=>{const a=e.target.closest('a[href^="#"]');const t=a&&a.getAttribute('href').length>1&&document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();lenis.scrollTo(t.getBoundingClientRect().top+scrollY-hdr.offsetHeight-8)};

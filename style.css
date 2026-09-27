@@ -310,13 +310,15 @@ nav.main a.nav-off:hover{background:#FFF1EA}
 .sh-steps li.on{opacity:1}
 .sh-steps li i{--p:0;display:block;height:2px;margin-bottom:8px;background:rgba(255,255,255,.22);position:relative;overflow:hidden}
 .sh-steps li i::after{content:"";position:absolute;inset:0;background:#fff;transform-origin:left;transform:scaleX(var(--p))}
-@media(max-width:760px){
-  .sh-stage{--road:30%}
-  .sh-bike{left:4%;width:92vw}
-  .sh-steps{bottom:16px}
-  .sh-cap{font-size:14px;margin-bottom:12px}
-  .sh-steps ol{gap:8px}
-  .sh-steps li{font-size:11px}
+/* Telefono e tablet in verticale: niente animazione, solo foto, titolo e pulsanti */
+@media(max-width:899px){
+  .sh-stage{height:auto;min-height:0;max-height:none;display:flex;align-items:flex-end}
+  .sh .hero-copy{position:relative;left:auto;right:auto;bottom:auto;padding:clamp(170px,42vw,300px) 24px 26px}
+  .sh .hero-copy h1{margin:10px 0 0}
+  .sh .hero-copy p{display:none}
+  .sh .hero-ctas{margin-top:22px;gap:10px}
+  .sh .hero-ctas .btn{padding:12px 20px;font-size:14.5px}
+  .ride{display:none}
 }
 
 /* Mini bici sotto l'header: avanza con lo scroll della pagina */
