@@ -190,9 +190,12 @@
   @media(max-width:900px){.split{grid-template-columns:1fr}.split .big{min-height:440px}}
 
   /* Marchi */
-  .brands{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:30px 0}
-  .marquee{display:flex;gap:64px;width:max-content;animation:scroll 38s linear infinite}
-  .brands:hover .marquee{animation-play-state:paused}
+  /* Fila dei marchi: scorre via JS (index.html); si può trascinare o scorrere a mano */
+  .brands{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding:30px 0;cursor:grab;-webkit-user-select:none;user-select:none}
+  .brands::-webkit-scrollbar{display:none}
+  .brands.drag{cursor:grabbing}
+  .marquee{display:flex;gap:64px;width:max-content}
+  .marquee a{-webkit-user-drag:none}
   .marquee span{font-family:Archivo;font-stretch:125%;font-weight:800;font-size:clamp(24px,3vw,36px);color:#B9B3A6;text-transform:uppercase;letter-spacing:.02em;transition:color .2s}
   .marquee span:hover{color:var(--blue)}
   @keyframes scroll{to{transform:translateX(-50%)}}

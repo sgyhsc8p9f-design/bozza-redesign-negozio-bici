@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=m5">
+<link rel="stylesheet" href="style.css?v=mq1">
 <style>html.lenis,html.lenis body{height:auto}html.lenis{scroll-behavior:auto!important}.lenis.lenis-smooth iframe{pointer-events:none}</style>
 <style>.demo-banner{position:relative;z-index:1;background:#0E1320;color:#fff;font:600 13px/1.4 Inter,system-ui,sans-serif;text-align:center;padding:9px 16px}.demo-banner a{color:#D8CCB2;text-decoration:underline;margin-left:6px}@media print{.demo-banner{display:none}}</style>
 </head>
@@ -151,7 +151,7 @@
 </div>
 
 <!-- MARCHI -->
-<div class="brands" aria-label="Marchi trattati"><div class="marquee" id="marquee"></div></div>
+<div class="brands" aria-label="Marchi trattati" data-lenis-prevent-horizontal><div class="marquee" id="marquee"></div></div>
 
 <!-- BOTTEGA -->
 <section id="bottega">
@@ -263,6 +263,27 @@ let tt;function toast(m,link,label){const t=document.getElementById('toast');t.q
 /* Marchi: solo quelli presenti nel catalogo, ognuno porta ai suoi prodotti */
 const brands=['Colnago','Giant','Liv','Bianchi','Merida','Santini','Shimano','Sidi','Mavic','Lazer','MET','Vittoria','Elite','Selle Italia',"O'Neal",'Crono'];
 document.getElementById('marquee').innerHTML=[...brands,...brands].map((b,i)=>`<a href="catalogo.html#/?brand=${encodeURIComponent(b)}" ${i>=brands.length?'aria-hidden="true" tabindex="-1"':''}><span>${b}</span></a>`).join('');
+
+/* Scorrimento dei marchi: va da solo; col mouse sopra rallenta fino a fermarsi senza scatti;
+   si può trascinare col mouse o scorrere col trackpad e col dito, in entrambe le direzioni, all'infinito */
+(()=>{const bx=document.querySelector('.brands'),mq=document.getElementById('marquee'),n=brands.length,still=matchMedia('(prefers-reduced-motion: reduce)');
+  let pos=0,v=0,hold=false,drag=null,moved=0,seen=true,touchT;
+  const period=()=>mq.children[n].offsetLeft-mq.children[0].offsetLeft;
+  const wrap=()=>{const P=period();if(P>0){while(pos>=P)pos-=P;while(pos<0)pos+=P}};
+  bx.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')hold=true});
+  bx.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'){hold=false;drag=null;bx.classList.remove('drag')}});
+  bx.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||e.button!==0)return;drag={x:e.clientX,p:pos};moved=0;bx.classList.add('drag')});
+  addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x;moved=Math.max(moved,Math.abs(dx));pos=drag.p-dx;wrap();bx.scrollLeft=pos});
+  addEventListener('pointerup',()=>{drag=null;bx.classList.remove('drag')});
+  bx.addEventListener('click',e=>{if(moved>6){e.preventDefault();moved=0}},true);
+  bx.addEventListener('touchstart',()=>{hold=true;clearTimeout(touchT)},{passive:true});
+  bx.addEventListener('touchend',()=>{touchT=setTimeout(()=>hold=false,1500)},{passive:true});
+  bx.addEventListener('focusin',()=>hold=true);bx.addEventListener('focusout',()=>hold=false);
+  bx.addEventListener('scroll',()=>{if(Math.abs(bx.scrollLeft-pos)>1.5){pos=bx.scrollLeft;const b=pos;wrap();if(pos!==b)bx.scrollLeft=pos}},{passive:true});
+  const tick=dt=>{const r=bx.getBoundingClientRect();seen=r.bottom>0&&r.top<innerHeight;if(!seen)return;const target=(hold||drag||still.matches)?0:60;v+=(target-v)*Math.min(1,dt*4);if(Math.abs(v)>.5){pos+=v*dt;wrap();bx.scrollLeft=pos}};
+  let last=performance.now();
+  (function loop(now){if(now){tick(Math.min(.05,(now-last)/1000));last=now}requestAnimationFrame(loop)})();
+})();
 
 /* Orari con stato aperto/chiuso */
 const H=[['Domenica',[]],['Lunedì',[['14:30','18:30']]],['Martedì',[['8:30','12:15'],['14:30','18:30']]],['Mercoledì',[['8:30','12:15'],['14:30','18:30']]],['Giovedì',[['8:30','12:15'],['14:30','18:30']]],['Venerdì',[['8:30','12:15'],['14:30','18:30']]],['Sabato',[['8:30','12:15'],['14:30','18:00']]]];
