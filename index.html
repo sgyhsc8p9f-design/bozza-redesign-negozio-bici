@@ -232,7 +232,7 @@
 
 <script>
 const WIX='https://static.wixstatic.com/media/6420e3_';
-const wix=(id,w,h,mode='fill')=>`${WIX}${id}/v1/${mode}/w_${w},h_${h},al_c,q_85/img.jpg`;
+const wix=(id,w,h,mode='fill')=>`${WIX}${id}/v1/${mode}/w_${w},h_${h},al_c,q_85/img.${/\.png$/i.test(id)?'webp':'jpg'}`;
 document.querySelectorAll('img[data-wix]').forEach(i=>{i.loading=i.dataset.eager?'eager':'lazy';i.src=wix(i.dataset.wix,i.dataset.w,i.dataset.h,i.dataset.mode||'fill')});
 
 /* Categorie */

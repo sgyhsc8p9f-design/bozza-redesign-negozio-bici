@@ -368,7 +368,7 @@
 
 <script>
 const MER='https://merida-cdn.m-c-g.net/merida-v2/';
-const wix=(id,w,h,mode='fill')=>`https://static.wixstatic.com/media/6420e3_${id}/v1/${mode}/w_${w},h_${h},al_c,q_85/img.jpg`;
+const wix=(id,w,h,mode='fill')=>`https://static.wixstatic.com/media/6420e3_${id}/v1/${mode}/w_${w},h_${h},al_c,q_85/img.${/\.png$/i.test(id)?'webp':'jpg'}`;
 const OFFICIAL=MER+'crud-zoom-img/master/bikes/2027/REACTO_7000_grnwht_MY27.tif?p1';
 
 /* Galleria: foto ufficiale Merida + foto del negozio + dettagli ingranditi */
