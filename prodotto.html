@@ -245,7 +245,8 @@
       </div>
 
       <div class="cta">
-        <button class="btn btn-blue" id="buyBtn">Prenota la tua Reacto</button>
+        <a class="btn btn-blue" id="stripePayBtn" href="https://buy.stripe.com/test_fZu00l8cmcBfcAB8uI2ZO01" target="_blank" rel="noopener">Acquista con Carta / Apple Pay</a>
+        <button class="btn btn-ghost" id="buyBtn">Aggiungi al carrello</button>
         <button class="icon-btn" id="favBtn" aria-label="Aggiungi ai preferiti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
       </div>
       <div class="avail-note" id="availNote">Seleziona una taglia per vedere la disponibilità</div>
@@ -362,7 +363,7 @@
   </div>
 </footer>
 
-<div class="mbar" id="mbar"><p><b>4.989 €</b><span>o 3 rate da 1.663 €</span></p><button class="btn btn-blue" onclick="document.getElementById('buyBtn').click()">Prenota</button></div>
+<div class="mbar" id="mbar"><p><b>4.989 €</b><span>o 3 rate da 1.663 €</span></p><button class="btn btn-blue" onclick="document.getElementById('stripePayBtn').click()">Acquista</button></div>
 <div class="toast" id="toast"><i>✓</i><span></span></div>
 <div class="concept">Bozza concept · proposta di redesign</div>
 
@@ -442,6 +443,7 @@ const cc=document.getElementById('cartCount'),fc=document.getElementById('favCou
 function badges(){const c=LS.get('ca_cart',[]),f=LS.get('ca_fav',[]);const n=c.reduce((a,l)=>a+l.qty,0);cc.textContent=n;cc.classList.toggle('on',n>0);fc.textContent=f.length;fc.classList.toggle('on',f.length>0);document.getElementById('favBtn').classList.toggle('on',f.includes('merida-reacto-7000'))}
 let tt;function toast(m,link,label){const t=document.getElementById('toast');t.querySelector('span').innerHTML=m+(link?` <a href="${link}" style="color:var(--stone);font-weight:700;text-decoration:underline;margin-left:6px">${label}</a>`:'');t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),3200)}
 function toggleFav(sl){const f=LS.get('ca_fav',[]);const i=f.indexOf(sl);if(i>=0)f.splice(i,1);else f.push(sl);LS.set('ca_fav',f);badges();toast(i<0?'Aggiunto ai preferiti':'Tolto dai preferiti',i<0?'catalogo.html#/preferiti':null,'Vedi preferiti');return i<0}
+document.getElementById('stripePayBtn').onclick=e=>{if(!sel){e.preventDefault();document.getElementById('sizes').scrollIntoView({behavior:'smooth',block:'center'});toast('Scegli prima la taglia');return}};
 document.getElementById('buyBtn').onclick=()=>{if(!sel){document.getElementById('sizes').scrollIntoView({behavior:'smooth',block:'center'});toast('Scegli prima la taglia');return}
   const d=document.querySelector('input[name=del]:checked');LS.set('ca_del',d?d.value:'ritiro');
   const opts={Taglia:AVAIL[sel]?sel:sel+' (su ordinazione)'};const key='merida-reacto-7000|'+JSON.stringify(opts);const cart=LS.get('ca_cart',[]);const l=cart.find(x=>x.key===key);
