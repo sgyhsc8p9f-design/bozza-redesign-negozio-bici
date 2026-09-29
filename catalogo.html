@@ -804,7 +804,7 @@ const catCount=c=>VISIBLE.filter(p=>p.cat===c).length;
 const chev='<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m6 9 6 6 6-6"/></svg>';
 const MM_EXTRA={Bici:[['Tutte le bici','#/g/Bici'],['Tutte le e-bike','#/g/E-bike'],['Bici e telai usati','#/g/Bici?usato=1'],['Aiutami a scegliere','#/aiutami'],['Confronta le bici','#/confronta']],
   Abbigliamento:[['Tutto l’abbigliamento','#/g/Abbigliamento'],['Collezione Santini','#/g/Abbigliamento?brand=Santini'],['Linea donna Liv','#/g/Abbigliamento?brand=Liv']],
-  Accessori:[['Tutti gli accessori','#/g/Accessori'],['Ricambi e-bike','#/c/Batterie%20e%20caricatori%20e-bike'],['Prenota l’officina','#/officina']]};
+  Accessori:[['Tutti gli accessori','#/g/Accessori'],['Ricambi e-bike','#/c/Batterie%20e%20caricatori%20e-bike'],['Servizi officina','#/officina']]};
 document.getElementById('mainNav').innerHTML=MENU.map(([g,cols])=>`<div class="mm"><a class="mm-t" href="#/g/${encodeURIComponent(g)}" aria-haspopup="true">${g}${chev}</a><div class="mm-p"><div class="wrap mm-g">${cols.map(([h,cs])=>`<div class="mm-c"><h5>${h}</h5>${cs.map(c=>`<a href="#/c/${encodeURIComponent(c)}">${c}<span>${catCount(c)}</span></a>`).join('')}</div>`).join('')}<div class="mm-c mm-x"><h5>Scorciatoie</h5>${MM_EXTRA[g].map(([t,h])=>`<a href="${h}">${t}</a>`).join('')}</div></div></div></div>`).join('')+'<a href="#/officina" class="nav-l">Officina</a><a href="#/offerte" class="nav-l nav-off">Offerte</a>';
 document.getElementById('mainNav').addEventListener('click',e=>{const m=e.target.closest('.mm');if(m&&e.target.closest('a')){m.classList.add('shut');document.activeElement&&document.activeElement.blur()}});
 document.querySelectorAll('#mainNav .mm').forEach(m=>m.addEventListener('mouseleave',()=>m.classList.remove('shut')));
@@ -1152,53 +1152,22 @@ function renderFav(){document.title='Demo non ufficiale · Preferiti — Cicli A
   const c=document.getElementById('clearFav');if(c)c.onclick=()=>{FAV=[];saveFav();renderFav()};
 }
 
-/* ---------- Officina (prenotazione simulata) ---------- */
-const SVC=[['revisione','Revisione completa','Controllo, pulizia, regolazioni di cambio e freni','circa 2 ore'],['ebike','Diagnosi e riparazione e-bike','Motore, batteria, software e aggiornamenti','circa 1 ora'],['montaggio','Montaggio su misura','Componenti, ruote e posizione in sella','da concordare'],['ruote','Ruote, gomme e tubeless','Centratura, cambio gomme, tubeless','circa 45 minuti'],['riparazione','Riparazione veloce','Foratura, cavi, pastiglie, piccoli interventi','circa 30 minuti'],['preventivo','Altro / preventivo','Descrivi il problema, ti rispondiamo noi','—']];
-const HOURS={0:[],1:[['14:30','18:30']],2:[['08:30','12:15'],['14:30','18:30']],3:[['08:30','12:15'],['14:30','18:30']],4:[['08:30','12:15'],['14:30','18:30']],5:[['08:30','12:15'],['14:30','18:30']],6:[['08:30','12:15'],['14:30','18:00']]};
-const toMin=s=>{const[h,m]=s.split(':');return +h*60+ +m},fromMin=m=>String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
-const DAYN=['dom','lun','mar','mer','gio','ven','sab'],MON=['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
-let BOOK={svc:'',type:'',day:null,slot:''},LAST_BOOK=null;
-function slotsFor(d){const out=[];(HOURS[d.getDay()]||[]).forEach(([a,b],k)=>{for(let m=toMin(a);m+30<=toMin(b);m+=30)out.push([fromMin(m),k])});return out}
-function renderOfficina(pre){document.title='Demo non ufficiale · Prenota l’officina — Cicli Ambrosini (bozza)';if(pre&&SVC.some(s=>s[0]===pre))BOOK.svc=pre;
-  const days=[];const d0=new Date();d0.setHours(0,0,0,0);for(let i=1;days.length<14&&i<30;i++){const d=new Date(d0);d.setDate(d0.getDate()+i);if(d.getDay()!==0)days.push(d)}
-  if(!BOOK.day)BOOK.day=days[0].toISOString();const day=new Date(BOOK.day);const sl=slotsFor(day);
-  const taken=new Set(sl.filter((_,i)=>(i*7+day.getDate())%5===0).map(s=>s[0]));
-  app.innerHTML=`<div class="wrap page"><div class="page-head"><div class="eyebrow">Officina</div><h1 class="display">Prenota un intervento</h1><p>Scegli il servizio e quando portarci la bici: ti confermiamo l'appuntamento. Pagina dimostrativa, nessun dato viene inviato.</p></div>
-  <form class="two" id="bk" novalidate><div>
-    <div class="box2"><h2><span class="n">1</span>Servizio</h2><div class="choice cols" id="svc">${SVC.map(([k,t,s,dur])=>`<label><input type="radio" name="svc" value="${k}" ${BOOK.svc===k?'checked':''}><p><b>${t}</b><span>${s}</span><br><span class="svc-price">${dur==='—'?'Preventivo gratuito':'Durata '+dur+' · preventivo in negozio'}</span></p></label>`).join('')}</div><p class="fl err" id="e-svc" style="display:none"><span class="e">Scegli un servizio</span></p></div>
-    <div class="box2"><h2><span class="n">2</span>La tua bici</h2><div class="choice cols" id="btype">${['Strada','Gravel','Mountain bike','E-bike','City / trekking'].map(x=>`<label><input type="radio" name="btype" value="${x}" ${BOOK.type===x?'checked':''}><p><b>${x}</b></p></label>`).join('')}</div>
-      <div class="form" style="margin-top:14px">${field('bmodel','Marca e modello','text',false,true,'placeholder="Es. Giant TCR Advanced 2024"')}<label class="fl full">Cosa dobbiamo sapere?<textarea id="bnote" rows="3" placeholder="Es. rumore dal movimento centrale, freni da spurgare…"></textarea></label></div></div>
-    <div class="box2"><h2><span class="n">3</span>Quando la porti</h2><div class="days" id="days">${days.map(d=>`<button type="button" data-day="${d.toISOString()}" class="${d.toDateString()===day.toDateString()?'on':''}">${DAYN[d.getDay()]}<b>${d.getDate()}</b>${MON[d.getMonth()]}</button>`).join('')}</div>
-      <div class="slots" id="slots">${sl.length?[0,1].map(k=>sl.some(s=>s[1]===k)?`<h4>${k?'Pomeriggio':(day.getDay()===1?'Pomeriggio':'Mattina')}</h4>`+sl.filter(s=>s[1]===k).map(([s])=>`<button type="button" data-slot="${s}" ${taken.has(s)?'disabled title="Già occupato"':''} class="${BOOK.slot===s?'on':''}">${s}</button>`).join(''):'').join(''):'<p>Chiuso</p>'}</div><p class="hint" style="font-size:12.5px;color:var(--muted);margin-top:10px">Lunedì solo pomeriggio · domenica chiuso.</p></div>
-    <div class="box2"><h2><span class="n">4</span>I tuoi contatti</h2><div class="form">${field('bnome','Nome e cognome','text',true,true)}${field('btel','Telefono','tel')}${field('bemail','Email','email')}
-      <label class="chk2 full" id="f-bprivacy"><input type="checkbox" id="bprivacy"><span>Ho letto l'<a href="#/info/privacy" target="_blank">informativa privacy</a> *</span></label></div></div>
-  </div><div><div class="box2 sum"><h2>La tua prenotazione</h2>
-    <div class="row"><span>Servizio</span><span id="rSvc">${BOOK.svc?SVC.find(s=>s[0]===BOOK.svc)[1]:'—'}</span></div>
-    <div class="row"><span>Bici</span><span id="rType">${BOOK.type||'—'}</span></div>
-    <div class="row"><span>Giorno</span><span>${DAYN[day.getDay()]} ${day.getDate()} ${MON[day.getMonth()]}</span></div>
-    <div class="row"><span>Orario</span><span>${BOOK.slot||'—'}</span></div>
-    <div class="hint">Il preventivo lo facciamo in negozio, senza impegno. Puoi disdire fino al giorno prima.</div>
-    <button class="btn btn-blue" type="submit">Conferma prenotazione (simulata)</button>
-    <a class="btn btn-ghost" href="tel:+390332240109" style="width:100%;justify-content:center;margin-top:8px">Preferisci chiamare? 0332 240109</a></div></div></form></div>`;
-  app.querySelectorAll('input[name=svc]').forEach(r=>r.onchange=()=>{BOOK.svc=r.value;document.getElementById('rSvc').textContent=SVC.find(s=>s[0]===r.value)[1];document.getElementById('e-svc').style.display='none'});
-  app.querySelectorAll('input[name=btype]').forEach(r=>r.onchange=()=>{BOOK.type=r.value;document.getElementById('rType').textContent=r.value});
-  app.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{const keep=collectBk();BOOK.day=b.dataset.day;BOOK.slot='';renderOfficina();restoreBk(keep)});
-  app.querySelectorAll('[data-slot]').forEach(b=>b.onclick=()=>{const keep=collectBk();BOOK.slot=b.dataset.slot;renderOfficina();restoreBk(keep)});
-  document.getElementById('bk').onsubmit=e=>{e.preventDefault();let ok=true;
-    if(!BOOK.svc){document.getElementById('e-svc').style.display='block';ok=false}
-    ['bnome','btel','bemail'].forEach(id=>{const i=document.getElementById(id),bad=!i.value.trim()||(id==='bemail'&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(i.value));document.getElementById('f-'+id).classList.toggle('err',bad);if(bad)ok=false});
-    const pv=document.getElementById('bprivacy');document.getElementById('f-bprivacy').classList.toggle('err',!pv.checked);if(!pv.checked)ok=false;
-    if(!BOOK.slot){toast('Scegli un orario');ok=false}
-    if(!ok){if(BOOK.slot)toast('Controlla i campi evidenziati');return}
-    LAST_BOOK={...BOOK,name:document.getElementById('bnome').value.trim(),model:document.getElementById('bmodel').value.trim()};BOOK={svc:'',type:'',day:null,slot:''};location.hash='#/officina/ok'};
+/* ---------- Officina (informazioni e servizi) ---------- */
+const SVC=[['revisione','Revisione completa','Controllo, pulizia, regolazioni di cambio e freni','circa 2 ore'],['ebike','Diagnosi e riparazione e-bike','Motore, batteria, software e aggiornamenti','circa 1 ora'],['montaggio','Montaggio su misura','Componenti, ruote e posizione in sella','da concordare'],['ruote','Ruote, gomme e tubeless','Centratura, cambio gomme, tubeless','circa 45 minuti'],['riparazione','Riparazione veloce','Foratura, cavi, pastiglie, piccoli interventi','circa 30 minuti'],['preventivo','Altro / preventivo','Descrivi il problema, valutiamo la soluzione migliore','—']];
+function renderOfficina(){document.title='Demo non ufficiale · Officina — Cicli Ambrosini (bozza)';
+  app.innerHTML=`<div class="wrap page"><div class="page-head"><div class="eyebrow">Officina</div><h1 class="display">I nostri servizi di officina</h1><p>Dal 1967 ripariamo, revisioniamo e montiamo biciclette con la cura di una vera bottega. Nessuna prenotazione necessaria: passa direttamente in negozio a Varese o chiamaci per qualsiasi esigenza.</p></div>
+  <div class="two"><div>
+    <div class="box2"><h2>Interventi e manutenzione</h2>
+      <div class="choice cols" style="grid-template-columns:1fr;gap:12px;margin-top:14px">${SVC.map(([k,t,s,dur])=>`<div style="padding:16px 20px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg)"><b style="font-size:16px;display:block;margin-bottom:4px">${t}</b><span style="color:var(--muted);font-size:14px;display:block;margin-bottom:8px">${s}</span><span style="font-size:13px;font-weight:700;color:var(--blue)">${dur==='—'?'Preventivo gratuito in bottega':'Durata indicativa: '+dur+' · preventivo in negozio'}</span></div>`).join('')}</div>
+    </div>
+  </div><div><div class="box2 sum"><h2>Vieni a trovarci in bottega</h2>
+    <div class="row"><span>Indirizzo</span><b>Piazza Madonnina in Prato 1, Varese</b></div>
+    <div class="row"><span>Orari</span><b>Mar–Sab 8:30–12:15 · 14:30–18:30 (Lun pom.)</b></div>
+    <div class="row"><span>Telefono</span><b>0332 240109</b></div>
+    <div class="hint">Portaci la tua bici senza impegno: guardiamo insieme cosa serve e ti diamo subito il preventivo prima di iniziare qualsiasi lavoro.</div>
+    <a class="btn btn-blue" href="tel:+390332240109" style="width:100%;justify-content:center">Chiama l'officina: 0332 240109</a>
+    <a class="btn btn-ghost" href="#/info/contatti" style="width:100%;justify-content:center;margin-top:8px">Orari e come arrivare</a></div></div></div></div>`;
 }
-function collectBk(){const o={};['bmodel','bnote','bnome','btel','bemail'].forEach(id=>{const i=document.getElementById(id);if(i)o[id]=i.value});o.bprivacy=document.getElementById('bprivacy')?.checked;return o}
-function restoreBk(o){Object.entries(o).forEach(([k,v])=>{const i=document.getElementById(k);if(!i)return;if(i.type==='checkbox')i.checked=v;else i.value=v})}
-function renderBookOk(){const b=LAST_BOOK;if(!b){location.hash='#/officina';return}const d=new Date(b.day);
-  app.innerHTML=`<div class="wrap page"><div class="done"><div class="ok">✓</div><h1 class="display">A presto, ${esc(b.name.split(' ')[0])}!</h1><p>Prenotazione registrata per <b>${DAYN[d.getDay()]} ${d.getDate()} ${MON[d.getMonth()]} alle ${esc(b.slot)}</b>.</p><span class="code">${esc(SVC.find(s=>s[0]===b.svc)[1])}${b.type?' · '+esc(b.type):''}${b.model?' · '+esc(b.model):''}</span></div>
-  <div class="recap"><h2 style="font-size:20px;margin:10px 0 4px">Cosa succede adesso</h2><div class="steps2"><div><b class="k">1</b><span>Ti confermiamo l'appuntamento per telefono o email entro la giornata.</span></div><div><b class="k">2</b><span>Porti la bici in Piazza Madonnina in Prato 1: guardiamo insieme cosa serve e ti diamo il preventivo.</span></div><div><b class="k">3</b><span>Ti avvisiamo quando è pronta.</span></div></div>
-  <div class="demo-note">Prenotazione simulata per la bozza: nessun dato è stato inviato.</div>
-  <div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-blue" href="#/">Vai al catalogo</a><a class="btn btn-ghost" href="#/info/contatti">Come arrivare</a></div></div></div>`}
 
 /* ---------- Richiesta informazioni / prezzo riservato ---------- */
 let LAST_REQ=null;
