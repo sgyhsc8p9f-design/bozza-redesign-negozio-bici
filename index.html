@@ -237,16 +237,16 @@ document.querySelectorAll('img[data-wix]').forEach(i=>{i.loading=i.dataset.eager
 
 /* Categorie */
 const cats=[
-  ['Strada','Colnago, Giant, Bianchi, Merida','537aa73e81ca40dd9c637d968ec1cfe2~mv2.jpg','Più venduta'],
-  ['Gravel','Per strade bianche e avventure','1d7916e8f98a4c29b16de3dde2cade07~mv2.jpg',''],
-  ['E-bike','E-MTB, e-road ed e-city','f135db4adc524db09be78c0fc03f873a~mv2.jpg','Nuovi arrivi'],
-  ['Mountain bike','Front e full suspension','e4a0565e063547819115337c87897fac~mv2.jpg',''],
-  ['Telai','Per chi monta la bici su misura','aef68c377ca148a69a3194b585480eae~mv2.jpg',''],
+  ['Strada','Colnago, Giant, Bianchi, Merida','img/categorie/strada.webp','Più venduta'],
+  ['Gravel','Per strade bianche e avventure','img/categorie/gravel.webp',''],
+  ['E-bike','E-MTB, e-road ed e-city','img/categorie/e-bike.jpg','Nuovi arrivi'],
+  ['Mountain bike','Front e full suspension','img/categorie/mountain-bike.jpg',''],
+  ['Telai','Per chi monta la bici su misura','img/categorie/telai.jpg',''],
   ['Città e trekking','Per la città e i viaggi, anche elettriche','e3195d8898d047bc9a194d3296ad09b4~mv2.jpg',''],
 ];
 const arrow='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 const CATLINK={'Strada':'#/c/Strada','Gravel':'#/c/Gravel','E-bike':'#/g/E-bike','Mountain bike':'#/c/Mountain%20bike','Telai':'#/c/Telai','Città e trekking':'#/c/Citt%C3%A0%20e%20trekking'};
-document.getElementById('cats').innerHTML=cats.map(([t,s,img,chip])=>`<a href="catalogo.html${CATLINK[t]||'#/g/Bici'}" class="cat"><img src="${wix(img,900,900,'fit')}" alt="${t}" loading="lazy">${chip?`<span class="chip">${chip}</span>`:''}<div class="txt"><div><h3>${t}</h3><small>${s}</small></div><span class="go">${arrow}</span></div></a>`).join('');
+document.getElementById('cats').innerHTML=cats.map(([t,s,img,chip])=>`<a href="catalogo.html${CATLINK[t]||'#/g/Bici'}" class="cat"><img src="${/^img\//.test(img)?img:wix(img,900,900,'fit')}" alt="${t}" loading="lazy">${chip?`<span class="chip">${chip}</span>`:''}<div class="txt"><div><h3>${t}</h3><small>${s}</small></div><span class="go">${arrow}</span></div></a>`).join('');
 
 /* Foto delle categorie: all'hover lo zoom out porta l'immagine intera nel riquadro (senza tagli).
    Il fattore dipende dal rapporto tra foto e riquadro e viene calcolato quando la foto è caricata. */
