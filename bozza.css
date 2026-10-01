@@ -1,0 +1,12 @@
+/* Aspetto da bozza (solo branch demo): niente funzioni d'acquisto, sezioni segnate "in definizione". */
+.topbar,.usp,
+a[href$="#/carrello"],a[href$="#/preferiti"],.badge,
+.heart,.cmpchk,.cmpbar,.mbar,#favBtn,#buyBtn,.installments,
+.rate,.field:has(.delivery),[data-t="p-ship"],#p-ship{display:none!important}
+.reveal{opacity:1!important;transform:none!important;transition:none!important}
+.draft-host{position:relative}
+.draft-tag{position:absolute;top:14px;right:var(--gutter,16px);z-index:20;background:#fff;color:var(--ink);border:1.5px dashed var(--stone-dark);border-radius:999px;font:600 11.5px/1 Inter,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:7px 12px;pointer-events:none}
+.draft-tag::before{content:"✎ "}
+.cta-call{display:inline-flex}
+.concept{background:#fff;border:1.5px dashed var(--stone-dark);box-shadow:none}
+@media print{.draft-tag{display:none}}
