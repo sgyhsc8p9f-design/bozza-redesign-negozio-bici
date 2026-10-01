@@ -472,6 +472,19 @@ nav.main a.nav-off:hover{background:#FFF1EA}
 .stock::before{content:"";width:8px;height:8px;border-radius:50%;background:#2BA36A}
 .stock.warn::before{background:#E0A21B}
 .stock.out::before{background:#A23B1F}
+/* Prodotto esaurito: scheda leggermente sbiadita nell'elenco, avviso di disponibilità nella pagina prodotto */
+.card.out .ph img,.card.out .brand,.card.out h3,.card.out .specline,.card.out .price{opacity:.55}
+.card.out .ph img{filter:grayscale(.25)}
+.card.out:hover .ph img,.card.out:hover .brand,.card.out:hover h3,.card.out:hover .specline,.card.out:hover .price{opacity:.8}
+.notify{margin-top:22px;padding:20px;border:1.5px solid var(--line);border-radius:var(--radius);background:var(--stone-light)}
+.notify b{display:block;font-size:17px;margin-bottom:4px}
+.notify p{font-size:14px;color:var(--muted);margin-bottom:12px}
+.notify form{display:flex;gap:8px;flex-wrap:wrap}
+.notify input{flex:1 1 200px;min-width:0;padding:14px 18px;border:1.5px solid var(--line);border-radius:999px;font:inherit;background:#fff}
+.notify input:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:transparent}
+.notify .btn{padding:14px 24px}
+.notify-ok{font-weight:600;color:#1E7B4A}
+.notify small{display:block;margin-top:10px;font-size:12px;color:var(--muted)}
 .verify{margin-top:22px;border-radius:16px;padding:18px 20px;background:#EEF7F1;border:1px solid #CFE8D8}
 .verify.partial{background:#FFF7E6;border-color:#F1DDB0}
 .verify.todo{background:var(--stone-light);border-color:var(--line)}
@@ -770,6 +783,7 @@ const wix=(id,w,h,mode='fit')=>!id?'':/^https?:/.test(id)?id:`https://static.wix
 const sized=(u,w)=>/a\.storyblok\.com/.test(u)&&!/\/m\//.test(u)?u+'/m/'+w+'x0':/cdn\.shopify\.com/.test(u)?u+(u.includes('?')?'&':'?')+'width='+w:u;
 const isBike=p=>p.grp==='Bici';
 const isRes=p=>/riservato/i.test(p.r);
+const isOut=p=>!p.stock;
 const isPre=p=>/arrivo|prenot/i.test(p.r);
 const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
 const VLABEL={verified:'Verificato sul sito ufficiale',partial:'Verifica parziale',todo:'Da verificare',notfound:'Non trovato sul sito ufficiale'};
@@ -782,7 +796,8 @@ function niceName(p){if(p.dn)return p.dn;
   let n=p.n; if(p.b){const rx=new RegExp('^\\s*'+p.b.replace(/[^\w]/g,'.?')+'\\s*[-,]?\\s*','i'); n=n.replace(rx,'')}
   n=n.replace(/\s+/g,' ').trim()||p.n;return smartCase(n).replace(/^[-–\s]+/,'')}
 const fullName=p=>(p.b?p.b+' ':'')+niceName(p);
-const ribbons=p=>{const r=[];if(isRes(p))return['Prezzo riservato'];if(p.o&&p.o>p.p)r.push(`-${Math.round((1-p.p/p.o)*100)}%`);if(p.r){let t=p.r.replace(/\s+/g,' ').trim();if(t===t.toUpperCase())t=t.toLowerCase();t=t.replace(/possibilie/gi,'possibile').replace(/contattattaci/gi,'contattaci').replace(/\bmag\b/gi,'maggiori');t=t.charAt(0).toUpperCase()+t.slice(1);r.push(t.replace(/ arrivo possibile prenotare/i,' arrivo · prenotabile'))}return r};
+const ribbonsAll=p=>{const r=[];if(!p.stock)r.push('Esaurito');if(isRes(p))return[...r,'Prezzo riservato'];if(p.o&&p.o>p.p)r.push(`-${Math.round((1-p.p/p.o)*100)}%`);if(p.r){let t=p.r.replace(/\s+/g,' ').trim();if(t===t.toUpperCase())t=t.toLowerCase();t=t.replace(/possibilie/gi,'possibile').replace(/contattattaci/gi,'contattaci').replace(/\bmag\b/gi,'maggiori');t=t.charAt(0).toUpperCase()+t.slice(1);r.push(t.replace(/ arrivo possibile prenotare/i,' arrivo · prenotabile'))}return r};
+const ribbons=p=>{const r=ribbonsAll(p);return p.stock?r:r.filter(x=>!/^disponibile$/i.test(x))};
 
 /* ---------- Memoria: carrello e preferiti (condivisi con home e scheda Reacto) ---------- */
 const MEM={};
@@ -793,7 +808,7 @@ function badges(){const n=CART.reduce((a,l)=>a+l.qty,0);cc.textContent=n;cc.clas
 function saveCart(){LS.set('ca_cart',CART);badges()}
 function saveFav(){LS.set('ca_fav',FAV);badges()}
 addEventListener('storage',()=>{CART=LS.get('ca_cart',[]);FAV=LS.get('ca_fav',[]);badges()});
-function addToCart(p,opts={},qty=1,extra={}){const key=p.s+'|'+JSON.stringify(opts);const l=CART.find(x=>x.key===key);
+function addToCart(p,opts={},qty=1,extra={}){if(isOut(p)){toast('Prodotto esaurito: puoi farti avvisare quando torna disponibile');return}const key=p.s+'|'+JSON.stringify(opts);const l=CART.find(x=>x.key===key);
   if(l)l.qty+=qty;else CART.push({key,slug:p.s,name:niceName(p),brand:p.b,img:p.img[0]||'',price:p.p,opts,qty,bike:isBike(p),pre:isPre(p),...extra});
   saveCart();toast(`${fullName(p)} aggiunto al carrello`,'#/carrello','Vai al carrello')}
 function isFav(s){return FAV.includes(s)}
@@ -860,10 +875,10 @@ function priceBands(base){const bike=base.length&&base.filter(p=>p.grp==='Bici')
 /* ---------- Scheda nell'elenco ---------- */
 let CMP=LS.get('ca_cmp',[]).filter(s=>BY[s]);
 const needsChoice=p=>isRes(p)||isBike(p)||p.opt.some(o=>o.v&&o.v.length>1);
-function card(p){const r=ribbons(p);return `<article class="card"><a href="#/p/${p.s}" class="ph">${p.img[0]?`<img src="${wix(p.img[0],500,500)}" alt="${esc(fullName(p))}" loading="lazy">`:''}<div class="rib">${r.slice(0,2).map(x=>`<span class="${x.startsWith('-')?'':'alt'}">${esc(x)}</span>`).join('')}</div></a><button class="heart ${isFav(p.s)?'on':''}" data-fav="${p.s}" aria-label="${isFav(p.s)?'Togli dai preferiti':'Aggiungi ai preferiti'}">${heartSvg}</button>
-<div class="body"><div class="brand">${esc(p.b||p.cat)}</div><h3><a href="#/p/${p.s}">${esc(niceName(p))}</a></h3>${p.sl?`<div class="specline">${esc(p.sl)}</div>`:''}${isRes(p)?`<div class="price"><b style="font-size:16px">Prezzo riservato</b></div><div class="rate">Listino ${eur(p.p)}</div>`:`<div class="price"><b>${eur(p.p)}</b>${p.o?`<s>${eur(p.o)}</s>`:''}</div><div class="rate">${p.p>=100?`oppure 3 rate da ${eur(Math.ceil(p.p/3))}`:''}</div>`}
+function card(p){const r=ribbons(p);return `<article class="card${isOut(p)?' out':''}"><a href="#/p/${p.s}" class="ph">${p.img[0]?`<img src="${wix(p.img[0],500,500)}" alt="${esc(fullName(p))}" loading="lazy">`:''}<div class="rib">${r.slice(0,2).map(x=>`<span class="${x.startsWith('-')?'':'alt'}">${esc(x)}</span>`).join('')}</div></a><button class="heart ${isFav(p.s)?'on':''}" data-fav="${p.s}" aria-label="${isFav(p.s)?'Togli dai preferiti':'Aggiungi ai preferiti'}">${heartSvg}</button>
+<div class="body"><div class="brand">${esc(p.b||p.cat)}</div><h3><a href="#/p/${p.s}">${esc(niceName(p))}</a></h3>${p.sl?`<div class="specline">${esc(p.sl)}</div>`:''}${isRes(p)?`<div class="price"><b style="font-size:16px">Prezzo riservato</b></div><div class="rate">Listino ${eur(p.p)}</div>`:`<div class="price"><b>${eur(p.p)}</b>${p.o?`<s>${eur(p.o)}</s>`:''}</div><div class="rate">${p.p>=100&&!isOut(p)?`oppure 3 rate da ${eur(Math.ceil(p.p/3))}`:''}</div>`}
 ${isBike(p)?`<label class="cmpchk"><input type="checkbox" data-cmp="${p.s}" ${CMP.includes(p.s)?'checked':''}> Confronta</label>`:''}
-<div class="row"><span>${esc(p.f.disp==='Disponibile'?(isBike(p)?'Ritiro in negozio':'Spedizione 24/48h'):p.f.disp)}</span>${needsChoice(p)?`<a class="add opt" href="#/p/${p.s}">${isRes(p)?'Richiedi':'Scegli'}</a>`:`<button class="add" data-add="${p.s}">Aggiungi</button>`}</div></div></article>`}
+<div class="row"><span>${isOut(p)?'Esaurito':esc(p.f.disp==='Disponibile'?(isBike(p)?'Ritiro in negozio':'Spedizione 24/48h'):p.f.disp)}</span>${isOut(p)?`<a class="add opt" href="#/p/${p.s}">Avvisami</a>`:needsChoice(p)?`<a class="add opt" href="#/p/${p.s}">${isRes(p)?'Richiedi':'Scegli'}</a>`:`<button class="add" data-add="${p.s}">Aggiungi</button>`}</div></div></article>`}
 function cmpBar(){let b=document.getElementById('cmpbar');if(!b){b=document.createElement('div');b.id='cmpbar';b.className='cmpbar';document.body.appendChild(b)}
   CMP=CMP.filter(s=>BY[s]);LS.set('ca_cmp',CMP);
   const listy=/^#?\/?(g\/|c\/|cerca|offerte|aiutami|\?|$)/.test(decodeURIComponent(location.hash.replace(/^#\/?/,'')))||!location.hash||location.hash==='#/';
@@ -971,7 +986,7 @@ function renderQuiz(){document.title='Demo non ufficiale · Aiutami a scegliere 
 
 /* ---------- Scheda prodotto ---------- */
 function renderProduct(p){
-  const v=p.v,bike=isBike(p),res=isRes(p),pre=isPre(p);
+  const v=p.v,bike=isBike(p),res=isRes(p),pre=isPre(p),out=isOut(p);
   const G=[...p.img.map(id=>({src:wix(id,1400,1400),th:wix(id,200,200),label:'',credit:'Foto: Cicli Ambrosini'})),...v.img.slice(0,6).map(u=>({src:sized(u,1400),th:sized(u,240),label:'Ufficiale',credit:'Foto: '+(v.site||p.b)}))];
   const r=ribbons(p),rel=VISIBLE.filter(x=>x.cat===p.cat&&x.s!==p.s).sort((a,b)=>Math.abs(a.p-p.p)-Math.abs(b.p-p.p)).slice(0,8);
   const specs=v.spec||[],hasShopSpecs=p.info.some(i=>i.h),opt=p.opt.filter(o=>o.v&&o.v.length);
@@ -990,18 +1005,23 @@ function renderProduct(p){
       ${v.sum?`<p class="sub">${esc(v.sum)}</p>`:''}
       <div class="pricebox">
         ${res?`<div class="row1"><b>Prezzo riservato</b></div><small>Prezzo di listino ${eur(p.p)} IVA inclusa · chiedici il prezzo a te riservato</small>`:`<div class="row1"><b>${eur(p.p)}</b>${p.o?`<s>${eur(p.o)}</s><span class="save">Risparmi ${eur(Math.round(p.o-p.p))}</span>`:''}</div><small>IVA inclusa</small>`}
-        ${!res&&p.p>=300?`<div class="installments"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C3FBF" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg><span>Oppure <strong>3 rate da ${eur(Math.ceil(p.p/3))}</strong> senza interessi · <a href="#/info/pagamenti" style="text-decoration:underline">come funziona</a></span></div>`:''}
+        ${!res&&!out&&p.p>=300?`<div class="installments"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C3FBF" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg><span>Oppure <strong>3 rate da ${eur(Math.ceil(p.p/3))}</strong> senza interessi · <a href="#/info/pagamenti" style="text-decoration:underline">come funziona</a></span></div>`:''}
       </div>
-      ${opt.map((o,oi)=>`<div class="field"><div class="field-head"><b>${esc(o.t)} <span data-lbl="${oi}">· ${o.v.length===1?esc(o.v[0]):'scegli'}</span></b>${/tagli/i.test(o.t)&&v.sizes.length?`<a class="link" href="#/p/${p.s}" data-tab="t-ver">Taglie ufficiali</a>`:''}</div><div class="opts" data-o="${oi}">${o.v.map(x=>`<button data-v="${esc(x)}" class="${o.v.length===1?'on':''}">${esc(x)}</button>`).join('')}</div></div>`).join('')}
-      ${bike&&!res?`<div class="field"><div class="field-head"><b>Come vuoi riceverla</b></div><div class="delivery">
+      ${out?'':opt.map((o,oi)=>`<div class="field"><div class="field-head"><b>${esc(o.t)} <span data-lbl="${oi}">· ${o.v.length===1?esc(o.v[0]):'scegli'}</span></b>${/tagli/i.test(o.t)&&v.sizes.length?`<a class="link" href="#/p/${p.s}" data-tab="t-ver">Taglie ufficiali</a>`:''}</div><div class="opts" data-o="${oi}">${o.v.map(x=>`<button data-v="${esc(x)}" class="${o.v.length===1?'on':''}">${esc(x)}</button>`).join('')}</div></div>`).join('')}
+      ${bike&&!res&&!out?`<div class="field"><div class="field-head"><b>Come vuoi riceverla</b></div><div class="delivery">
         <label class="optrow"><input type="radio" name="del" value="ritiro" ${DEL!=='spedizione'?'checked':''}><p><b>Ritiro in negozio, montata e regolata</b><span>Piazza Madonnina in Prato 1, Varese</span></p><em>Gratis</em></label>
         <label class="optrow"><input type="radio" name="del" value="spedizione" ${DEL==='spedizione'?'checked':''}><p><b>Spedizione a casa</b><span>Bici premontata in imballo rinforzato, corriere assicurato</span></p><em>${eur(SHIP.bike)}</em></label></div></div>`:''}
-      <div class="cta">
+      ${out?`<div class="notify" id="notify"><b>Esaurito al momento</b>
+        <p>Lasciaci la tua email: ti avvisiamo appena torna disponibile. Nessun obbligo di acquisto.</p>
+        <form id="notifyForm" novalidate><input type="email" id="notifyEmail" required placeholder="La tua email" aria-label="La tua email" autocomplete="email"><button class="btn btn-blue" type="submit">Avvisami</button></form>
+        <div class="notify-ok" id="notifyOk" hidden>✓ Perfetto, ti avviseremo appena torna disponibile.</div>
+        <small>Demo: nessun dato viene inviato.</small></div>
+      <div class="cta"><button class="icon-btn ${isFav(p.s)?'on':''}" id="favBtn" aria-label="${isFav(p.s)?'Togli dai preferiti':'Aggiungi ai preferiti'}">${heartSvg}</button></div>`:`<div class="cta">
         ${!res&&p.pl?`<a class="btn btn-blue" id="stripeDirectBtn" href="${p.pl}" target="_blank" rel="noopener">Acquista con Carta / Apple Pay</a>`:''}
         <button class="btn ${!res&&p.pl?'btn-ghost':'btn-blue'}" id="buyBtn">${res?'Richiedi il prezzo riservato':'Aggiungi al carrello'}</button>
         <button class="icon-btn ${isFav(p.s)?'on':''}" id="favBtn" aria-label="${isFav(p.s)?'Togli dai preferiti':'Aggiungi ai preferiti'}">${heartSvg}</button>
-      </div>
-      <div class="stock ${p.stock?(pre||/contatt/i.test(p.r)?'warn':''):'out'}">${res?'Disponibile su richiesta: ti ricontattiamo entro un giorno lavorativo':p.stock?(pre?'In arrivo: prenotabile, te la teniamo da parte':/contatt/i.test(p.r)?'Contattaci per disponibilità e altre taglie':'Disponibile, ritiro in negozio o spedizione'):'Esaurito online: chiedi in negozio'}</div>
+      </div>`}
+      <div class="stock ${p.stock?(pre||/contatt/i.test(p.r)?'warn':''):'out'}">${res?'Disponibile su richiesta: ti ricontattiamo entro un giorno lavorativo':p.stock?(pre?'In arrivo: prenotabile, te la teniamo da parte':/contatt/i.test(p.r)?'Contattaci per disponibilità e altre taglie':'Disponibile, ritiro in negozio o spedizione'):'Esaurito al momento: ti avvisiamo noi quando torna disponibile'}</div>
       ${res?'':`<a class="ask-link" href="#/richiesta/${p.s}">Hai una domanda su questo prodotto? Scrivici</a>`}
       <div class="verify ${vcls(v.st)}">
         <h4>${v.st==='verified'?'✓ ':''}${VLABEL[v.st]||VLABEL.todo}${v.site?' · '+esc(v.site):''}</h4>
@@ -1037,15 +1057,19 @@ function renderProduct(p){
   if(mi)stage.onclick=e=>{if(stage.classList.toggle('zoom')){const rc=stage.getBoundingClientRect();mi.style.transformOrigin=`${(e.clientX-rc.left)/rc.width*100}% ${(e.clientY-rc.top)/rc.height*100}%`}};
   const sel={};opt.forEach((o,i)=>{if(o.v.length===1)sel[i]=o.v[0]});
   app.querySelectorAll('.opts').forEach(box=>box.onclick=e=>{const b=e.target.closest('button');if(!b)return;const oi=box.dataset.o;sel[oi]=b.dataset.v;[...box.children].forEach(x=>x.classList.toggle('on',x===b));app.querySelector(`[data-lbl="${oi}"]`).textContent='· '+b.dataset.v});
-  document.getElementById('buyBtn').onclick=()=>{if(res){location.hash='#/richiesta/'+p.s;return}
+  const buyBtn=document.getElementById('buyBtn');if(buyBtn)buyBtn.onclick=()=>{if(res){location.hash='#/richiesta/'+p.s;return}
     const miss=opt.findIndex((o,i)=>!sel[i]);if(miss>=0){toast('Scegli prima: '+opt[miss].t.toLowerCase());app.querySelector(`[data-o="${miss}"]`).scrollIntoView({behavior:'smooth',block:'center'});return}
     const opts=Object.fromEntries(opt.map((o,i)=>[o.t,sel[i]]));const d=app.querySelector('input[name=del]:checked');
     if(bike&&d){DEL=d.value;LS.set('ca_del',DEL)}addToCart(p,opts,1)};
   document.getElementById('favBtn').onclick=e=>{const on=toggleFav(p.s);e.currentTarget.classList.toggle('on',on)};
+  const nf=document.getElementById('notifyForm');if(nf){const done=()=>{nf.hidden=true;document.getElementById('notifyOk').hidden=false};
+    if(LS.get('ca_notify',[]).includes(p.s))done();
+    nf.onsubmit=e=>{e.preventDefault();const i=document.getElementById('notifyEmail');if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(i.value.trim())){toast('Inserisci un’email valida');i.focus();return}
+      const l=LS.get('ca_notify',[]);if(!l.includes(p.s)){l.push(p.s);LS.set('ca_notify',l)}done();toast('Ti avviseremo appena torna disponibile (simulato: nessun dato inviato)')}}
   const openTab=t=>{app.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x.dataset.t===t));app.querySelectorAll('.panel').forEach(x=>x.classList.toggle('on',x.id===t))};
   document.getElementById('tabs').onclick=e=>{const b=e.target.closest('button');if(b)openTab(b.dataset.t)};
   app.querySelectorAll('[data-tab]').forEach(a=>a.onclick=e=>{e.preventDefault();openTab(a.dataset.tab);document.getElementById('tabsWrap').scrollIntoView({behavior:'smooth'})});
-  document.getElementById('mbar').innerHTML=res?`<p><b>Prezzo riservato</b><span>Listino ${eur(p.p)}</span></p><button class="btn btn-blue" onclick="document.getElementById('buyBtn').click()">Richiedi</button>`:`<p><b>${eur(p.p)}</b><span>${p.p>=100?'o 3 rate da '+eur(Math.ceil(p.p/3)):'IVA inclusa'}</span></p><button class="btn btn-blue" onclick="document.getElementById('buyBtn').click()">${pre?'Prenota':'Aggiungi'}</button>`;
+  document.getElementById('mbar').innerHTML=out?`<p><b>Esaurito</b><span>Ti avvisiamo noi</span></p><button class="btn btn-blue" onclick="document.getElementById('notify').scrollIntoView({behavior:'smooth',block:'center'});document.getElementById('notifyEmail').focus({preventScroll:true})">Avvisami</button>`:res?`<p><b>Prezzo riservato</b><span>Listino ${eur(p.p)}</span></p><button class="btn btn-blue" onclick="document.getElementById('buyBtn').click()">Richiedi</button>`:`<p><b>${eur(p.p)}</b><span>${p.p>=100?'o 3 rate da '+eur(Math.ceil(p.p/3)):'IVA inclusa'}</span></p><button class="btn btn-blue" onclick="document.getElementById('buyBtn').click()">${pre?'Prenota':'Aggiungi'}</button>`;
 }
 
 /* ---------- Carrello ---------- */
