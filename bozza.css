@@ -10,3 +10,8 @@ a[href$="#/carrello"],a[href$="#/preferiti"],.badge,
 .cta-call{display:inline-flex}
 .concept{background:#fff;border:1.5px dashed var(--stone-dark);box-shadow:none}
 @media print{.draft-tag{display:none}}
+
+/* Versione plain: nessuna animazione o transizione di movimento */
+.ride{display:none!important}
+*,*::before,*::after{animation:none!important;scroll-behavior:auto!important}
+.cat img,.cat:hover img,.card,.card:hover,.btn:hover,.cat .go,.cat:hover .go{transition:none!important;transform:none!important}
