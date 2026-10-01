@@ -105,7 +105,7 @@
   @media(max-width:760px){.platforms{grid-template-columns:1fr}}
   .note{margin-top:14px;padding:16px 20px;border-radius:14px;background:var(--blue-soft);font-size:14.5px;color:var(--blue-deep)}
 
-  /* Pacchetti */
+  /* Pagine di riferimento: pacchetti (non più usati) */
   .packs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:stretch}
   .pack{background:#fff;border-radius:var(--radius);padding:26px;display:flex;flex-direction:column;position:relative;border:2px solid transparent}
   .pack.rec{border-color:var(--blue);box-shadow:0 20px 40px -24px rgba(14,34,117,.45)}
@@ -167,8 +167,31 @@
     .sec{break-inside:avoid-page;padding-top:28px}
     .fact,.pack,.plat,.goal,.ph,.list{break-inside:avoid}
     .goal,.next,.compare th,.pack .flag,.plat .flag,.fill,.ph .bar i{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    .panel,.fact,.pack,.plat,.list,.ph,.summary div,.shot,.extras div{border:1px solid var(--line)}
+    .panel,.fact,.pack,.plat,.list,.ph,.summary div,.shot,.extras div,.mod{border:1px solid var(--line)}
+    .mod:not(.on){display:none}.mod input{display:none}.mod,.sumbox{break-inside:avoid}.sumbox{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   }
+
+  /* Moduli selezionabili */
+  .mods{display:grid;gap:12px}
+  .mod{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;background:#fff;border:2px solid transparent;border-radius:var(--radius);padding:20px 24px;cursor:pointer;transition:border-color .2s,opacity .2s}
+  .mod:not(.on){opacity:.62}
+  .mod.on{border-color:var(--blue)}
+  .mod.core{cursor:default}
+  .mod input{width:22px;height:22px;accent-color:var(--blue);margin-top:2px}
+  .mod h3{font-size:18px}
+  .mod h3 small{font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;margin-left:8px}
+  .mod p{font-size:14px;color:var(--muted);grid-column:2}
+  .mod .gain{grid-column:2;font-size:14px;background:var(--stone-light);border-radius:10px;padding:8px 12px;color:var(--ink)}
+  .mod .gain b{color:var(--blue-deep)}
+  .mod .need{grid-column:2;font-size:13px;color:var(--muted)}
+  .mod .need b{color:var(--ink)}
+  .sumbox{margin-top:18px;background:var(--ink);color:#fff;border-radius:var(--radius-lg);padding:26px 28px}
+  .sumbox h3{font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--stone);margin-bottom:12px}
+  .sumbox ul{list-style:none;display:grid;gap:8px;font-size:14.5px}
+  .sumbox li::before{content:"✓";color:var(--stone);font-weight:800;margin-right:10px}
+  .sumbox .cnt{font-family:Archivo;font-stretch:112%;font-weight:800;font-size:34px;line-height:1;margin-bottom:14px}
+  .opts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:900px){.opts{grid-template-columns:1fr}}
 </style>
 <style>.demo-banner{position:relative;z-index:1;background:#0E1320;color:#fff;font:600 13px/1.4 Inter,system-ui,sans-serif;text-align:center;padding:9px 16px}.demo-banner a{color:#D8CCB2;text-decoration:underline;margin-left:6px}@media print{.demo-banner{display:none}}</style>
 </head>
@@ -188,7 +211,7 @@
     <div class="logo" role="img" aria-label="Cicli Ambrosini"><small>CICLI</small><b>AMBROSI<span class="n">U</span>I</b></div>
     <div class="eyebrow">Proposta di redesign · cicliambrosini.it</div>
     <h1 class="display">Un sito all'altezza della bottega.</h1>
-    <p class="lead">Analisi del sito attuale e proposta per un nuovo negozio online: più facile da usare da telefono, più visibile su Google e più semplice da gestire per voi.</p>
+    <p class="lead">Analisi del sito attuale e proposta per un nuovo negozio online: più facile da usare da telefono, più visibile su Google e più semplice da gestire per voi. Il progetto è a moduli: si parte da un nucleo e si aggiunge solo ciò che serve al negozio.</p>
     <div class="meta">
       <div><span>Preparata per</span>Cicli Ambrosini, Varese</div>
       <div><span>Preparata da</span><span class="fill">[Nome Cognome]</span></div>
@@ -204,7 +227,7 @@
 
 <main class="doc">
   <nav class="toc" aria-label="Indice">
-    <a href="#oggi">1 · Il sito oggi</a><a href="#obiettivi">2 · Obiettivi</a><a href="#proposta">3 · La proposta</a><a href="#piattaforma">4 · Piattaforma</a><a href="#pacchetti">5 · Pacchetti</a><a href="#tempi">6 · Tempi</a><a href="#servono">7 · Cosa serve</a>
+    <a href="#oggi">1 · Il sito oggi</a><a href="#obiettivi">2 · Obiettivi</a><a href="#proposta">3 · La proposta</a><a href="#piattaforma">4 · Come costruirlo</a><a href="#moduli">5 · Moduli</a><a href="#tempi">6 · Tempi</a><a href="#servono">7 · Cosa serve</a>
   </nav>
 
   <section class="sec">
@@ -213,7 +236,7 @@
     <div class="summary">
       <div><b>Il negozio c'è, il sito non lo racconta</b><p>Storia dal 1967, officina e marchi come Colnago, Giant, Bianchi e Merida: online quasi non si vedono.</p></div>
       <div><b>Google e telefono vi penalizzano</b><p>Indirizzi di pagina confusi, parole chiave ripetute e immagini senza descrizione riducono la visibilità.</p></div>
-      <div><b>Un nuovo sito in 6–8 settimane</b><p>Portiamo online i vostri 363 prodotti, già ripuliti da doppioni, e reindirizziamo tutti i vecchi indirizzi per mantenere le posizioni su Google.</p></div>
+      <div><b>Si parte dal nucleo, il resto è a moduli</b><p>Portiamo online i vostri 363 prodotti, già ripuliti da doppioni, e reindirizziamo i vecchi indirizzi per mantenere le posizioni su Google. Vendita online, rate, prenotazione officina e il resto si aggiungono se e quando servono.</p></div>
     </div>
   </section>
 
@@ -240,9 +263,9 @@
     <div class="num">02</div>
     <h2 class="display">Obiettivi del nuovo sito</h2>
     <div class="goals">
-      <div class="goal"><b>Vendere</b><h3>Più bici e accessori online</h3><p>Schede chiare, taglie, rate e ritiro in negozio.</p></div>
+      <div class="goal"><b>Vendere</b><h3>Più bici e accessori online</h3><p>Schede chiare, taglie, ritiro in negozio e, se volete, pagamento online e rate.</p></div>
       <div class="goal"><b>Farsi trovare</b><h3>Più visibilità su Google</h3><p>Soprattutto per chi cerca "negozio bici Varese".</p></div>
-      <div class="goal"><b>Portare in negozio</b><h3>Più visite e prenotazioni</h3><p>Officina prenotabile online, orari e mappa sempre in vista.</p></div>
+      <div class="goal"><b>Portare in negozio</b><h3>Più visite e prenotazioni</h3><p>Orari, mappa e contatti sempre in vista; prenotazione officina online come modulo opzionale.</p></div>
       <div class="goal"><b>Semplificare</b><h3>Meno lavoro per voi</h3><p>Prodotti, prezzi e offerte aggiornabili in pochi minuti.</p></div>
     </div>
   </section>
@@ -258,16 +281,16 @@
         <tr><td>Home</td><td>Lista di prodotti mescolati</td><td>Percorso per tipo di bici, offerte, officina e storia della bottega</td></tr>
         <tr><td>Menu</td><td>26 voci sullo stesso livello</td><td>4 sezioni chiare: Bici, Abbigliamento, Accessori, Officina, più le offerte sempre in vista</td></tr>
         <tr><td>Scheda prodotto</td><td>Una foto, testo lungo, solo il nome della taglia</td><td>Galleria con dettagli, taglie con disponibilità, "qual è la mia taglia", scheda tecnica e geometria</td></tr>
-        <tr><td>Pagamento</td><td>Solo pagamento intero</td><td>Pagamento in 3 rate senza interessi (Scalapay o Klarna, da scegliere insieme)</td></tr>
+        <tr><td>Pagamento</td><td>Solo pagamento intero</td><td>Pagamento con carta e wallet tramite un sistema come Stripe; rate senza interessi come modulo opzionale</td></tr>
         <tr><td>Consegna</td><td>Non chiaro</td><td>Ritiro gratuito con montaggio e regolazione, oppure spedizione</td></tr>
-        <tr><td>Officina</td><td>Solo un modulo contatti</td><td>Servizi elencati e prenotazione online</td></tr>
+        <tr><td>Officina</td><td>Solo un modulo contatti</td><td>Servizi elencati con contatti diretti; prenotazione online come modulo opzionale</td></tr>
         <tr><td>Google</td><td>Indirizzi confusi, parole chiave ripetute</td><td>Indirizzi puliti, descrizioni delle immagini, scheda Google del negozio collegata</td></tr>
-        <tr><td>Telefono</td><td>Spazi vuoti, menu lungo</td><td>Progettato prima per il telefono, con barra "Prenota" sempre visibile</td></tr>
+        <tr><td>Telefono</td><td>Spazi vuoti, menu lungo</td><td>Progettato prima per il telefono, con le azioni principali sempre a portata di pollice</td></tr>
       </tbody>
     </table>
     <div class="shots">
-      <div class="shot"><b>Bozza della home</b><p>Apertura con foto, categorie di bici, offerte con i vostri prodotti reali, officina, abbigliamento, la bottega, orari e mappa.</p><a href="index.html" class="btn btn-blue">Apri la bozza</a></div>
-      <div class="shot"><b>Catalogo completo: 363 prodotti</b><p>Le 369 schede del sito attuale, senza 5 doppioni e 1 scheda vuota, organizzate in Bici, Abbigliamento e Accessori. Filtri per uso, telaio, gruppo, taglia, prezzo e disponibilità, confronto tra bici e questionario “Aiutami a scegliere”. Ogni scheda è incrociata con il sito ufficiale del produttore: sulle 368 schede con dati, 256 prodotti verificati, 68 con verifica parziale (differenze segnalate) e 170 con codice EAN recuperato, di cui 41 già pronti per l'importazione. Carrello, checkout, prenotazione officina e richieste funzionano in modalità dimostrativa.</p><a href="catalogo.html" class="btn btn-blue">Apri il catalogo</a></div>
+      <div class="shot"><b>Bozza della home</b><p>Apertura con foto, punti di forza, categorie di bici, officina, marchi, la bottega, orari, mappa e newsletter.</p><a href="index.html" class="btn btn-blue">Apri la bozza</a></div>
+      <div class="shot"><b>Catalogo completo: 363 prodotti</b><p>Le 369 schede del sito attuale, senza 5 doppioni e 1 scheda vuota, organizzate in Bici, Abbigliamento e Accessori. Filtri per uso, telaio, gruppo, taglia, prezzo e disponibilità, confronto tra bici e questionario “Aiutami a scegliere”. Ogni scheda è incrociata con il sito ufficiale del produttore: sulle 368 schede con dati, 256 prodotti verificati, 68 con verifica parziale (differenze segnalate) e 170 con codice EAN recuperato, di cui 41 già pronti per l'importazione. Carrello e checkout sono simulati, il pagamento diretto con Stripe è collegato in modalità test (nessun addebito reale) e l'officina mostra servizi e contatti diretti. Nel progetto le funzioni di acquisto corrispondono ai moduli della sezione 5 e si attivano solo se le scegliete.</p><a href="catalogo.html" class="btn btn-blue">Apri il catalogo</a></div>
       <div class="shot"><b>Scheda prodotto: Merida Reacto 7000</b><p>Prezzo e disponibilità dal vostro sito, foto e dati tecnici ufficiali Merida.</p><a href="prodotto.html" class="btn btn-stone">Apri la scheda</a></div>
     </div>
   </section>
@@ -275,82 +298,100 @@
   <!-- 4 -->
   <section class="sec" id="piattaforma">
     <div class="num">04</div>
-    <h2 class="display">Il motore del nuovo sito: Shopify</h2>
-    <p>Per gestire i vostri 363 prodotti e far crescere il negozio, propongo di passare a <strong>Shopify</strong>, la piattaforma e-commerce più diffusa e affidabile al mondo.</p>
-    <div class="platforms" style="grid-template-columns:1fr">
-      <div class="plat rec">
-        <span class="flag">Il meglio per voi</span>
-        <h3>Perché Shopify?</h3>
-        <div class="for">Tutto quello che vi serve per gestire le vendite, senza impazzire con l'informatica.</div>
+    <h2 class="display">Come costruirlo: nessuna strada è chiusa</h2>
+    <p>Il design e i contenuti della bozza valgono per qualsiasi soluzione. La scelta del "motore" si fa dopo l'incontro, in base a chi aggiornerà il catalogo, a come lavorate oggi in cassa e a quanto volete vendere online. Il sistema di pagamento più lineare è <strong>Stripe</strong> (carta, Apple Pay e Google Pay), che nella demo è già collegato in modalità test e si può usare con tutte e tre le strade.</p>
+    <div class="opts">
+      <div class="plat">
+        <h3>Piattaforma e-commerce pronta</h3>
+        <div class="for">Esempio: Shopify. Tutto in un unico pannello.</div>
         <ul>
-          <li class="p">Cassa e sito possono parlarsi: con Shopify POS vendete una bici in negozio e sparisce subito dal sito (costo e adeguamento fiscale a parte, vedi sotto).</li>
-          <li class="p">Pagamenti moderni: carta, Apple Pay e Google Pay pronti; PayPal, Satispay e rate senza interessi attivabili con una semplice richiesta.</li>
-          <li class="p">Gestione da telefono: cambiate un prezzo o aggiungete una foto direttamente dall'app in un attimo.</li>
-          <li class="p">Google: trasferiamo con cura tutti i vecchi indirizzi (405 sono già mappati) per non perdere il lavoro fatto finora.</li>
+          <li class="p">Catalogo, ordini, magazzino e spedizioni già integrati</li>
+          <li class="p">Gestione anche da app sul telefono</li>
+          <li class="p">Collegamento possibile con una cassa di negozio</li>
+          <li class="m">Meno libertà sul design e sulle funzioni su misura</li>
+        </ul>
+      </div>
+      <div class="plat">
+        <h3>Sito su misura + Stripe</h3>
+        <div class="for">Design e pagamenti separati, come nella demo attuale.</div>
+        <ul>
+          <li class="p">Massima libertà di design e di percorso d'acquisto</li>
+          <li class="p">Pagamenti Stripe con un pannello ordini già pronto</li>
+          <li class="m">Catalogo e magazzino meno automatici: va definito chi li aggiorna</li>
+          <li class="m">Funzioni come carrelli abbandonati o integrazioni vanno costruite</li>
+        </ul>
+      </div>
+      <div class="plat">
+        <h3>Sito aperto (CMS)</h3>
+        <div class="for">Esempio: WordPress con WooCommerce.</div>
+        <ul>
+          <li class="p">Molto flessibile e con tante estensioni disponibili</li>
+          <li class="p">Proprietà e controllo completi dei dati</li>
+          <li class="m">Richiede aggiornamenti e controlli di sicurezza periodici</li>
+          <li class="m">Più parti da mantenere (hosting, estensioni, backup)</li>
         </ul>
       </div>
     </div>
-    <div class="note">So che cambiare sistema può spaventare, per questo nel progetto è inclusa la <strong>formazione pratica</strong> per voi: in poche ore imparerete a gestirlo in totale autonomia.</div>
+    <div class="note">Qualunque sia la scelta, il lavoro sui dati (prodotti già ripuliti, 405 vecchi indirizzi mappati) e il dominio restano vostri e riutilizzabili. Quanto è facile cambiare piattaforma in futuro dipende dalla soluzione scelta, e lo verifichiamo insieme prima di decidere. Disponibilità e condizioni dei metodi di pagamento (rate, wallet, altri circuiti) vanno verificate con il fornitore scelto al momento della configurazione.</div>
   </section>
 
   <!-- 5 -->
-  <section class="sec" id="pacchetti">
+  <section class="sec" id="moduli">
     <div class="num">05</div>
-    <h2 class="display">Pacchetti</h2>
-    <p>I miei compensi per la realizzazione del progetto sono <em>una tantum</em> (si pagano una sola volta), IVA esclusa. I costi vivi per mantenere il sito online si pagano invece direttamente alla piattaforma.</p>
-    
-    <div class="fact" style="margin-bottom:28px; border:1.5px solid var(--blue); background:var(--blue-soft)">
-      <div class="big" style="color:var(--blue-deep)">27 €<small>al mese</small></div>
-      <h3 style="color:var(--blue-deep)">L'abbonamento a Shopify (Piano Basic)</h3>
-      <p style="color:var(--blue-deep); opacity:0.9">Include server ultra-veloce, certificato di sicurezza e inserimento prodotti illimitato. Scende a 19 €/mese pagando l'anno in un'unica soluzione. Prezzi dal listino ufficiale Shopify Italia di settembre 2026, da riverificare alla firma. Il listino non indica se i prezzi includono l'IVA: lo verifichiamo alla firma.</p>
-      <div class="why" style="background:rgba(255,255,255,0.7); margin-top:10px">
-        <b style="color:var(--blue-deep)">Commissioni:</b> per ogni pagamento online con carta standard Shopify trattiene l'<b>1,9% + 0,25 €</b> (3,6% + 0,25 € per Amex e carte internazionali). Con altri sistemi di pagamento (PayPal, Satispay, rate) Shopify aggiunge il <b>2%</b> sul piano Basic. <b>Nessuna commissione Shopify</b> se il cliente ritira e paga in negozio con la vostra cassa attuale.<br><br><b style="color:var(--blue-deep)">Se volete usare Shopify anche come cassa del negozio</b> (un solo magazzino per negozio e sito): Shopify POS Pro costa <b>79 €/mese</b> per negozio e le carte in negozio costano l'<b>1,5%</b>, più il lettore di carte e il collegamento al registratore telematico, da definire con il vostro commercialista.
-      </div>
+    <h2 class="display">Moduli: scegliete cosa vi serve</h2>
+    <p>Il nucleo è sempre incluso; ogni modulo si può attivare o escludere. Per ognuno trovate cosa ci guadagna il negozio e cosa serve da parte vostra. Non stimo ricavi: li possiamo quantificare insieme sui vostri dati reali (ordini, visite, richieste), una volta che il sito è online.</p>
+    <div class="mods" id="mods">
+      <label class="mod core on"><input type="checkbox" checked disabled><div><h3>Nucleo: vetrina e catalogo<small>Sempre incluso</small></h3></div>
+        <p>Nuovo sito pensato per il telefono, home, catalogo dei 363 prodotti ripuliti, schede prodotto, orari, mappa e contatti, elenco dei servizi dell'officina, indirizzi puliti e reindirizzamenti dei vecchi.</p>
+        <div class="gain"><b>Cosa guadagnate:</b> un sito che racconta la bottega e si usa bene da telefono; i clienti trovano prodotti, orari e officina senza telefonare; non perdete le posizioni su Google costruite finora.</div></label>
+      <label class="mod on" data-g="Vendere anche a negozio chiuso e fuori Varese, con pagamento già incassato"><input type="checkbox" checked><div><h3>Vendita online e pagamenti</h3></div>
+        <p>Carrello e checkout con carta, Apple Pay e Google Pay (Stripe o equivalente), ritiro gratuito in negozio con montaggio e regolazione, oppure spedizione.</p>
+        <div class="gain"><b>Cosa guadagnate:</b> vendere anche a negozio chiuso e fuori Varese; il cliente paga prima, quindi ritira con più certezza; meno telefonate per sapere se un articolo c'è.</div>
+        <div class="need"><b>Serve da voi:</b> account del sistema di pagamento, dati fiscali, condizioni di vendita e di reso, scelta tra ritiro e spedizione.</div></label>
+      <label class="mod on" data-g="Rendere accessibili le bici di fascia alta con il pagamento a rate"><input type="checkbox" checked><div><h3>Pagamento a rate</h3></div>
+        <p>Pagamento in più rate senza interessi per il cliente, dove il servizio scelto lo consente.</p>
+        <div class="gain"><b>Cosa guadagnate:</b> la spesa importante di una bici diventa più abbordabile e si riduce l'esitazione davanti al prezzo.</div>
+        <div class="need"><b>Serve da voi:</b> scegliere il servizio e verificarne soglie e condizioni; richiede il modulo di vendita online.</div></label>
+      <label class="mod on" data-g="Ricevere richieste di officina già ordinate, per servizio e data"><input type="checkbox" checked><div><h3>Prenotazione officina online</h3></div>
+        <p>Modulo di richiesta con tipo di intervento e giorno preferito, che arriva a voi già ordinato. Nella demo l'officina mostra solo servizi e contatti.</p>
+        <div class="gain"><b>Cosa guadagnate:</b> meno telefonate in orario di lavoro, richieste complete fin dal primo contatto e più facilità a distribuire gli appuntamenti.</div>
+        <div class="need"><b>Serve da voi:</b> elenco dei servizi con i prezzi e capacità giornaliera dell'officina.</div></label>
+      <label class="mod on" data-g="Farsi trovare da chi cerca «negozio bici Varese» e nei prodotti"><input type="checkbox" checked><div><h3>Visibilità su Google</h3></div>
+        <p>Descrizione delle immagini, dati dei prodotti con codici EAN dove disponibili, scheda Google del negozio collegata al sito.</p>
+        <div class="gain"><b>Cosa guadagnate:</b> farvi trovare da chi cerca un negozio di bici a Varese e, con i codici, aprire la strada a Google Immagini e Google Shopping.</div>
+        <div class="need"><b>Serve da voi:</b> accesso a Google Search Console e alla scheda Google del negozio.</div></label>
+      <label class="mod on" data-g="Riportare chi aveva scelto e comunicare offerte e uscite di gruppo"><input type="checkbox" checked><div><h3>Newsletter e carrelli abbandonati</h3></div>
+        <p>Iscrizione alla newsletter mensile e messaggi a chi lascia il carrello a metà.</p>
+        <div class="gain"><b>Cosa guadagnate:</b> un canale diretto con i clienti per offerte, novità e uscite di gruppo, e la possibilità di recuperare chi aveva già scelto.</div>
+        <div class="need"><b>Serve da voi:</b> consenso privacy gestito correttamente; richiede il modulo di vendita online per i carrelli.</div></label>
+      <label class="mod on" data-g="Evitare doppie vendite: negozio e sito sullo stesso magazzino"><input type="checkbox" checked><div><h3>Collegamento con cassa e magazzino</h3></div>
+        <p>Sito e negozio che condividono lo stesso magazzino, in base al gestionale e alla cassa che usate.</p>
+        <div class="gain"><b>Cosa guadagnate:</b> una bici venduta in negozio sparisce dal sito (e viceversa), con meno rischio di doppie vendite e meno aggiornamenti a mano.</div>
+        <div class="need"><b>Serve da voi:</b> come funzionano oggi cassa e gestionale; gli aspetti fiscali vanno definiti con il vostro commercialista.</div></label>
+      <label class="mod on" data-g="Rendere il sito memorabile con animazioni a scorrimento"><input type="checkbox" checked><div><h3>Animazioni a scorrimento</h3></div>
+        <p>Movimenti legati allo scorrimento della pagina: schede che compaiono in sequenza, foto in parallasse, numeri che si contano e scorrimento fluido. Nella bozza della home ne trovate alcuni esempi, da computer; si possono spingere oltre, ad esempio con una bici che prende forma nella prima schermata.</p>
+        <div class="gain"><b>Cosa guadagnate:</b> un sito più memorabile e riconoscibile rispetto ai concorrenti, che racconta la bottega già dal primo sguardo.</div>
+        <div class="need"><b>Da tenere presente:</b> si attivano solo da computer, restano disattivate da telefono e per chi ha ridotto i movimenti nelle impostazioni, per tenere il sito leggero.</div></label>
+      <label class="mod on" data-g="Distinguersi con foto proprie di negozio, officina e prodotti"><input type="checkbox" checked><div><h3>Servizio fotografico</h3></div>
+        <p>Foto di negozio, officina e prodotti scelti.</p>
+        <div class="gain"><b>Cosa guadagnate:</b> immagini vostre, riconoscibili, al posto di quelle dei cataloghi dei produttori.</div></label>
+      <label class="mod on" data-g="Liberare tempo: offerte e piccole modifiche gestite per voi"><input type="checkbox" checked><div><h3>Gestione e assistenza continuativa</h3></div>
+        <p>Aggiornamenti, caricamento di offerte e novità, piccole modifiche, assistenza dopo la messa online.</p>
+        <div class="gain"><b>Cosa guadagnate:</b> tempo da dedicare al negozio e al banco, con il sito sempre aggiornato.</div></label>
     </div>
-    <div class="packs" style="grid-template-columns:repeat(2,1fr)">
-      <div class="pack rec">
-        <span class="flag">Consigliato</span>
-        <h3>Negozio Online Base</h3>
-        <div class="for">Il nuovo sito completo, pronto per vendere e farsi trovare.</div>
-        <div class="price"><span class="fill">€ ____</span></div>
-        <div class="time">Circa 6–8 settimane</div>
-        <ul>
-          <li>Design moderno come da bozza</li>
-          <li>Trasferimento completo dei 363 prodotti, già verificati e ripuliti</li>
-          <li>Ottimizzazione Google e pulizia indirizzi</li>
-          <li>Taglie, varianti e filtri avanzati</li>
-          <li>Rate, ritiro in negozio e spedizioni</li>
-          <li>Prenotazione dell'officina</li>
-          <li>Formazione per il personale</li>
-        </ul>
-      </div>
-      <div class="pack">
-        <h3>Pacchetto Crescita</h3>
-        <div class="for">Sito completo + marketing e assistenza continua.</div>
-        <div class="price"><span class="fill">€ ____</span></div>
-        <div class="time">Circa 8–10 settimane</div>
-        <ul>
-          <li class="plus">Tutto il pacchetto "Base", più:</li>
-          <li>Collegamento con la cassa fisica del negozio (canone POS e adeguamento fiscale a parte)</li>
-          <li>Campagne locali per ricerche su Varese e provincia</li>
-          <li>Newsletter e recupero carrelli abbandonati</li>
-          <li>3 mesi di assistenza prioritaria inclusi</li>
-        </ul>
-      </div>
-    </div>
-    <div class="extras">
-      <div><b>Servizio fotografico</b><span>Negozio, officina e prodotti · <span class="fill">€ ____</span></span></div>
-      <div><b>Manutenzione mensile</b><span>Aggiornamenti e piccole modifiche · <span class="fill">€ ____ /mese</span></span></div>
-      <div><b>Gestione offerte e novità</b><span>Caricamento prodotti per voi · <span class="fill">€ ____ /mese</span></span></div>
+    <div class="sumbox" id="sumbox" aria-live="polite">
+      <h3>La configurazione scelta</h3>
+      <div class="cnt" id="cnt"></div>
+      <ul id="sumlist"></ul>
     </div>
   </section>
 
   <!-- 6 -->
   <section class="sec" id="tempi">
     <div class="num">06</div>
-    <h2 class="display">Tempi (pacchetto consigliato)</h2>
+    <h2 class="display">Tempi (indicativi: cambiano con i moduli scelti)</h2>
     <div class="timeline">
-      <div class="ph"><div class="wk">Settimana 1</div><div><b>Incontro e raccolta materiali</b><p>Obiettivi, accessi, foto, testi e attivazione degli account Shopify e dei pagamenti.</p><div class="bar"><i style="left:0;width:12.5%"></i></div></div></div>
+      <div class="ph"><div class="wk">Settimana 1</div><div><b>Incontro e raccolta materiali</b><p>Obiettivi, accessi, foto, testi e attivazione degli account della piattaforma scelta e dei pagamenti.</p><div class="bar"><i style="left:0;width:12.5%"></i></div></div></div>
       <div class="ph"><div class="wk">Settimane 2–3</div><div><b>Grafica definitiva</b><p>Home, categorie, scheda prodotto e officina, da telefono e computer. Due giri di modifiche.</p><div class="bar"><i style="left:12.5%;width:25%"></i></div></div></div>
       <div class="ph"><div class="wk">Settimane 3–6</div><div><b>Realizzazione e trasferimento</b><p>Costruzione del sito, trasferimento dei prodotti, pagamenti e spedizioni.</p><div class="bar"><i style="left:25%;width:50%"></i></div></div></div>
       <div class="ph"><div class="wk">Settimana 7</div><div><b>Prove e formazione</b><p>Ordini di prova, controlli su Google e formazione del personale.</p><div class="bar"><i style="left:75%;width:12.5%"></i></div></div></div>
@@ -380,6 +421,8 @@
       <div class="list">
         <h3>Da decidere insieme</h3>
         <ul>
+          <li>Il "motore" del sito: piattaforma pronta, sito su misura con Stripe o CMS aperto</li>
+          <li>Quali moduli attivare, subito o in un secondo momento</li>
           <li>Pagamento a rate: sì o no, e con quale servizio</li>
           <li>Spedizione delle bici o solo ritiro in negozio</li>
           <li>Servizi inclusi con l'acquisto: montaggio, primo controllo, permuta</li>
@@ -393,7 +436,7 @@
     <div>
       <div class="eyebrow">Prossimo passo</div>
       <h2 class="display">Ci vediamo in negozio?</h2>
-      <p>Mezz'ora per guardare insieme la bozza, capire come lavorate e scegliere il pacchetto giusto.</p>
+      <p>Mezz'ora per guardare insieme la bozza, capire come lavorate e scegliere insieme i moduli giusti.</p>
     </div>
     <div class="card-contact">
       <span>Contatti</span>
@@ -405,5 +448,13 @@
 </main>
 
 <div class="concept">Bozza concept · proposta di redesign</div>
+<script>
+/* Moduli: nessun dato viene salvato né inviato; serve solo a comporre la configurazione da mostrare o stampare */
+(()=>{const mods=[...document.querySelectorAll('#mods .mod')],cnt=document.getElementById('cnt'),list=document.getElementById('sumlist');
+function upd(){const on=mods.filter(m=>m.querySelector('input').checked);mods.forEach(m=>m.classList.toggle('on',m.querySelector('input').checked));
+ cnt.textContent=on.length+' moduli su '+mods.length;
+ list.innerHTML=['Un sito chiaro e usabile da telefono, con il catalogo ripulito e i vecchi indirizzi salvati'].concat(on.filter(m=>m.dataset.g).map(m=>m.dataset.g)).map(t=>'<li>'+t+'</li>').join('')}
+mods.forEach(m=>m.querySelector('input').addEventListener('change',upd));upd()})();
+</script>
 </body>
 </html>
