@@ -122,14 +122,9 @@
   @media(max-width:1000px){.cats{grid-auto-columns:calc((100% - 18px)/2.3)}}
   @media(max-width:560px){.cats{grid-auto-columns:78%}}
   .cat{position:relative;aspect-ratio:3/4;border-radius:var(--radius);overflow:hidden;background:var(--stone-light);color:#fff;isolation:isolate}
-  /* La foto parte come cover; lo script in index.html le dà la misura esatta di copertura (proporzioni originali) e il fattore --k la riduce fino a mostrarla intera */
-  .cat img{position:absolute;left:50%;top:50%;width:100%;height:100%;object-fit:cover;max-width:none;z-index:-2;transform:translate(-50%,-50%);transition:transform .9s cubic-bezier(.2,.7,.2,1)}
-  /* Sfondo sfocato dietro la foto: riempie le fasce che restano quando la foto è mostrata intera */
-  .cat img.bg{left:0;top:0;width:100%;height:100%;object-fit:cover;transform:scale(1.25);filter:blur(22px) saturate(1.1);z-index:-3;transition:none}
-  .cat:hover img.bg,.cat:focus-visible img.bg{transform:scale(1.25)}
-  /* Zoom out: la foto riposa leggermente ingrandita e al passaggio del mouse (o al focus da tastiera) si riduce fino a mostrare la bici intera (--k, calcolato in index.html).
-     Solo con mouse: su touch resta a dimensione normale. */
-  @media(hover:hover){.cat img{transform:translate(-50%,-50%) scale(1.14)}.cat:hover img,.cat:focus-visible img{transform:translate(-50%,-50%) scale(var(--k,1))}}
+  .cat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+  /* Zoom in al passaggio del mouse (o al focus da tastiera); i bordi della foto restano sempre coperti. Solo con mouse. */
+  @media(hover:hover){.cat:hover img,.cat:focus-visible img{transform:scale(1.08)}}
   .cat::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(8,14,40,.78),rgba(8,14,40,0) 55%)}
   .cat .chip{position:absolute;top:16px;left:16px;background:#fff;color:var(--ink);font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px}
   .cat .txt{position:absolute;left:22px;right:22px;bottom:20px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
