@@ -115,10 +115,14 @@
   .arrows{display:flex;gap:6px;background:var(--stone-light);border-radius:999px;padding:5px}
   .arrows button{width:46px;height:38px;border-radius:999px;display:grid;place-items:center;transition:background .2s}
   .arrows button:hover{background:#fff}
+  .arrows button:disabled{opacity:.35;cursor:default}
+  .arrows button:disabled:hover{background:none}
   .arrows svg{width:18px;height:18px}
 
   /* Categorie */
   .cats{grid-auto-columns:calc((100% - 3*18px)/4)}
+  /* Categorie: la fila non si scorre con trascinamento, trackpad o dito; si sposta solo con le frecce */
+  .rail.cats{overflow:hidden}
   @media(max-width:1000px){.cats{grid-auto-columns:calc((100% - 18px)/2.3)}}
   @media(max-width:560px){.cats{grid-auto-columns:78%}}
   .cat{position:relative;aspect-ratio:3/4;border-radius:var(--radius);overflow:hidden;background:var(--stone-light);color:#fff;isolation:isolate}

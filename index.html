@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Inter:wght@400;500;600;700&family=Righteous&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=n8">
+<link rel="stylesheet" href="style.css?v=n9">
 <style>html.lenis,html.lenis body{height:auto}html.lenis{scroll-behavior:auto!important}.lenis.lenis-smooth iframe{pointer-events:none}</style>
 <style>.demo-banner{position:relative;z-index:1;background:#0E1320;color:#fff;font:600 13px/1.4 Inter,system-ui,sans-serif;text-align:center;padding:9px 16px}.demo-banner a{color:#D8CCB2;text-decoration:underline;margin-left:6px}@media print{.demo-banner{display:none}}</style>
 </head>
@@ -247,6 +247,11 @@ const cats=[
 const arrow='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 const CATLINK={'Strada':'#/c/Strada','Gravel':'#/c/Gravel','E-bike':'#/g/E-bike','Mountain bike':'#/c/Mountain%20bike','Telai':'#/c/Telai','Città e trekking':'#/c/Citt%C3%A0%20e%20trekking'};
 document.getElementById('cats').innerHTML=cats.map(([t,s,img,chip])=>`<a href="catalogo.html${CATLINK[t]||'#/g/Bici'}" class="cat"><img src="${/^img\//.test(img)?img:wix(img,900,900,'fit')}" alt="${t}" loading="lazy">${chip?`<span class="chip">${chip}</span>`:''}<div class="txt"><div><h3>${t}</h3><small>${s}</small></div><span class="go">${arrow}</span></div></a>`).join('');
+
+/* Frecce delle categorie: la fila si sposta solo da qui; si disattivano a inizio e fine */
+(()=>{const r=document.getElementById('cats'),bs=document.querySelectorAll('.arrows[data-rail="cats"] button');if(!r||bs.length<2)return;
+  const upd=()=>{bs[0].disabled=r.scrollLeft<=2;bs[1].disabled=r.scrollLeft>=r.scrollWidth-r.clientWidth-2};
+  r.addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd()})();
 
 /* Carrello e preferiti condivisi con il catalogo (salvati nel browser) */
 const MEM={};const LS={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):(MEM[k]??d)}catch(e){return MEM[k]??d}},set(k,v){MEM[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
