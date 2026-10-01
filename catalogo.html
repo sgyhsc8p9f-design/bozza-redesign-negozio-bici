@@ -550,6 +550,10 @@ nav.main a.nav-off:hover{background:#FFF1EA}
 .sum .row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;font-size:14.5px}
 .sum .row.tot{border-top:1px solid var(--line);margin-top:8px;padding-top:14px;font-size:18px;font-weight:700}
 .sum .row span:last-child{text-align:right}
+.sum .row.hrs{flex-direction:column;gap:8px}
+.sum .row.hrs dl{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin:0}
+.sum .row.hrs dt{color:var(--muted);font-size:14px}
+.sum .row.hrs dd{margin:0;font-weight:700}
 .sum .hint{font-size:13px;color:var(--muted);margin-top:6px}
 .sum .btn{width:100%;justify-content:center;margin-top:16px;padding:16px}
 .freebar{margin:10px 0 4px;height:8px;border-radius:999px;background:var(--stone-light);overflow:hidden}
@@ -1162,7 +1166,7 @@ function renderOfficina(){document.title='Demo non ufficiale · Officina — Cic
     </div>
   </div><div><div class="box2 sum"><h2>Vieni a trovarci in bottega</h2>
     <div class="row"><span>Indirizzo</span><b>Piazza Madonnina in Prato 1, Varese</b></div>
-    <div class="row"><span>Orari</span><b>Mar–Sab 8:30–12:15 · 14:30–18:30 (Lun pom.)</b></div>
+    <div class="row hrs"><span>Orari</span><dl><dt>Lun</dt><dd>14:30–18:30</dd><dt>Mar–Ven</dt><dd>8:30–12:15 · 14:30–18:30</dd><dt>Sab</dt><dd>8:30–12:15 · 14:30–18:00</dd><dt>Dom</dt><dd>Chiuso</dd></dl></div>
     <div class="row"><span>Telefono</span><b>0332 240109</b></div>
     <div class="hint">Portaci la tua bici senza impegno: guardiamo insieme cosa serve e ti diamo subito il preventivo prima di iniziare qualsiasi lavoro.</div>
     <a class="btn btn-blue" href="tel:+390332240109" style="width:100%;justify-content:center">Chiama l'officina: 0332 240109</a>
