@@ -200,7 +200,7 @@
 
   /* Marchi */
   /* Fila dei marchi: scorre via JS (index.html); si può trascinare o scorrere a mano */
-  .brands{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding:30px 0;cursor:grab;-webkit-user-select:none;user-select:none}
+  .brands{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding:30px 0;cursor:grab;-webkit-user-select:none;user-select:none}
   .brands::-webkit-scrollbar{display:none}
   .brands.drag{cursor:grabbing}
   .marquee{display:flex;gap:64px;width:max-content}
