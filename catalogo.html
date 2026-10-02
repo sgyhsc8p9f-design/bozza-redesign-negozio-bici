@@ -869,7 +869,7 @@ const FACETS=[
 const C0L={'E-MTB':'E-MTB','E-bike strada e gravel':'E-bike da strada e gravel','E-City e trekking':'E-bike da città e trekking','City e trekking':'Città e trekking','Mountain bike':'Mountain bike','Strada':'Strada','Gravel':'Gravel'};
 const SIZE_ORDER=['3XS','XXS','XS','S','S-M','M','ML','M-L','L','L-XL','XL','XXL','XXXL','4XL','Taglia unica'];
 const sizeKey=s=>{const i=SIZE_ORDER.indexOf(s);if(i>=0)return i;const m=/^(\d{2})/.exec(s);return m?100+ +m[1]:999};
-const S={q:'',grp:'',cat:'',fx:{},pmin:null,pmax:null,disc:0,sort:'rel',limit:48,focus:false,panel:true,more:{},title:'',eyebrow:''};
+const S={q:'',grp:'',cat:'',fx:{},pmin:null,pmax:null,disc:0,sort:'rel',limit:48,focus:false,panel:false,more:{},title:'',eyebrow:''};
 const vals=(f,p)=>{const v=f.get(p);return v==null?[]:Array.isArray(v)?v:[v]};
 const inGroup=(p,g)=>g==='E-bike'?p.f.ele==='Sì':g==='Offerte'?true:p.grp===g;
 function baseList(){return VISIBLE.filter(p=>(!S.grp||inGroup(p,S.grp))&&(!S.cat||p.cat===S.cat))}
@@ -1294,8 +1294,9 @@ function route(){
   if(h==='/confronta'){renderCompare();scrollTo(0,0);return}
   if(h==='/aiutami'){renderQuiz();cmpBar();scrollTo(0,0);return}
   document.title='Demo non ufficiale · Catalogo — Cicli Ambrosini (bozza)';
+  /* Filtri chiusi all'ingresso in ogni pagina; aperti (da computer) solo dopo "Affina con i filtri" del questionario */
   if(!S.keep){S.fx={};S.pmin=S.pmax=null;S.disc=0;S.q=q.get('q')||'';S.sort='rel';S.title='';S.eyebrow='';S.more={};if(q.get('brand'))S.fx.b=[q.get('brand')];if(q.get('usato')==='1')S.fx.cond=['Usato'];if(q.get('sale')==='1')S.disc=20}
-  S.keep=false;S.limit=48;S.panel=!matchMedia('(max-width:960px)').matches;document.body.classList.remove('noscroll');
+  S.panel=S.keep&&!matchMedia('(max-width:960px)').matches;S.keep=false;S.limit=48;document.body.classList.remove('noscroll');
   if((m=h.match(/^\/g\/(.+)$/))){S.grp=m[1];S.cat=''}
   else if((m=h.match(/^\/c\/(.+)$/))){S.cat=m[1];S.grp=''}
   else if(h==='/offerte'){S.grp='Offerte';S.cat='';S.disc=S.disc||20;S.sort='sc';S.title='Offerte';S.eyebrow='Sconti del negozio'}
