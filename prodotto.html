@@ -182,7 +182,6 @@
     <nav class="main" id="mainNav"><!-- nav:main --><div class="mm"><a class="mm-t" href="catalogo.html#/g/Bici" aria-haspopup="true">Bici<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m6 9 6 6 6-6"/></svg></a><div class="mm-p"><div class="wrap mm-g"><div class="mm-c"><h5>Per disciplina</h5><a href="catalogo.html#/c/Strada">Strada<span>3</span></a><a href="catalogo.html#/c/Gravel">Gravel<span>3</span></a><a href="catalogo.html#/c/Mountain%20bike">Mountain bike<span>3</span></a></div><div class="mm-c"><h5>Elettriche</h5><a href="catalogo.html#/c/E-bike">E-bike<span>3</span></a></div><div class="mm-c mm-x"><h5>Scorciatoie</h5><a href="catalogo.html#/g/Bici">Tutte le bici</a><a href="catalogo.html#/g/E-bike">Tutte le e-bike</a></div></div></div></div><div class="mm"><a class="mm-t" href="catalogo.html#/g/Abbigliamento" aria-haspopup="true">Abbigliamento<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m6 9 6 6 6-6"/></svg></a><div class="mm-p"><div class="wrap mm-g"><div class="mm-c"><h5>Vestirsi</h5><a href="catalogo.html#/c/Maglie%2C%20giacche%20e%20salopette">Maglie, giacche e salopette<span>3</span></a></div><div class="mm-c"><h5>Protezione</h5><a href="catalogo.html#/c/Caschi%20e%20protezioni">Caschi e protezioni<span>3</span></a></div><div class="mm-c mm-x"><h5>Scorciatoie</h5><a href="catalogo.html#/g/Abbigliamento">Tutto l’abbigliamento</a></div></div></div></div><div class="mm"><a class="mm-t" href="catalogo.html#/g/Accessori" aria-haspopup="true">Accessori<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m6 9 6 6 6-6"/></svg></a><div class="mm-p"><div class="wrap mm-g"><div class="mm-c"><h5>Componenti</h5><a href="catalogo.html#/c/Trasmissione%20e%20pedali">Trasmissione e pedali<span>3</span></a></div><div class="mm-c"><h5>Per la bici</h5><a href="catalogo.html#/c/Borse%20e%20portaborracce">Borse e portaborracce<span>3</span></a></div><div class="mm-c mm-x"><h5>Scorciatoie</h5><a href="catalogo.html#/g/Accessori">Tutti gli accessori</a><a href="catalogo.html#/officina">Servizi officina</a></div></div></div></div><a href="catalogo.html#/officina" class="nav-l">Officina</a><a href="catalogo.html#/offerte" class="nav-l nav-off">Offerte</a><!-- /nav:main --></nav>
     <div class="icons">
       <a class="icon-btn hide-m" href="catalogo.html#/cerca" aria-label="Cerca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></a>
-      <a class="icon-btn hide-m" href="catalogo.html#/preferiti" aria-label="Preferiti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="badge" id="favCount">0</span></a>
       <a class="icon-btn" href="catalogo.html#/carrello" aria-label="Carrello"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cartCount">0</span></a>
       <button class="icon-btn burger" aria-label="Menu" id="openMenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
@@ -244,7 +243,6 @@
       <div class="cta">
         <a class="btn btn-blue cta-call" href="tel:+390332240109">Chiedi in negozio · 0332 240109</a>
         <button class="btn btn-blue" id="buyBtn" hidden>Aggiungi al carrello</button>
-        <button class="icon-btn" id="favBtn" aria-label="Aggiungi ai preferiti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
       </div>
       <div class="avail-note" id="availNote">Seleziona una taglia per vedere la disponibilità</div>
 
@@ -425,23 +423,19 @@ const REL=[
   ['colnago-v5rs-nuovo','Colnago','V5Rs',8599,10800,'050152e27bcf435db68e12f8c84ff0bd~mv2.jpg','Disponibile'],
 ];
 const eur=v=>String(v).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+' €';
-const heartSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
-function renderRel(){const fav=LS.get('ca_fav',[]);document.getElementById('rel').innerHTML=REL.map(([sl,b,n,p,o,img,st])=>{const off=Math.round((1-p/o)*100),h='catalogo.html#/p/'+sl;return `<article class="card"><a href="${h}" class="ph"><img src="${wix(img,600,600,'fit')}" alt="${b} ${n}" loading="lazy"><div class="rib"><span>-${off}%</span>${st?`<span class="alt">${st}</span>`:''}</div></a><button class="heart ${fav.includes(sl)?'on':''}" data-fav="${sl}" aria-label="Aggiungi ai preferiti">${heartSvg}</button><div class="body"><div class="brand">${b}</div><h3><a href="${h}">${n}</a></h3><div class="price"><b>${eur(p)}</b><s>${eur(o)}</s></div><div class="rate">oppure 3 rate da ${eur(Math.ceil(p/3))}</div><div class="row"><span>Ritiro in negozio</span><a class="add" href="${h}">Scegli</a></div></div></article>`}).join('')}
+function renderRel(){document.getElementById('rel').innerHTML=REL.map(([sl,b,n,p,o,img,st])=>{const off=Math.round((1-p/o)*100),h='catalogo.html#/p/'+sl;return `<article class="card"><a href="${h}" class="ph"><img src="${wix(img,600,600,'fit')}" alt="${b} ${n}" loading="lazy"><div class="rib"><span>-${off}%</span>${st?`<span class="alt">${st}</span>`:''}</div></a><div class="body"><div class="brand">${b}</div><h3><a href="${h}">${n}</a></h3><div class="price"><b>${eur(p)}</b><s>${eur(o)}</s></div><div class="rate">oppure 3 rate da ${eur(Math.ceil(p/3))}</div><div class="row"><span>Ritiro in negozio</span><a class="add" href="${h}">Scegli</a></div></div></article>`}).join('')}
 
-/* Interazioni: carrello e preferiti condivisi con home e catalogo (salvati nel browser) */
+/* Interazioni: carrello condiviso con home e catalogo (salvato nel browser) */
 const MEM={};const LS={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):(MEM[k]??d)}catch(e){return MEM[k]??d}},set(k,v){MEM[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const cc=document.getElementById('cartCount'),fc=document.getElementById('favCount');
-function badges(){const c=LS.get('ca_cart',[]),f=LS.get('ca_fav',[]);const n=c.reduce((a,l)=>a+l.qty,0);cc.textContent=n;cc.classList.toggle('on',n>0);fc.textContent=f.length;fc.classList.toggle('on',f.length>0);document.getElementById('favBtn').classList.toggle('on',f.includes('merida-reacto-7000'))}
+const cc=document.getElementById('cartCount');
+function badges(){const c=LS.get('ca_cart',[]);const n=c.reduce((a,l)=>a+l.qty,0);cc.textContent=n;cc.classList.toggle('on',n>0)}
 let tt;function toast(m,link,label){const t=document.getElementById('toast');t.querySelector('span').innerHTML=m+(link?` <a href="${link}" style="color:var(--stone);font-weight:700;text-decoration:underline;margin-left:6px">${label}</a>`:'');t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),3200)}
-function toggleFav(sl){const f=LS.get('ca_fav',[]);const i=f.indexOf(sl);if(i>=0)f.splice(i,1);else f.push(sl);LS.set('ca_fav',f);badges();toast(i<0?'Aggiunto ai preferiti':'Tolto dai preferiti',i<0?'catalogo.html#/preferiti':null,'Vedi preferiti');return i<0}
 document.getElementById('buyBtn').onclick=()=>{if(!sel){document.getElementById('sizes').scrollIntoView({behavior:'smooth',block:'center'});toast('Scegli prima la taglia');return}
   const d=document.querySelector('input[name=del]:checked');LS.set('ca_del',d?d.value:'ritiro');
   const opts={Taglia:AVAIL[sel]?sel:sel+' (su ordinazione)'};const key='merida-reacto-7000|'+JSON.stringify(opts);const cart=LS.get('ca_cart',[]);const l=cart.find(x=>x.key===key);
   if(l)l.qty++;else cart.push({key,slug:'merida-reacto-7000',name:'Reacto 7000',brand:'Merida',img:'6420e3_f93f7c42b1374fb2a1f4783e46da796c~mv2.jpg',price:4989,opts,qty:1,bike:true,pre:true});
   LS.set('ca_cart',cart);badges();toast(`Reacto 7000 taglia ${sel} aggiunta al carrello`,'catalogo.html#/carrello','Vai al carrello')};
-document.getElementById('favBtn').onclick=()=>toggleFav('merida-reacto-7000');
 document.addEventListener('click',e=>{
-  const h=e.target.closest('[data-fav]');if(h){h.classList.toggle('on',toggleFav(h.dataset.fav))}
   const ar=e.target.closest('.arrows button');if(ar){const r=document.getElementById(ar.parentElement.dataset.rail);r.scrollBy({left:ar.dataset.dir*r.clientWidth*.8,behavior:'smooth'})}
 });
 renderRel();badges();addEventListener('pageshow',badges);

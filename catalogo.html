@@ -718,7 +718,6 @@ body:has(.cmpbar.on) .concept{bottom:96px}
     <nav class="main" id="mainNav"></nav>
     <div class="icons">
       <a class="icon-btn hide-m" href="#/cerca" aria-label="Cerca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></a>
-      <a class="icon-btn hide-m" href="#/preferiti" aria-label="Preferiti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="badge" id="favCount">0</span></a>
       <a class="icon-btn" href="#/carrello" aria-label="Carrello"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cartCount">0</span></a>
       <button class="icon-btn burger" aria-label="Menu" id="openMenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
@@ -770,7 +769,6 @@ const isPre=p=>/arrivo|prenot/i.test(p.r);
 const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
 const VLABEL={verified:'Verificato sul sito ufficiale',partial:'Verifica parziale',todo:'Da verificare',notfound:'Non trovato sul sito ufficiale'};
 const vcls=st=>st==='verified'?'':st==='partial'?'partial':'todo';
-const heartSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
 const KEEP=new Set(['UCI','SL','SLR','AXS','DI2','KOM','QOM','MIPS','GRX','XT','XTR','SLX','GPS','LED','USB','BSA','DA','FF','CF','CF3','CF4','E1','SPD','SPD-SL','PD','SH','RC','TT','II','III','IV','XL','XXL','XS','MTB','EVO','KC','CE','CPSC','DLC','ID','UAE','TDF','RS','DB','SS','XC','AL','AMX','BRN','WAG','XP','BB','CC','CFRP','ED','MY','PRO']);
 function smartCase(n){const L=n.replace(/[^A-Za-zÀ-ÿ]/g,'');if(!L||L.replace(/[^A-ZÀ-Þ]/g,'').length/L.length<.7)return n;
   return n.split(/(\s+|-|\/)/).map(w=>{const u=w.toUpperCase();if(KEEP.has(u)||/\d/.test(w)&&w.length<=6||w.length<=1)return w;return w.charAt(0)+w.slice(1).toLowerCase()}).join('')}
@@ -783,17 +781,14 @@ const ribbons=p=>{const r=[];if(isRes(p))return['Prezzo riservato'];if(p.o&&p.o>
 /* ---------- Memoria: carrello e preferiti (condivisi con home e scheda Reacto) ---------- */
 const MEM={};
 const LS={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):(MEM[k]??d)}catch(e){return MEM[k]??d}},set(k,v){MEM[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-let CART=LS.get('ca_cart',[]),FAV=LS.get('ca_fav',[]),DEL=LS.get('ca_del','ritiro');
-const cc=document.getElementById('cartCount'),fc=document.getElementById('favCount');
-function badges(){const n=CART.reduce((a,l)=>a+l.qty,0);cc.textContent=n;cc.classList.toggle('on',n>0);fc.textContent=FAV.length;fc.classList.toggle('on',FAV.length>0)}
+let CART=LS.get('ca_cart',[]),DEL=LS.get('ca_del','ritiro');
+const cc=document.getElementById('cartCount');
+function badges(){const n=CART.reduce((a,l)=>a+l.qty,0);cc.textContent=n;cc.classList.toggle('on',n>0)}
 function saveCart(){LS.set('ca_cart',CART);badges()}
-function saveFav(){LS.set('ca_fav',FAV);badges()}
-addEventListener('storage',()=>{CART=LS.get('ca_cart',[]);FAV=LS.get('ca_fav',[]);badges()});
+addEventListener('storage',()=>{CART=LS.get('ca_cart',[]);badges()});
 function addToCart(p,opts={},qty=1,extra={}){const key=p.s+'|'+JSON.stringify(opts);const l=CART.find(x=>x.key===key);
   if(l)l.qty+=qty;else CART.push({key,slug:p.s,name:niceName(p),brand:p.b,img:p.img[0]||'',price:p.p,opts,qty,bike:isBike(p),pre:isPre(p),...extra});
   saveCart();toast(`${fullName(p)} aggiunto al carrello`,'#/carrello','Vai al carrello')}
-function isFav(s){return FAV.includes(s)}
-function toggleFav(s){const i=FAV.indexOf(s);if(i>=0)FAV.splice(i,1);else FAV.push(s);saveFav();toast(isFav(s)?'Aggiunto ai preferiti':'Tolto dai preferiti',isFav(s)?'#/preferiti':null,'Vedi preferiti');return isFav(s)}
 const SHIP={free:60,std:7.9,bike:49};
 function totals(method){const sub=CART.reduce((a,l)=>a+l.price*l.qty,0),bikeSub=CART.filter(l=>l.bike).reduce((a,l)=>a+l.price*l.qty,0),bikes=CART.filter(l=>l.bike).reduce((a,l)=>a+l.qty,0),other=sub-bikeSub;
   let ship=0;if(method==='spedizione')ship=bikes*SHIP.bike+(other>0&&other<SHIP.free?SHIP.std:0);return{sub,ship,tot:sub+ship,bikes,other}}
@@ -994,7 +989,6 @@ function renderProduct(p){
       <div class="cta">
         <a class="btn btn-blue cta-call" href="tel:+390332240109">Chiedi in negozio · 0332 240109</a>
         <button class="btn btn-blue" id="buyBtn" hidden>${res?'Richiedi il prezzo riservato':'Aggiungi al carrello'}</button>
-        <button class="icon-btn ${isFav(p.s)?'on':''}" id="favBtn" aria-label="${isFav(p.s)?'Togli dai preferiti':'Aggiungi ai preferiti'}">${heartSvg}</button>
       </div>
       <div class="stock ${p.stock?(pre||/contatt/i.test(p.r)?'warn':''):'out'}">${res?'Disponibile su richiesta: ti ricontattiamo entro un giorno lavorativo':p.stock?(pre?'In arrivo: prenotabile, te la teniamo da parte':/contatt/i.test(p.r)?'Contattaci per disponibilità e altre taglie':'Disponibile: passa in negozio o chiamaci'):'Esaurito online: chiedi in negozio'}</div>
       ${res?'':`<a class="ask-link" href="#/richiesta/${p.s}">Hai una domanda su questo prodotto? Scrivici</a>`}
@@ -1036,7 +1030,6 @@ function renderProduct(p){
     const miss=opt.findIndex((o,i)=>!sel[i]);if(miss>=0){toast('Scegli prima: '+opt[miss].t.toLowerCase());app.querySelector(`[data-o="${miss}"]`).scrollIntoView({behavior:'smooth',block:'center'});return}
     const opts=Object.fromEntries(opt.map((o,i)=>[o.t,sel[i]]));const d=app.querySelector('input[name=del]:checked');
     if(bike&&d){DEL=d.value;LS.set('ca_del',DEL)}addToCart(p,opts,1)};
-  document.getElementById('favBtn').onclick=e=>{const on=toggleFav(p.s);e.currentTarget.classList.toggle('on',on)};
   const openTab=t=>{app.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x.dataset.t===t));app.querySelectorAll('.panel').forEach(x=>x.classList.toggle('on',x.id===t))};
   document.getElementById('tabs').onclick=e=>{const b=e.target.closest('button');if(b)openTab(b.dataset.t)};
   app.querySelectorAll('[data-tab]').forEach(a=>a.onclick=e=>{e.preventDefault();openTab(a.dataset.tab);document.getElementById('tabsWrap').scrollIntoView({behavior:'smooth'})});
@@ -1047,7 +1040,7 @@ function renderProduct(p){
 function lineHtml(l,i){const p=BY[l.slug];const img=l.img?wix(l.img,200,200):'';
   return `<div class="line"><a class="im" href="#/p/${l.slug}">${img?`<img src="${img}" alt="">`:''}</a><div><div class="b">${esc(l.brand||'')}</div><h3><a href="#/p/${l.slug}">${esc(l.name)}</a></h3>
   <div class="meta">${Object.entries(l.opts||{}).map(([k,v])=>`${esc(k)}: <b>${esc(v)}</b>`).join(' · ')}${l.bike?`${Object.keys(l.opts||{}).length?' · ':''}Montata e regolata in officina`:''}${l.pre?' · <b>In arrivo: prenotazione</b>':''}</div>
-  <div class="acts"><button data-rm="${i}">Rimuovi</button><button data-mv="${i}">Sposta nei preferiti</button>${p?'':''}</div></div>
+  <div class="acts"><button data-rm="${i}">Rimuovi</button>${p?'':''}</div></div>
   <div class="rt"><b>${eur(l.price*l.qty)}</b><div class="qty"><button data-q="${i}" data-d="-1" aria-label="Diminuisci">−</button><span>${l.qty}</span><button data-q="${i}" data-d="1" aria-label="Aumenta">+</button></div>${l.qty>1?`<span class="meta">${eur(l.price)} cad.</span>`:''}</div></div>`}
 function summaryHtml(method,withBtn,inner=''){const t=totals(method);const miss=SHIP.free-t.other;
   return `<div class="box2 sum"><h2>Riepilogo</h2>
@@ -1060,10 +1053,9 @@ function summaryHtml(method,withBtn,inner=''){const t=totals(method);const miss=
   ${withBtn?`<a class="btn btn-blue" href="#/checkout">Procedi all'acquisto</a><a class="btn btn-ghost" href="#/" style="width:100%;justify-content:center;margin-top:8px">Continua gli acquisti</a>`:''}
   ${inner||'<div class="pay-icons"><span>Carta</span><span>PayPal</span><span>Satispay</span><span>Scalapay</span><span>In negozio</span></div>'}</div>`}
 function renderCart(){document.title='Demo non ufficiale · Carrello — Cicli Ambrosini (bozza)';
-  if(!CART.length){const favs=FAV.map(s=>BY[s]).filter(Boolean).slice(0,4);
+  if(!CART.length){
     app.innerHTML=`<div class="wrap page"><div class="page-head"><div class="eyebrow">Carrello</div><h1 class="display">Il tuo carrello</h1></div>
-    <div class="empty-cart"><h2>Il carrello è vuoto</h2><p>Scegli la tua prossima bici o dai un'occhiata alle offerte.</p><div class="ctas"><a class="btn btn-blue" href="#/g/Bici">Scopri le bici</a><a class="btn btn-ghost" href="#/?sale=1">Vedi le offerte</a>${FAV.length?'<a class="btn btn-ghost" href="#/preferiti">I tuoi preferiti</a>':''}</div></div>
-    ${favs.length?`<section style="padding:48px 0 0"><div class="sec-head"><div><div class="eyebrow">Dai tuoi preferiti</div><h2 class="display" style="font-size:32px">Li avevi salvati</h2></div></div><div class="grid">${favs.map(card).join('')}</div></section>`:''}</div>`;return}
+    <div class="empty-cart"><h2>Il carrello è vuoto</h2><p>Scegli la tua prossima bici o dai un'occhiata alle offerte.</p><div class="ctas"><a class="btn btn-blue" href="#/g/Bici">Scopri le bici</a><a class="btn btn-ghost" href="#/?sale=1">Vedi le offerte</a></div></div></div>`;return}
   app.innerHTML=`<div class="wrap page"><div class="page-head"><div class="eyebrow">Carrello</div><h1 class="display">Il tuo carrello</h1><p>Controlla i prodotti e scegli come riceverli. Il pagamento avviene nel passaggio successivo.</p></div>
   <div class="two"><div>
     <div class="lines">${CART.map(lineHtml).join('')}</div>
@@ -1074,7 +1066,6 @@ function renderCart(){document.title='Demo non ufficiale · Carrello — Cicli A
   </div><div>${summaryHtml(DEL,true)}</div></div></div>`;
   app.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>{const l=CART[+b.dataset.q];l.qty=Math.max(0,l.qty+ +b.dataset.d);if(!l.qty)CART.splice(+b.dataset.q,1);saveCart();renderCart()});
   app.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{const l=CART.splice(+b.dataset.rm,1)[0];saveCart();renderCart();toast(`${l.name} rimosso dal carrello`)});
-  app.querySelectorAll('[data-mv]').forEach(b=>b.onclick=()=>{const l=CART.splice(+b.dataset.mv,1)[0];if(!isFav(l.slug))FAV.push(l.slug);saveFav();saveCart();renderCart();toast('Spostato nei preferiti','#/preferiti','Vedi')});
   app.querySelectorAll('input[name=cdel]').forEach(r=>r.onchange=()=>{DEL=r.value;LS.set('ca_del',DEL);renderCart()});
   document.getElementById('emptyCart').onclick=()=>{if(confirm('Vuoi togliere tutti i prodotti dal carrello?')){CART=[];saveCart();renderCart()}};
 }
@@ -1144,13 +1135,6 @@ function renderOrder(id){document.title='Demo non ufficiale · Ordine confermato
   <div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-blue" href="#/">Continua gli acquisti</a><a class="btn btn-ghost" href="#/info/contatti">Contatti e orari</a></div></div></div>`;
 }
 
-/* ---------- Preferiti ---------- */
-function renderFav(){document.title='Demo non ufficiale · Preferiti — Cicli Ambrosini (bozza)';const list=FAV.map(s=>BY[s]).filter(Boolean);
-  app.innerHTML=`<div class="wrap page"><div class="page-head"><div class="eyebrow">Preferiti</div><h1 class="display">I tuoi preferiti</h1><p>${list.length?`${list.length} prodott${list.length===1?'o':'i'} salvat${list.length===1?'o':'i'} su questo dispositivo.`:'Tocca il cuore su un prodotto per salvarlo qui.'}</p></div>
-  ${list.length?`<div class="grid">${list.map(card).join('')}</div><p style="margin-top:22px"><button class="link" id="clearFav">Svuota i preferiti</button></p>`:`<div class="empty-cart"><h2>Nessun preferito</h2><p>Salva i prodotti che ti interessano per ritrovarli più tardi.</p><div class="ctas"><a class="btn btn-blue" href="#/">Sfoglia il catalogo</a></div></div>`}</div>`;
-  const c=document.getElementById('clearFav');if(c)c.onclick=()=>{FAV=[];saveFav();renderFav()};
-}
-
 /* ---------- Officina (informazioni e servizi) ---------- */
 const SVC=[['revisione','Revisione completa','Controllo, pulizia, regolazioni di cambio e freni','circa 2 ore'],['ebike','Diagnosi e riparazione e-bike','Motore, batteria, software e aggiornamenti','circa 1 ora'],['montaggio','Montaggio su misura','Componenti, ruote e posizione in sella','da concordare'],['ruote','Ruote, gomme e tubeless','Centratura, cambio gomme, tubeless','circa 45 minuti'],['riparazione','Riparazione veloce','Foratura, cavi, pastiglie, piccoli interventi','circa 30 minuti'],['preventivo','Altro / preventivo','Descrivi il problema, valutiamo la soluzione migliore','—']];
 function renderOfficina(){document.title='Demo non ufficiale · Officina — Cicli Ambrosini (bozza)';
@@ -1202,7 +1186,7 @@ const INFO={
   <p style="margin-top:18px"><a class="btn btn-blue" href="#/officina">Prenota l'officina</a></p>
   <div class="map" style="margin-top:18px;border-radius:var(--radius);overflow:hidden"><iframe loading="lazy" title="Mappa" style="width:100%;height:340px;border:0" src="https://www.google.com/maps?q=Piazza+Madonnina+in+Prato+1,+Varese&output=embed"></iframe></div>`],
  privacy:['Informativa privacy',`<p>Titolare del trattamento: Cicli Ambrosini, Piazza Madonnina in Prato 1, Varese.</p><ul><li>Usiamo i tuoi dati solo per gestire ordini, prenotazioni e richieste.</li><li>La newsletter è facoltativa e puoi disiscriverti in ogni momento.</li><li>Puoi chiedere accesso, correzione o cancellazione dei tuoi dati scrivendoci.</li></ul>${DRAFT}`],
- cookie:['Cookie',`<p>Il sito usa solo i cookie tecnici necessari al funzionamento (carrello e preferiti). Eventuali cookie di statistica o marketing vengono attivati solo con il tuo consenso.</p>${DRAFT}`],
+ cookie:['Cookie',`<p>Il sito usa solo i cookie tecnici necessari al funzionamento (carrello). Eventuali cookie di statistica o marketing vengono attivati solo con il tuo consenso.</p>${DRAFT}`],
  termini:['Termini di vendita',`<ul><li>I prezzi sono in euro, IVA inclusa.</li><li>Il contratto si conclude con la conferma dell'ordine via email.</li><li>I prodotti "in arrivo" sono prenotabili: ti avvisiamo appena disponibili.</li><li>Diritto di recesso entro 14 giorni per gli acquisti online.</li></ul>${DRAFT}`],
 };
 function renderInfo(k){const it=INFO[k];if(!it){renderNotFound();return}document.title='Demo non ufficiale · '+it[0]+' — Cicli Ambrosini (bozza)';
@@ -1212,7 +1196,6 @@ function renderNotFound(){app.innerHTML='<div class="wrap notfound"><h1 class="d
 /* ---------- Clic globali, toast ---------- */
 let tt;function toast(m,href,label){const t=document.getElementById('toast');t.querySelector('span').innerHTML=esc(m)+(href?` <a href="${href}">${esc(label||'Apri')}</a>`:'');t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),3200)}
 document.addEventListener('click',e=>{
-  const h=e.target.closest('[data-fav]');if(h){e.preventDefault();const on=toggleFav(h.dataset.fav);h.classList.toggle('on',on);h.setAttribute('aria-label',on?'Togli dai preferiti':'Aggiungi ai preferiti');if(location.hash.startsWith('#/preferiti'))renderFav();return}
   const c=e.target.closest('[data-cmp]');if(c){if(!toggleCmp(c.dataset.cmp,c.checked))c.checked=false;return}
   const u=e.target.closest('[data-uncmp]');if(u){e.preventDefault();if(u.dataset.uncmp==='*')CMP=[];else CMP=CMP.filter(x=>x!==u.dataset.uncmp);cmpBar();app.querySelectorAll('[data-cmp]').forEach(x=>x.checked=CMP.includes(x.dataset.cmp));if(location.hash.startsWith('#/confronta'))renderCompare();return}
   const a=e.target.closest('[data-add]');if(a){e.preventDefault();const p=BY[a.dataset.add];const opts=Object.fromEntries(p.opt.filter(o=>o.v&&o.v.length===1).map(o=>[o.t,o.v[0]]));addToCart(p,opts);a.textContent='Aggiunto ✓';setTimeout(()=>a.textContent='Aggiungi',1500)}
