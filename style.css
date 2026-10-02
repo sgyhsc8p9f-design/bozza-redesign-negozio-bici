@@ -186,14 +186,14 @@
   .services small{display:block;opacity:.75;font-size:13px}
   .services em{font-style:normal;font-size:13px;background:#fff;color:var(--blue);padding:5px 12px;border-radius:999px;font-weight:600;white-space:nowrap}
   @media(max-width:900px){.band .in{grid-template-columns:1fr}}
-  /* Officina senza foto: fondo blu pieno, colonna unica */
+  /* Officina senza foto: fascia chiara color pietra, tutto centrato */
+  .band.plain{background:var(--stone-light);color:var(--ink)}
   .band.plain::before{display:none}
-  .band.plain .in{padding-block:clamp(48px,6vw,80px)}
-  .band.plain h2{margin-bottom:0}
-  .band.plain .side-txt .hero-ctas{margin-top:0}
-  .band.plain .side-txt .btn{padding:17px 30px;font-size:16px}
-  @media(min-width:901px){.band.plain .in{align-items:center}.band.plain .side-txt .hero-ctas{justify-content:center}}
-  @media(max-width:900px){.band.plain .in{gap:24px}}
+  .band.plain .in{display:block;text-align:center;padding-block:clamp(48px,6vw,80px)}
+  .band.plain .eyebrow{color:var(--blue)}
+  .band.plain h2{margin:12px 0 0}
+  .band.plain .hero-ctas{justify-content:center;margin-top:28px}
+  .band.plain .btn{padding:17px 30px;font-size:16px}
 
   /* Abbigliamento split */
   .split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
