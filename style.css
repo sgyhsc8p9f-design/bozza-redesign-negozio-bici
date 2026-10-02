@@ -183,6 +183,9 @@
   .services small{display:block;opacity:.75;font-size:13px}
   .services em{font-style:normal;font-size:13px;background:#fff;color:var(--blue);padding:5px 12px;border-radius:999px;font-weight:600;white-space:nowrap}
   @media(max-width:900px){.band .in{grid-template-columns:1fr}}
+  /* Officina senza foto: fondo blu pieno, colonna unica */
+  .band.plain::before{display:none}
+  .band.plain .in{grid-template-columns:1fr;align-items:start}
 
   /* Abbigliamento split */
   .split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
@@ -235,7 +238,7 @@
   .status.closed{background:#F3E9E6;color:#A23B1F}
   .contact a{display:flex;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:14.5px}
   .contact a:last-child{border:0}
-  .contact i{width:40px;height:40px;border-radius:50%;background:var(--stone-light);display:grid;place-items:center;flex:none}
+  .contact i{width:20px;display:grid;place-items:center;flex:none}
   .contact i svg{width:18px;height:18px;color:var(--blue)}
   .map{border-radius:var(--radius);overflow:hidden;min-height:340px;background:#ddd}
   .map iframe{width:100%;height:100%;border:0;min-height:340px;filter:saturate(.7)}
